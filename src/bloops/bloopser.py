@@ -81,7 +81,6 @@ def convert_to_html(
                     + "\n\n"
                     + f"{error_line[0]}: {error_line[1]}"
                 )
-
             if "type" in list_dict and list_dict["type"] == "ol":
                 if "style" not in list_dict:
                     content.append("<ol>")
@@ -98,7 +97,6 @@ def convert_to_html(
                     content.append(f'<ol type="{list_dict["style"]}">')
                 content.append(inner_content)
                 content.append("</ol>")
-
             else:
                 if "style" not in list_dict:
                     content.append("<ul>")
@@ -131,13 +129,11 @@ def convert_to_html(
                 content.append(f'<blockquote cite="{quote_dict["link"]}">')
             else:
                 content.append("<blockquote>")
-            content.append("<p>" + "\n" + inner_content + "\n" + "</p>")
+            content.append(f"<p>{inner_content}</p>")
             content.append("</blockquote>")
             if "author" in quote_dict:
                 content.append("<figcaption>")
-                content.append("<cite>")
-                content.append(quote_dict["author"])
-                content.append("</cite>")
+                content.append(f"<cite>{quote_dict['author']}</cite>")
                 content.append("</figcaption>")
                 content.append("</figure>")
 
@@ -162,11 +158,89 @@ def convert_to_html(
                         + f"{error_line[0]}: {error_line[1]}"
                     )
                 content.append(
-                    f'<a href="{url_dict["link"]}" target="_{url_dict["target"]}">'
+                    f'<a href="{url_dict["link"]}" target="_{url_dict["target"]}">{inner_content}</a>'
                 )
-            content.append(f'<a href="{url_dict["link"]}">')
-            content.append(inner_content)
-            content.append("</a>")
+            else:
+                content.append(
+                    f'<a href="{url_dict["link"]}">{inner_content}</a>'
+                )
+
+    if tag in [
+        "theorem",
+        "lemma",
+        "proposition",
+        "corollary",
+        "example",
+        "claim",
+        "problem",
+        "exercise",
+    ]:
+        if tag in ["theorem", "lemma"]:
+            content.append('<div class="boxtheorem">')
+        elif tag in ["proposition", "corollary"]:
+            content.append('<div class="boxproposition">')
+        elif tag in ["example"]:
+            content.append('<div class="boxexample">')
+        elif tag in ["claim"]:
+            content.append('<div class="boxclaim">')
+        elif tag in ["problem", "exercise"]:
+            content.append('<div class="boxproblem">')
+        if "desc" in args:
+            if tag not in ["claim", "problem", "exercise"]:
+                content.append(
+                    f'<span class="title-block">{tag.title()} ({args["desc"]}).</span>'
+                )
+            elif tag == "claim":
+                content.append(
+                    f'<span class="title-inline">{tag.title()} ({args["desc"]}) —</span>'
+                )
+            else:
+                content.append(
+                    f'<span class="title-inline">{tag.title()} ({args["desc"]}).</span>'
+                )
+        else:
+            if tag not in ["claim", "problem", "exercise"]:
+                content.append(
+                    f'<span class="title-block">{tag.title()}.</span>'
+                )
+            elif tag == "claim":
+                content.append(
+                    f'<span class="title-inline">{tag.title()} —</span>'
+                )
+            else:
+                content.append(
+                    f'<span class="title-inline">{tag.title()}.</span>'
+                )
+        content.append(inner_content)
+        content.append("</div>")
+
+    if tag in ["b", "i", "u", "s", "*", "sub", "sup", "proof", "soln"]:
+        inline_code_dict = {
+            "b": "strong",
+            "i": "em",
+            "u": "u",
+            "s": "s",
+            "*": "li",
+            "sub": "sub",
+            "sup": "sup",
+        }
+
+        if tag == "proof":
+            content.append("<div>")
+            content.append(
+                f'<i>Proof.</i> {inner_content}<span class="qed">&#9632;</span>'
+            )
+            content.append("</div>")
+        elif tag == "soln":
+            content.append("<div>")
+            content.append(
+                f'<i>Solution.</i> {inner_content}<span class="qed">&#9633;</span>'
+            )
+            content.append("</div>")
+        else:
+            content.append(
+                f"<{inline_code_dict[tag]}>{inner_content}</{inline_code_dict[tag]}>"
+            )
 
     return "\n".join(content)
 
@@ -186,6 +260,9 @@ def get_tag_and_args(
         )
 
     pattern = r'[\w]+=".*?"|[\w]+=[^\s]+'
+    if len(match.groups()) <= 1:
+        return (match.group(1), {})
+
     args_list: list[str] = re.findall(pattern, match.group(2))
     args_dict = {
         arg.split("=")[0]: (arg.split("=")[1]).strip('"') for arg in args_list
