@@ -4,6 +4,8 @@ import pytest
 
 from bloops.bloopser import convert_to_html, get_tag_and_args, validate_args
 
+# TODO: maybe add even more tests? idk
+
 
 class TestGetTagAndArgs:
     def test_missing_open_delim(self):
@@ -17,21 +19,27 @@ lorem [ay]some random stuff
             context.value
         )
 
+    def test_simple_tag(self):
+        text = r"""meow lorem [b]some random stuff[/b]"""
+        res = get_tag_and_args(text, 11, re.compile(r"\[(b)\]"))
+        assert res[0] == "b"
+        assert res[1] == {}
+
     def test_no_args(self):
         text = r"""meow
 lorem [asy]some random stuff
 [/asy]"""
-        tag_and_args = get_tag_and_args(text, 11, re.compile(r"\[(asy)(.*?)\]"))
-        assert tag_and_args[0] == "asy"
-        assert tag_and_args[1] == {}
+        res = get_tag_and_args(text, 11, re.compile(r"\[(asy)(.*?)\]"))
+        assert res[0] == "asy"
+        assert res[1] == {}
 
     def test_args(self):
         text = r"""meow
 lorem [asy meow=hi width=50 alt="meow neow" caption=this]some random stuff
 [/asy]"""
-        tag_and_args = get_tag_and_args(text, 11, re.compile(r"\[(asy)(.*?)\]"))
-        assert tag_and_args[0] == "asy"
-        assert tag_and_args[1] == {
+        res = get_tag_and_args(text, 11, re.compile(r"\[(asy)(.*?)\]"))
+        assert res[0] == "asy"
+        assert res[1] == {
             "meow": "hi",
             "width": "50",
             "alt": "meow neow",
@@ -40,13 +48,18 @@ lorem [asy meow=hi width=50 alt="meow neow" caption=this]some random stuff
 
 
 class TestValidateArgs:
+    def test_simple_tag(self):
+        text = r"""meow lorem [b]some random stuff[/b]"""
+        res = validate_args(text, 11, re.compile(r"\[(b)\]"), [])
+        assert res == False
+
     def test_invalid_args(self):
         text = r"""meow
 lorem [asy meow=hi width=50 alt="meow neow" caption=this]some random stuff
 [/asy]"""
 
         with pytest.raises(ValueError) as context:
-            test_args = validate_args(
+            _ = validate_args(
                 text,
                 11,
                 re.compile(r"\[(asy)(.*?)\]"),
@@ -61,25 +74,43 @@ lorem [asy meow=hi width=50 alt="meow neow" caption=this]some random stuff
 lorem [asy width=50 alt="meow neow" caption=this]some random stuff
 [/asy]"""
 
-        test_args = validate_args(
+        res = validate_args(
             text, 11, re.compile(r"\[(asy)(.*?)\]"), ["width", "alt", "caption"]
         )
 
-        assert test_args is True
+        assert res is True
 
     def test_empty_args(self):
         text = r"""meow
 lorem [asy]some random stuff
 [/asy]"""
 
-        test_args = validate_args(
+        res = validate_args(
             text, 11, re.compile(r"\[(asy)(.*?)\]"), ["width", "alt", "caption"]
         )
 
-        assert test_args is False
+        assert res is False
 
 
 class TestConvertToHtml:
+    def test_simple_tag_conversion(self):
+        text = r"""lorem [b]some random stuff[/b] lorem"""
+        res = convert_to_html(
+            text, 6, re.compile(r"\[(b)\]"), re.compile(r"\[/b\]")
+        )
+        assert res == (r"""<strong>some random stuff</strong>""")
+
+    def test_proof(self):
+        text = r"""lorem [proof]some random stuff[/proof] lorem"""
+        res = convert_to_html(
+            text, 6, re.compile(r"\[(proof)\]"), re.compile(r"\[/proof\]")
+        )
+        assert res == (
+            r"""<div>
+<i>Proof.</i> some random stuff<span class="qed">&#9632;</span>
+</div>"""
+        )
+
     def test_code_without_lang(self):
         text = r"""lorem [code]some random stuff[/code] lorem"""
         res = convert_to_html(
@@ -110,7 +141,7 @@ some random stuff
     def test_color_without_hex(self):
         text = r"""lorem [color]some random stuff[/color] lorem"""
         with pytest.raises(ValueError) as context:
-            res = convert_to_html(
+            _ = convert_to_html(
                 text,
                 6,
                 re.compile(r"\[(color)(.*?)\]"),
@@ -283,16 +314,149 @@ some random stuff
         )
 
     def test_quote(self):
-        text = r"""lorem [list type=ol style=1]some random stuff[/list] lorem"""
+        text = r"""lorem [quote]some random stuff[/quote] lorem"""
         res = convert_to_html(
             text,
             6,
-            re.compile(r"\[(list)(.*?)\]"),
-            re.compile(r"\[/list\]"),
+            re.compile(r"\[(quote)(.*?)\]"),
+            re.compile(r"\[/quote\]"),
         )
         assert (
             res
-            == r"""<ol type="1">
+            == r"""<blockquote>
+<p>some random stuff</p>
+</blockquote>"""
+        )
+
+    def test_quote_with_citation(self):
+        text = r"""lorem [quote link=https://www.bubudroid.me]some random stuff[/quote] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(quote)(.*?)\]"),
+            re.compile(r"\[/quote\]"),
+        )
+        assert (
+            res
+            == r"""<blockquote cite="https://www.bubudroid.me">
+<p>some random stuff</p>
+</blockquote>"""
+        )
+
+    def test_quote_with_author(self):
+        text = r"""lorem [quote author="bubu droid"]some random stuff[/quote] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(quote)(.*?)\]"),
+            re.compile(r"\[/quote\]"),
+        )
+        assert (
+            res
+            == r"""<figure>
+<blockquote>
+<p>some random stuff</p>
+</blockquote>
+<figcaption>
+<cite>bubu droid</cite>
+</figcaption>
+</figure>"""
+        )
+
+    def test_url_without_link(self):
+        text = r"""lorem [url]some random stuff[/url] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = convert_to_html(
+                text,
+                6,
+                re.compile(r"\[(url)(.*?)\]"),
+                re.compile(r"\[/url\]"),
+            )
+        assert context.type is ValueError
+        assert "Missing mandatory parameter" in str(context.value)
+
+    def test_url_with_invalid_target(self):
+        text = r"""lorem [url link=https://www.bubudroid.me target=meow]some random stuff[/url] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = convert_to_html(
+                text,
+                6,
+                re.compile(r"\[(url)(.*?)\]"),
+                re.compile(r"\[/url\]"),
+            )
+        assert context.type is ValueError
+        assert "Invalid target value provided" in str(context.value)
+
+    def test_url_without_target(self):
+        text = r"""lorem [url link=https://www.bubudroid.me]some random stuff[/url] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(url)(.*?)\]"),
+            re.compile(r"\[/url\]"),
+        )
+        assert (
+            res
+            == r"""<a href="https://www.bubudroid.me">some random stuff</a>"""
+        )
+
+    def test_url_with_target(self):
+        text = r"""lorem [url link=https://www.bubudroid.me target=blank]some random stuff[/url] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(url)(.*?)\]"),
+            re.compile(r"\[/url\]"),
+        )
+        assert (
+            res
+            == r"""<a href="https://www.bubudroid.me" target="_blank">some random stuff</a>"""
+        )
+
+    def test_math_box_thm(self):
+        text = r"""lorem [theorem]some random stuff[/theorem] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(theorem)(.*?)\]"),
+            re.compile(r"\[/theorem\]"),
+        )
+        assert (
+            res
+            == r"""<div class="boxtheorem">
+<span class="title-block">Theorem.</span>
 some random stuff
-</ol>"""
+</div>"""
+        )
+
+    def test_math_box_prop(self):
+        text = r"""lorem [proposition]some random stuff[/proposition] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(proposition)(.*?)\]"),
+            re.compile(r"\[/proposition\]"),
+        )
+        assert (
+            res
+            == r"""<div class="boxproposition">
+<span class="title-block">Proposition.</span>
+some random stuff
+</div>"""
+        )
+
+    def test_claim_box_with_desc(self):
+        text = r"""lorem [claim desc="this is a claim"]some random stuff[/claim] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(claim)(.*?)\]"),
+            re.compile(r"\[/claim\]"),
+        )
+        assert (
+            res
+            == r"""<div class="boxclaim">
+<span class="title-inline">Claim (this is a claim) —</span>
+some random stuff
+</div>"""
         )
