@@ -55,6 +55,13 @@ def convert_to_html(
         elif tag == "img":
             img_dict = args
             content.append("<figure>")
+            if "src" not in img_dict:
+                error_line = get_error_line(text, open_delim_start_index)
+                raise ValueError(
+                    'Missing mandatory parameter "src."'
+                    + "\n\n"
+                    + f"{error_line[0]}: {error_line[1]}"
+                )
             if "alt" in img_dict:
                 optional_args_list.append(f'alt="{img_dict["alt"]}"')
             if "width" in img_dict:
@@ -62,14 +69,12 @@ def convert_to_html(
                     f'style="width: {img_dict["width"]}%; height: auto;"'
                 )
             content.append(
-                f'<img src="{inner_content}" {" ".join(optional_args_list)}>'
+                f'<img src="{img_dict["src"]}" {" ".join(optional_args_list)}>'
                 if optional_args_list
-                else f'<img src="{inner_content}">'
+                else f'<img src="{img_dict["src"]}">'
             )
-            if "caption" in img_dict:
-                content.append(
-                    f"<figcaption>{img_dict['caption']}</figcaption>"
-                )
+            if inner_content:
+                content.append(f"<figcaption>{inner_content}</figcaption>")
             content.append("</figure>")
 
         elif tag == "list":
