@@ -71,6 +71,17 @@ lorem [asy]some[asy] [asy]random stuff[/asy]
             == out_text
         )
 
+    def test_check_inside_empty_delim(self):
+        text = r"""meow
+lorem [asy][/asy]"""
+        out_text = r""""""
+        assert (
+            gobble_inside_delim(
+                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+            )
+            == out_text
+        )
+
 
 class TestGobbleAroundDelim:
     def test_check_around_delim(self):

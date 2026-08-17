@@ -1,0 +1,94 @@
+import re
+
+import pytest
+
+from bloops.bloopser import convert_to_html
+
+
+class TestImgTag:
+    def test_img_without_src(self):
+        text = r"""lorem [img]some random stuff[/img] lorem"""
+
+        with pytest.raises(ValueError) as context:
+            _ = convert_to_html(
+                text, 6, re.compile(r"\[(img)(.*?)\]"), re.compile(r"\[/img\]")
+            )
+        assert context.type is ValueError
+        assert "Missing mandatory parameter" in str(context.value)
+
+    def test_img(self):
+        text = r"""lorem [img src=/home/bubu/meow.png][/img] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(img)(.*?)\]"),
+            re.compile(r"\[/img\]"),
+        )
+        assert (
+            res
+            == r"""<figure>
+<img src="/home/bubu/meow.png">
+</figure>"""
+        )
+
+    def test_img_with_width(self):
+        text = r"""lorem [img src=/home/bubu/meow.png width=50][/img] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(img)(.*?)\]"),
+            re.compile(r"\[/img\]"),
+        )
+        assert (
+            res
+            == r"""<figure>
+<img src="/home/bubu/meow.png" style="width: 50%; height: auto;">
+</figure>"""
+        )
+
+    def test_img_with_alt(self):
+        text = r"""lorem [img src=/home/bubu/meow.png alt="hello kitty"][/img] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(img)(.*?)\]"),
+            re.compile(r"\[/img\]"),
+        )
+        assert (
+            res
+            == r"""<figure>
+<img src="/home/bubu/meow.png" alt="hello kitty">
+</figure>"""
+        )
+
+    def test_img_with_caption(self):
+        text = r"""lorem [img src=/home/bubu/meow.png]some random stuff[/img] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(img)(.*?)\]"),
+            re.compile(r"\[/img\]"),
+        )
+        assert (
+            res
+            == r"""<figure>
+<img src="/home/bubu/meow.png">
+<figcaption>some random stuff</figcaption>
+</figure>"""
+        )
+
+    def test_img_with_all(self):
+        text = r"""lorem [img src=/home/bubu/meow.png width=50 alt="hello kitty"]some random stuff[/img] lorem"""
+        res = convert_to_html(
+            text,
+            6,
+            re.compile(r"\[(img)(.*?)\]"),
+            re.compile(r"\[/img\]"),
+        )
+        assert (
+            res
+            == r"""<figure>
+<img src="/home/bubu/meow.png" alt="hello kitty" style="width: 50%; height: auto;">
+<figcaption>some random stuff</figcaption>
+</figure>"""
+        )
