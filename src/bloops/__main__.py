@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
-
 import argparse
 import pathlib
+from typing import cast
 
 from . import builder
 
@@ -41,12 +40,25 @@ _ = parser.add_argument(
     nargs=1,
     type=pathlib.Path,
     required=True,
-    metavar="DIR",
-    help="directory name which contains the BBCode file",
+    metavar="INDIR",
+    help="directory path which contains the BBCode file",
+)
+_ = parser.add_argument(
+    "-o",
+    "--output",
+    action="store",
+    nargs=1,
+    type=pathlib.Path,
+    required=True,
+    metavar="OUTDIR",
+    help="directory path where generated Asymptote diagrams are to be saved",
 )
 
-# args = parser.parse_args(["-b", "-i", "~/Tests/"])
 args = parser.parse_args()
 
-if args.build:
-    builder.main(args.input[0])
+in_dir = cast(pathlib.Path, args.input[0])
+out_dir = cast(pathlib.Path, args.output[0])
+build_flag = cast(bool, args.build)
+
+if build_flag:
+    builder.main(in_dir, out_dir)
