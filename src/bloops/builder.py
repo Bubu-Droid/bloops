@@ -10,7 +10,7 @@ BBCODE_TAGS = [
     (
         re.compile(r"\[(asy)(.*?)\]"),
         re.compile(r"\[/asy\]"),
-        ["width", "alt", "caption"],
+        ["src", "label", "width", "alt", "caption"],
     ),
     (re.compile(r"\[(code)(.*?)\]"), re.compile(r"\[/code\]"), ["lang"]),
     (re.compile(r"\[(color)(.*?)\]"), re.compile(r"\[/color\]"), ["hex"]),
@@ -66,15 +66,24 @@ BBCODE_TAGS = [
 ]
 
 
-def main(path: pathlib.Path):
-    ABS_PATH = path.absolute()
-    validate(ABS_PATH)
+def main(in_dir: pathlib.Path, out_dir: pathlib.Path):
+    IN_DIR_ABS = in_dir.absolute()
+    OUT_DIR_ABS = out_dir.absolute()
+    validate(IN_DIR_ABS, OUT_DIR_ABS)
 
 
-def validate(path: pathlib.Path):
-    file_path = path / "content.bbcode"
+def validate(in_dir: pathlib.Path, out_dir: pathlib.Path):
+    if not in_dir.exists():
+        raise FileNotFoundError("Directory not found.")
+    if not in_dir.is_dir():
+        raise NotADirectoryError("Not a directory.")
+    file_path = in_dir / "content.bbcode"
     if not file_path.exists():
         raise FileNotFoundError("BBCode file (content.bbcode) not found.")
+    if not out_dir.exists():
+        raise FileNotFoundError("Directory not found.")
+    if not out_dir.is_dir():
+        raise NotADirectoryError("Not a directory.")
     with file_path.open(mode="r", encoding="utf-8") as f:
         file_content = f.read().strip()
 
