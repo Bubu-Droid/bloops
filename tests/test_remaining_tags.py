@@ -1,7 +1,5 @@
 import re
 
-import pytest
-
 from bloops.bloopser import convert_to_html
 
 
@@ -34,18 +32,6 @@ some random stuff
 
 
 class TestColorTag:
-    def test_color_without_hex(self):
-        text = r"""lorem [color]some random stuff[/color] lorem"""
-        with pytest.raises(ValueError) as context:
-            _ = convert_to_html(
-                text,
-                6,
-                re.compile(r"\[(color)(.*?)\]"),
-                re.compile(r"\[/color\]"),
-            )
-        assert context.type is ValueError
-        assert "Missing mandatory parameter" in str(context.value)
-
     def test_color_with_hex(self):
         text = r"""lorem [color hex=#FFFFFF]some random stuff[/color] lorem"""
         res = convert_to_html(
@@ -132,30 +118,6 @@ class TestQuote:
 
 
 class TestUrlTag:
-    def test_url_without_link(self):
-        text = r"""lorem [url]some random stuff[/url] lorem"""
-        with pytest.raises(ValueError) as context:
-            _ = convert_to_html(
-                text,
-                6,
-                re.compile(r"\[(url)(.*?)\]"),
-                re.compile(r"\[/url\]"),
-            )
-        assert context.type is ValueError
-        assert "Missing mandatory parameter" in str(context.value)
-
-    def test_url_with_invalid_target(self):
-        text = r"""lorem [url link=https://www.bubudroid.me target=meow]some random stuff[/url] lorem"""
-        with pytest.raises(ValueError) as context:
-            _ = convert_to_html(
-                text,
-                6,
-                re.compile(r"\[(url)(.*?)\]"),
-                re.compile(r"\[/url\]"),
-            )
-        assert context.type is ValueError
-        assert "Invalid target value provided" in str(context.value)
-
     def test_url_without_target(self):
         text = r"""lorem [url link=https://www.bubudroid.me]some random stuff[/url] lorem"""
         res = convert_to_html(

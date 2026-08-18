@@ -88,3 +88,80 @@ lorem [asy]some random stuff
         )
 
         assert res is False
+
+    def test_img_without_src(self):
+        text = r"""lorem [img]some random stuff[/img] lorem"""
+
+        with pytest.raises(ValueError) as context:
+            _ = validate_args(
+                text,
+                6,
+                re.compile(r"\[(img)(.*?)\]"),
+                ["width", "alt", "caption"],
+            )
+        assert context.type is ValueError
+        assert "Missing mandatory parameter" in str(context.value)
+
+    def test_list_ul_with_invalid_style(self):
+        text = (
+            r"""lorem [list type=ul style=meow]some random stuff[/list] lorem"""
+        )
+        with pytest.raises(ValueError) as context:
+            _ = validate_args(
+                text,
+                6,
+                re.compile(r"\[(list)(.*?)\]"),
+                ["type", "style"],
+            )
+        assert context.type is ValueError
+        assert "Invalid <ul> style provided" in str(context.value)
+
+    def test_list_ol_with_invalid_style(self):
+        text = (
+            r"""lorem [list type=ol style=meow]some random stuff[/list] lorem"""
+        )
+        with pytest.raises(ValueError) as context:
+            _ = validate_args(
+                text,
+                6,
+                re.compile(r"\[(list)(.*?)\]"),
+                ["type", "style"],
+            )
+        assert context.type is ValueError
+        assert "Invalid <ol> style provided" in str(context.value)
+
+    def test_color_without_hex(self):
+        text = r"""lorem [color]some random stuff[/color] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = validate_args(
+                text,
+                6,
+                re.compile(r"\[(color)(.*?)\]"),
+                ["hex"],
+            )
+        assert context.type is ValueError
+        assert "Missing mandatory parameter" in str(context.value)
+
+    def test_url_without_link(self):
+        text = r"""lorem [url]some random stuff[/url] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = validate_args(
+                text,
+                6,
+                re.compile(r"\[(url)(.*?)\]"),
+                ["link", "target"],
+            )
+        assert context.type is ValueError
+        assert "Missing mandatory parameter" in str(context.value)
+
+    def test_url_with_invalid_target(self):
+        text = r"""lorem [url link=https://www.bubudroid.me target=meow]some random stuff[/url] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = validate_args(
+                text,
+                6,
+                re.compile(r"\[(url)(.*?)\]"),
+                ["link", "target"],
+            )
+        assert context.type is ValueError
+        assert "Invalid target value provided" in str(context.value)

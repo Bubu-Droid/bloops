@@ -1,21 +1,9 @@
 import re
 
-import pytest
-
 from bloops.bloopser import convert_to_html
 
 
 class TestImgTag:
-    def test_img_without_src(self):
-        text = r"""lorem [img]some random stuff[/img] lorem"""
-
-        with pytest.raises(ValueError) as context:
-            _ = convert_to_html(
-                text, 6, re.compile(r"\[(img)(.*?)\]"), re.compile(r"\[/img\]")
-            )
-        assert context.type is ValueError
-        assert "Missing mandatory parameter" in str(context.value)
-
     def test_img(self):
         text = r"""lorem [img src=/home/bubu/meow.png][/img] lorem"""
         res = convert_to_html(

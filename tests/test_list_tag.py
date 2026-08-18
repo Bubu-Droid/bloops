@@ -1,7 +1,5 @@
 import re
 
-import pytest
-
 from bloops.bloopser import convert_to_html
 
 
@@ -50,34 +48,6 @@ some random stuff
 some random stuff
 </ol>"""
         )
-
-    def test_list_ul_with_invalid_style(self):
-        text = (
-            r"""lorem [list type=ul style=meow]some random stuff[/list] lorem"""
-        )
-        with pytest.raises(ValueError) as context:
-            _ = convert_to_html(
-                text,
-                6,
-                re.compile(r"\[(list)(.*?)\]"),
-                re.compile(r"\[/list\]"),
-            )
-        assert context.type is ValueError
-        assert "Invalid <ul> style provided" in str(context.value)
-
-    def test_list_ol_with_invalid_style(self):
-        text = (
-            r"""lorem [list type=ol style=meow]some random stuff[/list] lorem"""
-        )
-        with pytest.raises(ValueError) as context:
-            _ = convert_to_html(
-                text,
-                6,
-                re.compile(r"\[(list)(.*?)\]"),
-                re.compile(r"\[/list\]"),
-            )
-        assert context.type is ValueError
-        assert "Invalid <ol> style provided" in str(context.value)
 
     def test_list_ul_with_valid_style(self):
         text = (
