@@ -6,7 +6,7 @@ from bloops.bracer import get_close_delim_end_index
 # TODO: handle the case when there is a ] inside the string
 # TODO: maybe convert this into a dict to not hardcode re.Pattern(s)
 # in tests
-BBCODE_TAGS = [
+BBCODE_TAGS: list[tuple[re.Pattern[str], re.Pattern[str], list[str]]] = [
     (
         re.compile(r"\[(asy)(.*?)\]"),
         re.compile(r"\[/asy\]"),
@@ -54,15 +54,15 @@ BBCODE_TAGS = [
         re.compile(r"\[/exercise\]"),
         ["title"],
     ),
-    (re.compile(r"\[(b)\]"), re.compile(r"\[/b\]")),
-    (re.compile(r"\[(i)\]"), re.compile(r"\[/i\]")),
-    (re.compile(r"\[(u)\]"), re.compile(r"\[/u\]")),
-    (re.compile(r"\[(s)\]"), re.compile(r"\[/s\]")),
-    (re.compile(r"\[(\*)\]"), re.compile(r"\[/\*\]")),
-    (re.compile(r"\[(sub)\]"), re.compile(r"\[/sub\]")),
-    (re.compile(r"\[(sup)\]"), re.compile(r"\[/sup\]")),
-    (re.compile(r"\[(proof)\]"), re.compile(r"\[/proof\]")),
-    (re.compile(r"\[(soln)\]"), re.compile(r"\[/soln\]")),
+    (re.compile(r"\[(b)\]"), re.compile(r"\[/b\]"), []),
+    (re.compile(r"\[(i)\]"), re.compile(r"\[/i\]"), []),
+    (re.compile(r"\[(u)\]"), re.compile(r"\[/u\]"), []),
+    (re.compile(r"\[(s)\]"), re.compile(r"\[/s\]"), []),
+    (re.compile(r"\[(\*)\]"), re.compile(r"\[/\*\]"), []),
+    (re.compile(r"\[(sub)\]"), re.compile(r"\[/sub\]"), []),
+    (re.compile(r"\[(sup)\]"), re.compile(r"\[/sup\]"), []),
+    (re.compile(r"\[(proof)\]"), re.compile(r"\[/proof\]"), []),
+    (re.compile(r"\[(soln)\]"), re.compile(r"\[/soln\]"), []),
 ]
 
 
