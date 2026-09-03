@@ -33,7 +33,7 @@ class TestGenerateAsyDiags:
                 pathlib.Path("./build/"),
             )
         assert context.type is ValueError
-        assert "31.1: syntax error" in str(context.value)
+        assert "30.1: syntax error" in str(context.value)
 
 
 correct_asy = r"""lorem
