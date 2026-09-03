@@ -59,6 +59,9 @@ args = parser.parse_args()
 in_dir = cast(pathlib.Path, args.input[0])
 out_dir = cast(pathlib.Path, args.output[0])
 build_flag = cast(bool, args.build)
+cont_build_flag = cast(bool, args.build_cont)
 
 if build_flag:
     builder.main(in_dir, out_dir)
+if cont_build_flag:
+    builder.main(in_dir, out_dir, build_cont=True)
