@@ -4,12 +4,11 @@ import re
 import subprocess
 from typing import cast
 
-from bloops.bloopser import get_tag_and_args
 from bloops.bracer import (
     get_error_line,
     gobble_inside_delim,
 )
-from bloops.builder import BBCODE_TAGS
+from bloops.tags import BBCODE_TAGS
 
 
 def validate_args(
@@ -125,10 +124,13 @@ def validate_args(
             )
 
 
-def validate_and_setup_asy(
+def validate_tags_and_setup_asy(
     text: str,
     in_dir: pathlib.Path | None = None,
     out_dir: pathlib.Path | None = None,
+    bbcode_tags: list[
+        tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    ] = BBCODE_TAGS,
 ) -> None:
     if not (in_dir and out_dir):
         raise TypeError(
@@ -136,17 +138,17 @@ def validate_and_setup_asy(
         )
 
     label_dict: dict[str, int] = {}
-    for tag_tuple in BBCODE_TAGS:
-        tag = tag_tuple[0]
+    for tag_tuple in bbcode_tags:
+        open_delim = tag_tuple[0]
         valid_args = tag_tuple[2]
         index = 0
-        match = re.search(tag, text[index:])
+        match = open_delim.search(text, index)
         is_asy = bool("label" in valid_args)
         while match:
             index = match.start()
-            validate_args(text, index, tag, valid_args)
+            validate_args(text, index, open_delim, valid_args)
             if is_asy:
-                _, args = get_tag_and_args(text, index, tag)
+                args = get_tag_and_args(text, index, open_delim)[1]
                 if args["label"] in label_dict:
                     error_line = get_error_line(text, index)
                     raise ValueError(
@@ -155,6 +157,7 @@ def validate_and_setup_asy(
                         + f"{error_line[0]}: {error_line[1]}"
                     )
                 label_dict[args["label"]] = index
+            match = open_delim.search(text, match.end())
 
     if label_dict:
         generate_asy_diags(label_dict, text, in_dir, out_dir)
@@ -165,7 +168,7 @@ def generate_asy_diags(
     text: str,
     in_dir: pathlib.Path,
     out_dir: pathlib.Path,
-):
+) -> None:
     build_dir = in_dir / "build/"
     build_dir.mkdir(exist_ok=True)
     asy_cache_file = build_dir / "cache.json"
@@ -185,7 +188,7 @@ def generate_asy_diags(
             index,
             re.compile(r"\[(asy)(.*?)\]"),
             re.compile(r"\[/asy\]"),
-        )
+        ).strip()
         if label not in asy_cache_content:
             asy_cache_content[label] = inner_content
             changed = True
@@ -221,3 +224,29 @@ def generate_asy_diags(
                 raise ValueError(
                     f"{error_line[0]}: {error_line[1]}" + "\n\n" + error_message
                 )
+
+
+def get_tag_and_args(
+    text: str,
+    open_delim_start_index: int,
+    open_delim: re.Pattern[str],
+) -> tuple[str, dict[str, str]]:
+    match = open_delim.match(text, open_delim_start_index)
+    if not match:
+        error_line = get_error_line(text, open_delim_start_index)
+        raise SyntaxError(
+            "No opening delimiter at the current position."
+            + "\n\n"
+            + f"{error_line[0]}: {error_line[1]} index is {open_delim_start_index}"
+        )
+
+    pattern = r'[\w]+=".*?"|[\w]+=[^\s]+'
+    if len(match.groups()) <= 1:
+        return (match.group(1), {})
+
+    args_list: list[str] = re.findall(pattern, match.group(2))
+    args_dict = {
+        arg.split("=")[0]: (arg.split("=")[1]).strip('"') for arg in args_list
+    }
+
+    return (match.group(1), args_dict)
