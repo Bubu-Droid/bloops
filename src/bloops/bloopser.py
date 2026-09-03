@@ -1,9 +1,8 @@
 import re
 
-from bloops.bracer import (
-    get_error_line,
-    gobble_inside_delim,
-)
+from bloops.bracer import get_close_delim_end_index, gobble_inside_delim
+from bloops.tags import BBCODE_TAGS
+from bloops.validator import get_tag_and_args
 
 
 def convert_to_html(
@@ -205,27 +204,29 @@ def convert_to_html(
     return "\n".join(content)
 
 
-def get_tag_and_args(
+# TODO: write one huge test for this
+def transpile_all_tags(
     text: str,
-    open_delim_start_index: int,
-    open_delim: re.Pattern[str],
-) -> tuple[str, dict[str, str]]:
-    match = open_delim.match(text, open_delim_start_index)
-    if not match:
-        error_line = get_error_line(text, open_delim_start_index)
-        raise SyntaxError(
-            "No opening delimiter at the current position."
-            + "\n\n"
-            + f"{error_line[0]}: {error_line[1]}"
-        )
-
-    pattern = r'[\w]+=".*?"|[\w]+=[^\s]+'
-    if len(match.groups()) <= 1:
-        return (match.group(1), {})
-
-    args_list: list[str] = re.findall(pattern, match.group(2))
-    args_dict = {
-        arg.split("=")[0]: (arg.split("=")[1]).strip('"') for arg in args_list
-    }
-
-    return (match.group(1), args_dict)
+    bbcode_tags: list[
+        tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    ] = BBCODE_TAGS,
+) -> str:
+    for tag_tuple in bbcode_tags:
+        open_delim = tag_tuple[0]
+        close_delim = tag_tuple[1]
+        index = 0
+        match = open_delim.search(text, index)
+        while match:
+            index = match.start()
+            text = (
+                text[:index]
+                + convert_to_html(text, index, open_delim, close_delim)
+                + text[
+                    get_close_delim_end_index(
+                        text, index, open_delim, close_delim
+                    )
+                    + 1 :
+                ]
+            )
+            match = open_delim.search(text, match.end())
+    return text
