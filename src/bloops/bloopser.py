@@ -1,8 +1,8 @@
 import re
 
 from bloops.bracer import get_close_delim_end_index, gobble_inside_delim
-from bloops.tags import BBCODE_TAGS
 from bloops.validator import get_tag_and_args
+from bloops.vars import BBCODE_TAGS
 
 
 def convert_to_html(
@@ -18,7 +18,7 @@ def convert_to_html(
     optional_args_list: list[str] = []
     inner_content = gobble_inside_delim(
         text, open_delim_start_index, open_delim, close_delim
-    )
+    ).strip()
 
     if tag in ["asy", "code", "color", "img", "list", "quote", "url"]:
         if tag == "asy":
@@ -74,8 +74,10 @@ def convert_to_html(
                 if optional_args_list
                 else f'<img src="{img_dict["src"]}">'
             )
-            if inner_content:
-                content.append(f"<figcaption>{inner_content}</figcaption>")
+            if "caption" in img_dict:
+                content.append(
+                    f"<figcaption>{img_dict['caption']}</figcaption>"
+                )
             content.append("</figure>")
 
         elif tag == "list":
@@ -121,7 +123,7 @@ def convert_to_html(
                 )
             else:
                 content.append(
-                    f'<a href="{url_dict["link"]}">{inner_content}</a>'
+                    f'<a href="{url_dict["link"]}" target="_blank">{inner_content}</a>'
                 )
 
     if tag in [
@@ -144,18 +146,18 @@ def convert_to_html(
             content.append('<div class="boxclaim">')
         elif tag in ["problem", "exercise"]:
             content.append('<div class="boxproblem">')
-        if "desc" in args:
+        if "title" in args:
             if tag not in ["claim", "problem", "exercise"]:
                 content.append(
-                    f'<span class="title-block">{tag.title()} ({args["desc"]}).</span>'
+                    f'<span class="title-block">{tag.title()} ({args["title"]}).</span>'
                 )
             elif tag == "claim":
                 content.append(
-                    f'<span class="title-inline">{tag.title()} ({args["desc"]}) —</span>'
+                    f'<span class="title-inline">{tag.title()} ({args["title"]}) —</span>'
                 )
             else:
                 content.append(
-                    f'<span class="title-inline">{tag.title()} ({args["desc"]}).</span>'
+                    f'<span class="title-inline">{tag.title()} ({args["title"]}).</span>'
                 )
         else:
             if tag not in ["claim", "problem", "exercise"]:
@@ -173,7 +175,23 @@ def convert_to_html(
         content.append(inner_content)
         content.append("</div>")
 
-    if tag in ["b", "i", "u", "s", "*", "sub", "sup", "proof", "soln"]:
+    if tag in [
+        "b",
+        "i",
+        "u",
+        "s",
+        "*",
+        "sub",
+        "sup",
+        "proof",
+        "soln",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+    ]:
         inline_code_dict = {
             "b": "strong",
             "i": "em",
@@ -182,18 +200,24 @@ def convert_to_html(
             "*": "li",
             "sub": "sub",
             "sup": "sup",
+            "h1": "h1",
+            "h2": "h2",
+            "h3": "h3",
+            "h4": "h4",
+            "h5": "h5",
+            "h6": "h6",
         }
 
         if tag == "proof":
             content.append("<div>")
             content.append(
-                f'<i>Proof.</i> {inner_content}<span class="qed">&#9632;</span>'
+                f'<i class="proof">Proof.</i>\n{inner_content}<span class="qed">&#9632;</span>'
             )
             content.append("</div>")
         elif tag == "soln":
             content.append("<div>")
             content.append(
-                f'<i>Solution.</i> {inner_content}<span class="qed">&#9633;</span>'
+                f'<i class="proof">Solution.</i>\n{inner_content}<span class="qed">&#9633;</span>'
             )
             content.append("</div>")
         else:
@@ -204,7 +228,6 @@ def convert_to_html(
     return "\n".join(content)
 
 
-# TODO: write one huge test for this
 def transpile_all_tags(
     text: str,
     bbcode_tags: list[
@@ -228,5 +251,58 @@ def transpile_all_tags(
                     + 1 :
                 ]
             )
-            match = open_delim.search(text, match.end())
-    return text
+            match = open_delim.search(text, index + 1)
+
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>bloops preview</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      MathJax = {{
+        tex: {{
+          inlineMath: {{"[+]": [['$', '$']]}}
+        }},
+        svg: {{
+          fontCache: 'global'
+        }},
+        output: {{
+          displayOverflow: "linebreak",
+          linebreaks: {{
+            inline: true,
+            width: "100%",
+            lineleading: 0.2,
+            LinebreakVisitor: null,
+          }},
+        }},
+      }};
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
+    ></script>
+  </head>
+  <body>
+    {text}
+  </body>
+</html>"""
