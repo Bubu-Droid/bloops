@@ -5,10 +5,11 @@ import subprocess
 from typing import cast
 
 from bloops.bracer import (
+    get_close_delim_end_index,
     get_error_line,
     gobble_inside_delim,
 )
-from bloops.tags import BBCODE_TAGS
+from bloops.vars import BBCODE_TAGS
 
 
 def validate_args(
@@ -143,9 +144,13 @@ def validate_tags_and_setup_asy(
         valid_args = tag_tuple[2]
         index = 0
         match = open_delim.search(text, index)
+        # TODO: fix this hack after changing BBCODE_TAGS to dict
         is_asy = bool("label" in valid_args)
         while match:
             index = match.start()
+            _ = get_close_delim_end_index(
+                text, index, tag_tuple[0], tag_tuple[1]
+            )
             validate_args(text, index, open_delim, valid_args)
             if is_asy:
                 args = get_tag_and_args(text, index, open_delim)[1]
@@ -237,7 +242,7 @@ def get_tag_and_args(
         raise SyntaxError(
             "No opening delimiter at the current position."
             + "\n\n"
-            + f"{error_line[0]}: {error_line[1]} index is {open_delim_start_index}"
+            + f"{error_line[0]}: {error_line[1]}"
         )
 
     pattern = r'[\w]+=".*?"|[\w]+=[^\s]+'
