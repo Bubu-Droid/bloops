@@ -2,11 +2,11 @@ import re
 
 import pytest
 
-from bloops.bloopser import get_tag_and_args
+from bloops.validator import get_tag_and_args
 
 
 class TestGetTagAndArgs:
-    def test_missing_open_delim(self):
+    def test_missing_open_delim(self) -> None:
         text = r"""meow
 lorem [ay]some random stuff
 [/asy]"""
@@ -17,13 +17,13 @@ lorem [ay]some random stuff
             context.value
         )
 
-    def test_simple_tag(self):
+    def test_simple_tag(self) -> None:
         text = r"""meow lorem [b]some random stuff[/b]"""
         res = get_tag_and_args(text, 11, re.compile(r"\[(b)\]"))
         assert res[0] == "b"
         assert res[1] == {}
 
-    def test_no_args(self):
+    def test_no_args(self) -> None:
         text = r"""meow
 lorem [asy]some random stuff
 [/asy]"""
@@ -31,7 +31,7 @@ lorem [asy]some random stuff
         assert res[0] == "asy"
         assert res[1] == {}
 
-    def test_args(self):
+    def test_args(self) -> None:
         text = r"""meow
 lorem [asy meow=hi width=50 alt="meow neow" caption=this]some random stuff
 [/asy]"""

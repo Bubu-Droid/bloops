@@ -6,7 +6,7 @@ from bloops.validator import generate_asy_diags
 
 
 class TestGenerateAsyDiags:
-    def test_clear_cache_files(self):
+    def test_clear_cache_files(self) -> None:
         for path in [
             pathlib.Path("./build/meow-1.asy"),
             pathlib.Path("./build/meow-2.asy"),
@@ -16,7 +16,7 @@ class TestGenerateAsyDiags:
             if path.exists():
                 path.unlink()
 
-    def test_correct_asy(self):
+    def test_correct_asy(self) -> None:
         generate_asy_diags(
             {"meow-1": 6},
             correct_asy,
@@ -24,7 +24,7 @@ class TestGenerateAsyDiags:
             pathlib.Path("./build/"),
         )
 
-    def test_incorrect_asy(self):
+    def test_incorrect_asy(self) -> None:
         with pytest.raises(ValueError) as context:
             generate_asy_diags(
                 {"meow-2": 6},

@@ -4,7 +4,7 @@ from bloops.bloopser import convert_to_html
 
 
 class TestMathBoxesWithoutDesc:
-    def test_theorem_box(self):
+    def test_theorem_box(self) -> None:
         text = r"""lorem [theorem]some random stuff[/theorem] lorem"""
         res = convert_to_html(
             text,
@@ -20,7 +20,7 @@ some random stuff
 </div>"""
         )
 
-    def test_lemma_box(self):
+    def test_lemma_box(self) -> None:
         text = r"""lorem [lemma]some random stuff[/lemma] lorem"""
         res = convert_to_html(
             text,
@@ -36,7 +36,7 @@ some random stuff
 </div>"""
         )
 
-    def test_prop_box(self):
+    def test_prop_box(self) -> None:
         text = r"""lorem [proposition]some random stuff[/proposition] lorem"""
         res = convert_to_html(
             text,
@@ -52,7 +52,7 @@ some random stuff
 </div>"""
         )
 
-    def test_corollary_box(self):
+    def test_corollary_box(self) -> None:
         text = r"""lorem [corollary]some random stuff[/corollary] lorem"""
         res = convert_to_html(
             text,
@@ -68,7 +68,7 @@ some random stuff
 </div>"""
         )
 
-    def test_example_box(self):
+    def test_example_box(self) -> None:
         text = r"""lorem [example]some random stuff[/example] lorem"""
         res = convert_to_html(
             text,
@@ -84,7 +84,7 @@ some random stuff
 </div>"""
         )
 
-    def test_claim_box(self):
+    def test_claim_box(self) -> None:
         text = r"""lorem [claim]some random stuff[/claim] lorem"""
         res = convert_to_html(
             text,
@@ -100,7 +100,7 @@ some random stuff
 </div>"""
         )
 
-    def test_problem_box(self):
+    def test_problem_box(self) -> None:
         text = r"""lorem [problem]some random stuff[/problem] lorem"""
         res = convert_to_html(
             text,
@@ -116,7 +116,7 @@ some random stuff
 </div>"""
         )
 
-    def test_exercise_box(self):
+    def test_exercise_box(self) -> None:
         text = r"""lorem [exercise]some random stuff[/exercise] lorem"""
         res = convert_to_html(
             text,
@@ -134,8 +134,8 @@ some random stuff
 
 
 class TestMathBoxesWithDesc:
-    def test_theorem_box(self):
-        text = r"""lorem [theorem desc="some description"]some random stuff[/theorem] lorem"""
+    def test_theorem_box(self) -> None:
+        text = r"""lorem [theorem title="some description"]some random stuff[/theorem] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -150,8 +150,8 @@ some random stuff
 </div>"""
         )
 
-    def test_lemma_box(self):
-        text = r"""lorem [lemma desc="some description"]some random stuff[/lemma] lorem"""
+    def test_lemma_box(self) -> None:
+        text = r"""lorem [lemma title="some description"]some random stuff[/lemma] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -166,8 +166,8 @@ some random stuff
 </div>"""
         )
 
-    def test_prop_box(self):
-        text = r"""lorem [proposition desc="some description"]some random stuff[/proposition] lorem"""
+    def test_prop_box(self) -> None:
+        text = r"""lorem [proposition title="some description"]some random stuff[/proposition] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -182,8 +182,8 @@ some random stuff
 </div>"""
         )
 
-    def test_corollary_box(self):
-        text = r"""lorem [corollary desc="some description"]some random stuff[/corollary] lorem"""
+    def test_corollary_box(self) -> None:
+        text = r"""lorem [corollary title="some description"]some random stuff[/corollary] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -198,8 +198,8 @@ some random stuff
 </div>"""
         )
 
-    def test_example_box(self):
-        text = r"""lorem [example desc="some description"]some random stuff[/example] lorem"""
+    def test_example_box(self) -> None:
+        text = r"""lorem [example title="some description"]some random stuff[/example] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -214,8 +214,8 @@ some random stuff
 </div>"""
         )
 
-    def test_claim_box(self):
-        text = r"""lorem [claim desc="some description"]some random stuff[/claim] lorem"""
+    def test_claim_box(self) -> None:
+        text = r"""lorem [claim title="some description"]some random stuff[/claim] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -230,8 +230,8 @@ some random stuff
 </div>"""
         )
 
-    def test_problem_box(self):
-        text = r"""lorem [problem desc="some description"]some random stuff[/problem] lorem"""
+    def test_problem_box(self) -> None:
+        text = r"""lorem [problem title="some description"]some random stuff[/problem] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -246,8 +246,8 @@ some random stuff
 </div>"""
         )
 
-    def test_exercise_box(self):
-        text = r"""lorem [exercise desc="some description"]some random stuff[/exercise] lorem"""
+    def test_exercise_box(self) -> None:
+        text = r"""lorem [exercise title="some description"]some random stuff[/exercise] lorem"""
         res = convert_to_html(
             text,
             6,

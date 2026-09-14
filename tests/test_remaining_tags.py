@@ -4,7 +4,7 @@ from bloops.bloopser import convert_to_html
 
 
 class TestCodeTag:
-    def test_code_without_lang(self):
+    def test_code_without_lang(self) -> None:
         text = r"""lorem [code]some random stuff[/code] lorem"""
         res = convert_to_html(
             text, 6, re.compile(r"\[(code)(.*?)\]"), re.compile(r"\[/code\]")
@@ -17,7 +17,7 @@ some random stuff
 </pre>"""
         )
 
-    def test_code_with_lang(self):
+    def test_code_with_lang(self) -> None:
         text = r"""lorem [code lang=html]some random stuff[/code] lorem"""
         res = convert_to_html(
             text, 6, re.compile(r"\[(code)(.*?)\]"), re.compile(r"\[/code\]")
@@ -32,7 +32,7 @@ some random stuff
 
 
 class TestColorTag:
-    def test_color_with_hex(self):
+    def test_color_with_hex(self) -> None:
         text = r"""lorem [color hex=#FFFFFF]some random stuff[/color] lorem"""
         res = convert_to_html(
             text,
@@ -46,7 +46,7 @@ class TestColorTag:
 
 
 class TestQuote:
-    def test_quote(self):
+    def test_quote(self) -> None:
         text = r"""lorem [quote]some random stuff[/quote] lorem"""
         res = convert_to_html(
             text,
@@ -61,7 +61,7 @@ class TestQuote:
 </blockquote>"""
         )
 
-    def test_quote_with_citation(self):
+    def test_quote_with_citation(self) -> None:
         text = r"""lorem [quote link=https://www.bubudroid.me]some random stuff[/quote] lorem"""
         res = convert_to_html(
             text,
@@ -76,7 +76,7 @@ class TestQuote:
 </blockquote>"""
         )
 
-    def test_quote_with_author(self):
+    def test_quote_with_author(self) -> None:
         text = r"""lorem [quote author="bubu droid"]some random stuff[/quote] lorem"""
         res = convert_to_html(
             text,
@@ -96,7 +96,7 @@ class TestQuote:
 </figure>"""
         )
 
-    def test_quote_with_cite_and_author(self):
+    def test_quote_with_cite_and_author(self) -> None:
         text = r"""lorem [quote link=https://www.bubudroid.me author="bubu droid"]some random stuff[/quote] lorem"""
         res = convert_to_html(
             text,
@@ -118,7 +118,7 @@ class TestQuote:
 
 
 class TestUrlTag:
-    def test_url_without_target(self):
+    def test_url_without_target(self) -> None:
         text = r"""lorem [url link=https://www.bubudroid.me]some random stuff[/url] lorem"""
         res = convert_to_html(
             text,
@@ -128,11 +128,11 @@ class TestUrlTag:
         )
         assert (
             res
-            == r"""<a href="https://www.bubudroid.me">some random stuff</a>"""
+            == r"""<a href="https://www.bubudroid.me" target="_blank">some random stuff</a>"""
         )
 
-    def test_url_with_target(self):
-        text = r"""lorem [url link=https://www.bubudroid.me target=blank]some random stuff[/url] lorem"""
+    def test_url_with_target(self) -> None:
+        text = r"""lorem [url link=https://www.bubudroid.me target=self]some random stuff[/url] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -141,5 +141,5 @@ class TestUrlTag:
         )
         assert (
             res
-            == r"""<a href="https://www.bubudroid.me" target="_blank">some random stuff</a>"""
+            == r"""<a href="https://www.bubudroid.me" target="_self">some random stuff</a>"""
         )
