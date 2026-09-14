@@ -10,7 +10,7 @@ from bloops.bracer import (
 
 
 class TestGetCloseDelimEndIndex:
-    def test_missing_open_delim(self):
+    def test_missing_open_delim(self) -> None:
         text = r"""meow
 lorem [ay]some random stuff
 [/asy]"""
@@ -25,7 +25,7 @@ lorem [ay]some random stuff
         assert "2:" in str(context.value)
         assert "[ay]" in str(context.value)
 
-    def test_missing_closing_delim(self):
+    def test_missing_closing_delim(self) -> None:
         text = r"""meow
 lorem [asy]some random stuff
 [asy]
@@ -42,7 +42,7 @@ asdf [/asy]"""
         assert "4:" in str(context.value)
         assert "asdf [/asy]" in str(context.value)
 
-    def test_close_delim_index(self):
+    def test_close_delim_index(self) -> None:
         text = r"""meow
 lorem [asy]some[asy] [asy]random stuff[/asy]
 [/asy][/asy]"""
@@ -56,7 +56,7 @@ lorem [asy]some[asy] [asy]random stuff[/asy]
 
 
 class TestGobbleInsideDelim:
-    def test_check_inside_delim(self):
+    def test_check_inside_delim(self) -> None:
         text = r"""meow
 lorem [asy]some[asy] [asy]random stuff[/asy]
 [/asy]
@@ -71,7 +71,7 @@ lorem [asy]some[asy] [asy]random stuff[/asy]
             == out_text
         )
 
-    def test_check_inside_empty_delim(self):
+    def test_check_inside_empty_delim(self) -> None:
         text = r"""meow
 lorem [asy][/asy]"""
         out_text = r""""""
@@ -84,7 +84,7 @@ lorem [asy][/asy]"""
 
 
 class TestGobbleAroundDelim:
-    def test_check_around_delim(self):
+    def test_check_around_delim(self) -> None:
         text = r"""meow
 lorem [asy]some[asy] [asy]random stuff[/asy]
 [/asy]

@@ -4,7 +4,7 @@ from bloops.bloopser import convert_to_html
 
 
 class TestListTag:
-    def test_without_type(self):
+    def test_without_type(self) -> None:
         text = r"""lorem [list]some random stuff[/list] lorem"""
         res = convert_to_html(
             text,
@@ -19,7 +19,7 @@ some random stuff
 </ul>"""
         )
 
-    def test_list_ul(self):
+    def test_list_ul(self) -> None:
         text = r"""lorem [list type=ul]some random stuff[/list] lorem"""
         res = convert_to_html(
             text,
@@ -34,7 +34,7 @@ some random stuff
 </ul>"""
         )
 
-    def test_list_ol(self):
+    def test_list_ol(self) -> None:
         text = r"""lorem [list type=ol]some random stuff[/list] lorem"""
         res = convert_to_html(
             text,
@@ -49,7 +49,7 @@ some random stuff
 </ol>"""
         )
 
-    def test_list_ul_with_valid_style(self):
+    def test_list_ul_with_valid_style(self) -> None:
         text = (
             r"""lorem [list type=ul style=disc]some random stuff[/list] lorem"""
         )
@@ -66,7 +66,7 @@ some random stuff
 </ul>"""
         )
 
-    def test_list_ol_with_valid_style(self):
+    def test_list_ol_with_valid_style(self) -> None:
         text = r"""lorem [list type=ol style=1]some random stuff[/list] lorem"""
         res = convert_to_html(
             text,

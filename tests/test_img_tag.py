@@ -4,7 +4,7 @@ from bloops.bloopser import convert_to_html
 
 
 class TestImgTag:
-    def test_img(self):
+    def test_img(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png][/img] lorem"""
         res = convert_to_html(
             text,
@@ -19,7 +19,7 @@ class TestImgTag:
 </figure>"""
         )
 
-    def test_img_with_width(self):
+    def test_img_with_width(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png width=50][/img] lorem"""
         res = convert_to_html(
             text,
@@ -34,7 +34,7 @@ class TestImgTag:
 </figure>"""
         )
 
-    def test_img_with_alt(self):
+    def test_img_with_alt(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png alt="hello kitty"][/img] lorem"""
         res = convert_to_html(
             text,
@@ -49,8 +49,8 @@ class TestImgTag:
 </figure>"""
         )
 
-    def test_img_with_caption(self):
-        text = r"""lorem [img src=/home/bubu/meow.png]some random stuff[/img] lorem"""
+    def test_img_with_caption(self) -> None:
+        text = r"""lorem [img src=/home/bubu/meow.png caption="some random stuff"][/img] lorem"""
         res = convert_to_html(
             text,
             6,
@@ -65,8 +65,8 @@ class TestImgTag:
 </figure>"""
         )
 
-    def test_img_with_all(self):
-        text = r"""lorem [img src=/home/bubu/meow.png width=50 alt="hello kitty"]some random stuff[/img] lorem"""
+    def test_img_with_all(self) -> None:
+        text = r"""lorem [img src=/home/bubu/meow.png width=50 alt="hello kitty" caption="some random stuff"][/img] lorem"""
         res = convert_to_html(
             text,
             6,
