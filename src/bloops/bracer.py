@@ -1,8 +1,6 @@
 import re
 
 
-# NOTE: i know using splitlines to extract the n-th line adds overhead
-# might optimize this later
 def get_error_line(text: str, index: int) -> tuple[int, str]:
     line_num = text.count("\n", 0, index)
 
@@ -73,6 +71,7 @@ def get_close_delim_end_index(
                 + "\n\n"
                 + f"{error_line[0]}: {error_line[1]}"
             )
+
         elif not open_delim_match:
             index = close_delim_match.end()
             close_delim_counter += 1
