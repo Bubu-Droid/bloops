@@ -253,12 +253,18 @@ def transpile_all_tags(
             )
             match = open_delim.search(text, index + 1)
 
+    # TODO: shift the avatar to integration server and use the static link
     return f"""<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>bloops preview</title>
+    <title>Bloops Preview</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
+    />
     <link rel="stylesheet" href="static/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
