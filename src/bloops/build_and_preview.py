@@ -57,7 +57,6 @@ class Handler(PatternMatchingEventHandler):
             print("Converting BBCODE into HTML...")
             with self.output_file.open("w", encoding="utf-8") as f:
                 _ = f.write(transpile_all_tags(self.file_content))
-        # TODO: set up favicon
         except Exception as e:
             with self.output_file.open("w", encoding="utf-8") as f:
                 _ = f.write(ERROR_CODE)
