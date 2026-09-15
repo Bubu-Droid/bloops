@@ -13,20 +13,7 @@ from watchdog.observers import Observer
 
 from bloops.bloopser import transpile_all_tags
 from bloops.validator import validate_tags_and_setup_asy
-from bloops.vars import STYLESHEET
-
-ERROR_MESSAGE = r"""<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>bloops preview</title>
-  </head>
-  <body>
-    <strong>An error has occured. Check the terminal logs.</strong>
-  </body>
-</html>
-"""
+from bloops.vars import ERROR_CODE, STYLESHEET
 
 
 class Handler(PatternMatchingEventHandler):
@@ -70,9 +57,10 @@ class Handler(PatternMatchingEventHandler):
             print("Converting BBCODE into HTML...")
             with self.output_file.open("w", encoding="utf-8") as f:
                 _ = f.write(transpile_all_tags(self.file_content))
+        # TODO: set up favicon
         except Exception as e:
             with self.output_file.open("w", encoding="utf-8") as f:
-                _ = f.write(ERROR_MESSAGE)
+                _ = f.write(ERROR_CODE)
             # HACK: the liveserver plugin takes short time span before
             # it can reflect the updates.
             # if we raise the exception immediately, then the program
