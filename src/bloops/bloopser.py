@@ -211,13 +211,13 @@ def convert_to_html(
         if tag == "proof":
             content.append("<div>")
             content.append(
-                f'<i class="proof">Proof.</i>\n{inner_content}<span class="qed">&#9632;</span>'
+                f'<i class="proof">Proof.</i>\n{inner_content}<span class="qed">&#9633;</span>'
             )
             content.append("</div>")
         elif tag == "soln":
             content.append("<div>")
             content.append(
-                f'<i class="proof">Solution.</i>\n{inner_content}<span class="qed">&#9633;</span>'
+                f'<i class="proof">Solution.</i>\n{inner_content}<span class="qed">&#9632;</span>'
             )
             content.append("</div>")
         else:
