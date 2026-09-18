@@ -61,7 +61,7 @@ class TestSimpleTag:
         assert res == (
             r"""<div>
 <i class="proof">Proof.</i>
-some random stuff<span class="qed">&#9632;</span>
+some random stuff<span class="qed">&#9633;</span>
 </div>"""
         )
 
@@ -73,7 +73,7 @@ some random stuff<span class="qed">&#9632;</span>
         assert res == (
             r"""<div>
 <i class="proof">Solution.</i>
-some random stuff<span class="qed">&#9633;</span>
+some random stuff<span class="qed">&#9632;</span>
 </div>"""
         )
 

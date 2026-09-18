@@ -356,12 +356,12 @@ some theorem statement.
 
 <div>
 <i class="proof">Solution.</i>
-this is a solution.<span class="qed">&#9633;</span>
+this is a solution.<span class="qed">&#9632;</span>
 </div>
 
 <div>
 <i class="proof">Proof.</i>
-and this is a proof.<span class="qed">&#9632;</span>
+and this is a proof.<span class="qed">&#9633;</span>
 </div>
 
 Now some text formattings.
