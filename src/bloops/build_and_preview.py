@@ -100,10 +100,14 @@ def main(
     handler = Handler(in_dir, out_dir, file_content)
 
     if preview:
-        server_thread = threading.Thread(
-            target=run_server, daemon=True, args=(output_file,)
-        )
-        server_thread.start()
+        if build_cont:
+            server_thread = threading.Thread(
+                target=run_server, daemon=False, args=(output_file,)
+            )
+            server_thread.start()
+        else:
+            print("Press ctrl/C to stop preview.\n")
+            run_server(output_file)
 
     if build_cont:
         observer = Observer()
