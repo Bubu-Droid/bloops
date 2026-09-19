@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/bloops/__about__.py"
+
+[project]
+name = "bloops"
+dynamic = ["version"]
+dependencies = ["watchdog>=6.0.0", "livereload>=2.7.1"]
+requires-python = ">=3.10"
+authors = [{ name = "Bubu-Droid", email = "bubu@bubudroid.me" }]
+description = """An AoPS-like BBCode to HTML transpiler, \
+with live-preview and support for Asymptote geometry diagrams."""
+readme = "README.md"
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+keywords = [
+  "bbcode",
+  "html",
+  "transpiler",
+  "converter",
+  "markup",
+  "live-preview",
+  "asymptote",
+  "geometry",
+  "diagrams",
+  "aops",
+  "math",
+  "latex",
+  "tex",
+  "aops",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+
+[project.scripts]
+bloops = "bloops.__main__"
+
+[dependency-groups]
+dev = ["pytest>=9.1.1"]
+
+[project.urls]
+Homepage = "https://github.com/Bubu-Droid/bloops"
+Issues = "https://github.com/Bubu-Droid/bloops/issues"
+
+[tool.ruff]
+line-length = 80
+[tool.ruff.lint]
+extend-select = ["ANN"]
