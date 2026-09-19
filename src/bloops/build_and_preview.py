@@ -57,7 +57,7 @@ class Handler(PatternMatchingEventHandler):
             print("Converting BBCODE into HTML...")
             with self.output_file.open("w", encoding="utf-8") as f:
                 _ = f.write(transpile_all_tags(self.file_content))
-        except Exception as e:
+        except Exception:
             with self.output_file.open("w", encoding="utf-8") as f:
                 _ = f.write(ERROR_CODE)
             # HACK: the liveserver plugin takes short time span before
@@ -67,7 +67,7 @@ class Handler(PatternMatchingEventHandler):
             # message
             # a fix would really be appreciated. help me fix this, anon.
             time.sleep(1)
-            raise e
+            raise
 
 
 def main(
