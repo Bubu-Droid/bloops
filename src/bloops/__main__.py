@@ -2,12 +2,13 @@ import argparse
 import pathlib
 from typing import cast
 
-from . import build_and_preview
+from bloops import build_and_preview
 
 # TODO: ensure that the description here matches with that in the github repo desc
 parser = argparse.ArgumentParser(
     prog="bloops",
-    description="A BBCode to HTML transpiler written in Python with support for Asymptote geometry diagrams.",
+    description="An AoPS-like BBCode to HTML transpiler written in Python,\
+    with live-preview and support for Asymptote geometry diagrams.",
     allow_abbrev=False,
 )
 
@@ -39,7 +40,7 @@ _ = parser.add_argument(
     "-o",
     "--output",
     action="store",
-    nargs="?",
+    nargs=1,
     type=pathlib.Path,
     metavar="OUTDIR",
     help="optional directory path where generated Asymptote diagrams are to be saved",
@@ -49,8 +50,8 @@ args = parser.parse_args()
 
 # I LOVE TYPE HINTING!!!!
 in_dir = cast(pathlib.Path, args.input[0])
-out_arg = cast(pathlib.Path | None, args.output)
-out_dir = out_arg if out_arg and out_arg else in_dir / "static/"
+out_arg = cast(list[pathlib.Path] | None, args.output)
+out_dir = out_arg[0] if out_arg else in_dir / "static/"
 
 build_cont_flag = cast(bool, args.build_cont)
 preview_flag = cast(bool, args.preview)
