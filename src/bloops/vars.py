@@ -434,7 +434,7 @@ ERROR_CODE = r"""<!doctype html>
   </head>
   <body>
     <h1 class="error-msg">
-      <span>An error has occured.</span>
+      <span>An error has occurred.</span>
       <span>Check the terminal logs.</span>
     </h1>
     <svg

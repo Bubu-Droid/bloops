@@ -82,6 +82,6 @@ def get_close_delim_end_index(
             index = close_delim_match.end()
             close_delim_counter += 1
         else:
-            raise RuntimeError("An unexpected error has occured.")
+            raise RuntimeError("An unexpected error has occurred.")
 
     return index - 1
