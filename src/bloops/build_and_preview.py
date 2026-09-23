@@ -54,7 +54,7 @@ class Handler(PatternMatchingEventHandler):
                 self.file_content, self.in_dir, self.out_dir
             )
 
-            print("Converting BBCODE into HTML...")
+            print("Converting BBCode into HTML...")
             with self.output_file.open("w", encoding="utf-8") as f:
                 _ = f.write(transpile_all_tags(self.file_content))
         except Exception:
