@@ -154,7 +154,7 @@ this is a solution.
 and this is a proof.
 [/proof]
 
-Now some text formattings.
+Now some text formatting.
 
 [b][i]bold and italic[/i][/b] with some [s]strikethrough[/s]
 and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
@@ -364,7 +364,7 @@ this is a solution.<span class="qed">&#9632;</span>
 and this is a proof.<span class="qed">&#9633;</span>
 </div>
 
-Now some text formattings.
+Now some text formatting.
 
 <strong><em>bold and italic</em></strong> with some <s>strikethrough</s>
 and <u>underline</u> to top it off. <sup>14</sup>P<sub>3</sub>.
