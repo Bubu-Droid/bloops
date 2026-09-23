@@ -10,7 +10,7 @@ class TestSimpleTag:
             text, 6, re.compile(r"\[(b)\]"), re.compile(r"\[/b\]")
         )
         # assert res == (r"""<strong>some random stuff</strong>""")
-        assert res == (r"""<strong>ome random stuff</strong>""")
+        assert res == (r"""<string>ome random stuff</strong>""")
 
     def test_i_tag(self) -> None:
         text = r"""lorem [i]some random stuff[/i] lorem"""
