@@ -1,0 +1,118 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_install_hook_types = ["pre-commit", "commit-msg"]
+# default_stages = ["pre-commit"]
+
+[[repos]]
+repo = "https://github.com/compilerla/conventional-pre-commit"
+rev = "v4.4.0"
+hooks = [{ id = "conventional-pre-commit", stages = ["commit-msg"] }]
+
+[[repos]]
+repo = "builtin"
+hooks = [
+  { id = "trailing-whitespace" },
+  { id = "end-of-file-fixer" },
+  { id = "check-toml" },
+  { id = "check-yaml" },
+  { id = "mixed-line-ending" },
+  { id = "check-merge-conflict" },
+  { id = "detect-private-key" },
+  { id = "check-shebang-scripts-are-executable" },
+  { id = "check-executables-have-shebangs" },
+]
+
+# [[repos]]
+# repo = "meta"
+# hooks = [{ id = "check-useless-excludes" }]
+
+[[repos]]
+repo = "https://github.com/gitleaks/gitleaks"
+rev = "v8.30.1"
+hooks = [{ id = "gitleaks" }]
+
+[[repos]]
+repo = "https://github.com/zizmorcore/zizmor-pre-commit"
+rev = "v1.30.1"
+hooks = [{ id = "zizmor" }]
+
+# TODO: gotta test if this reads from the pyproject.toml file
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.16.8"
+hooks = [{ id = "ruff-format" }, { id = "ruff-check" }]
+
+# move this to pre-push if this slows down commits too much
+[[repos]]
+repo = "https://github.com/DetachHead/basedpyright-prek-mirror"
+rev = "1.40.1"
+hooks = [{ id = "basedpyright" }]
+
+[[repos]]
+repo = "https://github.com/tox-dev/pyproject-fmt"
+rev = "v2.29.4"
+hooks = [{ id = "pyproject-fmt", files = "^pyproject\\.toml$" }]
+
+[[repos]]
+repo = "https://github.com/tombi-toml/tombi-pre-commit"
+rev = "v1.5.5"
+hooks = [
+  { id = "tombi-format", args = ["--offline"], exclude = "^pyproject\\.toml$" },
+  { id = "tombi-lint", args = ["--offline"] },
+]
+
+[[repos]]
+repo = "https://github.com/google/yamlfmt"
+rev = "v0.21.0"
+hooks = [
+  { id = "yamlfmt" },
+]
+
+[[repos]]
+repo = "https://github.com/rhysd/actionlint"
+rev = "v1.7.12"
+hooks = [
+  { id = "actionlint", files = "^\\.github/workflows/.*\\.ya?ml$" },
+]
+
+[[repos]]
+repo = "https://github.com/adrienverge/yamllint.git"
+rev = "v1.38.0"
+hooks = [
+  { id = "yamllint", exclude = "^\\.github/workflows/.*\\.ya?ml$" },
+]
+
+[[repos]]
+repo = "https://github.com/rvben/rumdl-pre-commit"
+rev = "v0.2.77"
+hooks = [
+  { id = "rumdl-fmt" },
+  { id = "rumdl" },
+]
+
+[[repos]]
+repo = "https://github.com/codespell-project/codespell"
+rev = "v2.4.3"
+hooks = [{ id = "codespell" }]
+
+[[repos]]
+repo = "https://github.com/astral-sh/uv-pre-commit"
+rev = "0.12.18"
+hooks = [{ id = "uv-lock" }]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "pytest",
+    name = "pytest",
+    entry = "uv run pytest",
+    pass_filenames = false,
+    language = "system",
+    stages = [
+      "pre-push",
+    ]
+  },
+]
