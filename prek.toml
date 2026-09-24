@@ -45,15 +45,14 @@ rev = "v0.16.8"
 hooks = [{ id = "ruff-format" }, { id = "ruff-check" }]
 
 # move this to pre-push if this slows down commits too much
-[[repos]]
-repo = "https://github.com/DetachHead/basedpyright-prek-mirror"
-rev = "1.40.1"
-hooks = [
-  {
-    id = "basedpyright",
-    pass_filenames = false,
-  }
-]
+# [[repos]]
+# repo = "https://github.com/DetachHead/basedpyright-prek-mirror"
+# rev = "1.40.1"
+# hooks = [
+#   {
+#     id = "basedpyright",
+#   }
+# ]
 
 [[repos]]
 repo = "https://github.com/tox-dev/pyproject-fmt"
@@ -110,6 +109,13 @@ hooks = [{ id = "uv-lock" }]
 [[repos]]
 repo = "local"
 hooks = [
+  {
+    id = "basedpyright",
+    name = "basedpyright",
+    entry = "uv run basedpyright",
+    language = "system",
+    types = ["python"]
+  },
   {
     id = "pytest",
     name = "pytest",
