@@ -4,15 +4,58 @@ import re
 import subprocess
 from typing import cast
 
+from bloops._helper import get_error_line, get_tag_and_args
 from bloops.bracer import (
     get_close_delim_end_index,
-    get_error_line,
     gobble_inside_delim,
 )
 from bloops.vars import BBCODE_TAGS
 
 
-def validate_args(
+def validate_bbcode_and_compile_asy(
+    text: str,
+    in_dir: pathlib.Path | None = None,
+    out_dir: pathlib.Path | None = None,
+    bbcode_tags: list[
+        tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    ] = BBCODE_TAGS,
+) -> None:
+    if not (in_dir and out_dir):
+        raise TypeError(
+            "Input and output directory paths are mandatory arguments."
+        )
+
+    label_dict: dict[str, int] = {}
+    for tag_tuple in bbcode_tags:
+        open_delim = tag_tuple[0]
+        valid_args = tag_tuple[2]
+        index = 0
+        match = open_delim.search(text, index)
+        # TODO: fix this hack after changing BBCODE_TAGS to dict
+        is_asy = bool("label" in valid_args)
+        while match:
+            index = match.start()
+            _ = get_close_delim_end_index(
+                text, index, tag_tuple[0], tag_tuple[1]
+            )
+            _validate_args(text, index, open_delim, valid_args)
+            if is_asy:
+                args = get_tag_and_args(text, index, open_delim)[1]
+                if args["label"] in label_dict:
+                    error_line = get_error_line(text, index)
+                    raise ValueError(
+                        "A diagram with the same label already exists."
+                        + "\n\n"
+                        + f"{error_line[0]}: {error_line[1]}"
+                    )
+                label_dict[args["label"]] = index
+            match = open_delim.search(text, match.end())
+
+    if label_dict:
+        _compile_asy_diags(label_dict, text, in_dir, out_dir)
+
+
+def _validate_args(
     text: str,
     open_delim_start_index: int,
     open_delim: re.Pattern[str],
@@ -125,50 +168,7 @@ def validate_args(
             )
 
 
-def validate_tags_and_setup_asy(
-    text: str,
-    in_dir: pathlib.Path | None = None,
-    out_dir: pathlib.Path | None = None,
-    bbcode_tags: list[
-        tuple[re.Pattern[str], re.Pattern[str], list[str]]
-    ] = BBCODE_TAGS,
-) -> None:
-    if not (in_dir and out_dir):
-        raise TypeError(
-            "Input and output directory paths are mandatory arguments."
-        )
-
-    label_dict: dict[str, int] = {}
-    for tag_tuple in bbcode_tags:
-        open_delim = tag_tuple[0]
-        valid_args = tag_tuple[2]
-        index = 0
-        match = open_delim.search(text, index)
-        # TODO: fix this hack after changing BBCODE_TAGS to dict
-        is_asy = bool("label" in valid_args)
-        while match:
-            index = match.start()
-            _ = get_close_delim_end_index(
-                text, index, tag_tuple[0], tag_tuple[1]
-            )
-            validate_args(text, index, open_delim, valid_args)
-            if is_asy:
-                args = get_tag_and_args(text, index, open_delim)[1]
-                if args["label"] in label_dict:
-                    error_line = get_error_line(text, index)
-                    raise ValueError(
-                        "A diagram with the same label already exists."
-                        + "\n\n"
-                        + f"{error_line[0]}: {error_line[1]}"
-                    )
-                label_dict[args["label"]] = index
-            match = open_delim.search(text, match.end())
-
-    if label_dict:
-        generate_asy_diags(label_dict, text, in_dir, out_dir)
-
-
-def generate_asy_diags(
+def _compile_asy_diags(
     label_dict: dict[str, int],
     text: str,
     in_dir: pathlib.Path,
@@ -229,29 +229,3 @@ def generate_asy_diags(
                 raise ValueError(
                     f"{error_line[0]}: {error_line[1]}" + "\n\n" + error_message
                 )
-
-
-def get_tag_and_args(
-    text: str,
-    open_delim_start_index: int,
-    open_delim: re.Pattern[str],
-) -> tuple[str, dict[str, str]]:
-    match = open_delim.match(text, open_delim_start_index)
-    if not match:
-        error_line = get_error_line(text, open_delim_start_index)
-        raise SyntaxError(
-            "No opening delimiter at the current position."
-            + "\n\n"
-            + f"{error_line[0]}: {error_line[1]}"
-        )
-
-    pattern = r'[\w]+=".*?"|[\w]+=[^\s]+'
-    if len(match.groups()) <= 1:
-        return (match.group(1), {})
-
-    args_list: list[str] = re.findall(pattern, match.group(2))
-    args_dict = {
-        arg.split("=")[0]: (arg.split("=")[1]).strip('"') for arg in args_list
-    }
-
-    return (match.group(1), args_dict)

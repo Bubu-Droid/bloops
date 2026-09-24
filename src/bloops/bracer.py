@@ -1,10 +1,6 @@
 import re
 
-
-def get_error_line(text: str, index: int) -> tuple[int, str]:
-    line_num = text.count("\n", 0, index)
-
-    return (line_num + 1, text.splitlines()[line_num])
+from bloops._helper import get_error_line
 
 
 def gobble_inside_delim(

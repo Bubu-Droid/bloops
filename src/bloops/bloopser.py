@@ -1,11 +1,97 @@
 import re
 
+from bloops._helper import get_tag_and_args
 from bloops.bracer import get_close_delim_end_index, gobble_inside_delim
-from bloops.validator import get_tag_and_args
 from bloops.vars import BBCODE_TAGS
 
 
-def convert_to_html(
+def convert_bbcode_to_html(
+    text: str,
+    bbcode_tags: list[
+        tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    ] = BBCODE_TAGS,
+) -> str:
+    for tag_tuple in bbcode_tags:
+        open_delim = tag_tuple[0]
+        close_delim = tag_tuple[1]
+        index = 0
+        match = open_delim.search(text, index)
+        while match:
+            index = match.start()
+            text = (
+                text[:index]
+                + _convert_tag_to_html(text, index, open_delim, close_delim)
+                + text[
+                    get_close_delim_end_index(
+                        text, index, open_delim, close_delim
+                    )
+                    + 1 :
+                ]
+            )
+            match = open_delim.search(text, index + 1)
+
+    # TODO: shift the avatar to integration server and use the static link
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bloops Preview</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
+    />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      MathJax = {{
+        tex: {{
+          inlineMath: {{"[+]": [['$', '$']]}}
+        }},
+        svg: {{
+          fontCache: 'global'
+        }},
+        output: {{
+          displayOverflow: "linebreak",
+          linebreaks: {{
+            inline: true,
+            width: "100%",
+            lineleading: 0.2,
+            LinebreakVisitor: null,
+          }},
+        }},
+      }};
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
+    ></script>
+  </head>
+  <body>
+    {text}
+  </body>
+</html>"""
+
+
+def _convert_tag_to_html(
     text: str,
     open_delim_start_index: int,
     open_delim: re.Pattern[str],
@@ -226,89 +312,3 @@ def convert_to_html(
             )
 
     return "\n".join(content)
-
-
-def transpile_all_tags(
-    text: str,
-    bbcode_tags: list[
-        tuple[re.Pattern[str], re.Pattern[str], list[str]]
-    ] = BBCODE_TAGS,
-) -> str:
-    for tag_tuple in bbcode_tags:
-        open_delim = tag_tuple[0]
-        close_delim = tag_tuple[1]
-        index = 0
-        match = open_delim.search(text, index)
-        while match:
-            index = match.start()
-            text = (
-                text[:index]
-                + convert_to_html(text, index, open_delim, close_delim)
-                + text[
-                    get_close_delim_end_index(
-                        text, index, open_delim, close_delim
-                    )
-                    + 1 :
-                ]
-            )
-            match = open_delim.search(text, index + 1)
-
-    # TODO: shift the avatar to integration server and use the static link
-    return f"""<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bloops Preview</title>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
-    />
-    <link rel="stylesheet" href="static/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
-    <script>
-      hljs.highlightAll();
-    </script>
-    <script>
-      MathJax = {{
-        tex: {{
-          inlineMath: {{"[+]": [['$', '$']]}}
-        }},
-        svg: {{
-          fontCache: 'global'
-        }},
-        output: {{
-          displayOverflow: "linebreak",
-          linebreaks: {{
-            inline: true,
-            width: "100%",
-            lineleading: 0.2,
-            LinebreakVisitor: null,
-          }},
-        }},
-      }};
-    </script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
-    ></script>
-  </head>
-  <body>
-    {text}
-  </body>
-</html>"""
