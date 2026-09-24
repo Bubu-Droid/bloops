@@ -2,7 +2,7 @@ import re
 
 import pytest
 
-from bloops.validator import get_tag_and_args
+from bloops._helper import get_tag_and_args
 
 
 class TestGetTagAndArgs:

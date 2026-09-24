@@ -1,12 +1,12 @@
 import re
 
-from bloops.bloopser import convert_to_html
+from bloops.bloopser import _convert_tag_to_html
 
 
 class TestListTag:
     def test_without_type(self) -> None:
         text = r"""lorem [list]some random stuff[/list] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(list)(.*?)\]"),
@@ -21,7 +21,7 @@ some random stuff
 
     def test_list_ul(self) -> None:
         text = r"""lorem [list type=ul]some random stuff[/list] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(list)(.*?)\]"),
@@ -36,7 +36,7 @@ some random stuff
 
     def test_list_ol(self) -> None:
         text = r"""lorem [list type=ol]some random stuff[/list] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(list)(.*?)\]"),
@@ -53,7 +53,7 @@ some random stuff
         text = (
             r"""lorem [list type=ul style=disc]some random stuff[/list] lorem"""
         )
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(list)(.*?)\]"),
@@ -68,7 +68,7 @@ some random stuff
 
     def test_list_ol_with_valid_style(self) -> None:
         text = r"""lorem [list type=ol style=1]some random stuff[/list] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(list)(.*?)\]"),

@@ -1,4 +1,4 @@
-from bloops.bloopser import transpile_all_tags
+from bloops.bloopser import convert_bbcode_to_html
 
 
 class TestTranspileAll:
@@ -370,5 +370,5 @@ Now some text formatting.
 and <u>underline</u> to top it off. <sup>14</sup>P<sub>3</sub>.
   </body>
 </html>"""
-        res = transpile_all_tags(text)
+        res = convert_bbcode_to_html(text)
         assert res == output_text

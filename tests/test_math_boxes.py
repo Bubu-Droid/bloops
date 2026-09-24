@@ -1,12 +1,12 @@
 import re
 
-from bloops.bloopser import convert_to_html
+from bloops.bloopser import _convert_tag_to_html
 
 
 class TestMathBoxesWithoutDesc:
     def test_theorem_box(self) -> None:
         text = r"""lorem [theorem]some random stuff[/theorem] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(theorem)(.*?)\]"),
@@ -22,7 +22,7 @@ some random stuff
 
     def test_lemma_box(self) -> None:
         text = r"""lorem [lemma]some random stuff[/lemma] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(lemma)(.*?)\]"),
@@ -38,7 +38,7 @@ some random stuff
 
     def test_prop_box(self) -> None:
         text = r"""lorem [proposition]some random stuff[/proposition] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(proposition)(.*?)\]"),
@@ -54,7 +54,7 @@ some random stuff
 
     def test_corollary_box(self) -> None:
         text = r"""lorem [corollary]some random stuff[/corollary] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(corollary)(.*?)\]"),
@@ -70,7 +70,7 @@ some random stuff
 
     def test_example_box(self) -> None:
         text = r"""lorem [example]some random stuff[/example] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(example)(.*?)\]"),
@@ -86,7 +86,7 @@ some random stuff
 
     def test_claim_box(self) -> None:
         text = r"""lorem [claim]some random stuff[/claim] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(claim)(.*?)\]"),
@@ -102,7 +102,7 @@ some random stuff
 
     def test_problem_box(self) -> None:
         text = r"""lorem [problem]some random stuff[/problem] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(problem)(.*?)\]"),
@@ -118,7 +118,7 @@ some random stuff
 
     def test_exercise_box(self) -> None:
         text = r"""lorem [exercise]some random stuff[/exercise] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(exercise)(.*?)\]"),
@@ -136,7 +136,7 @@ some random stuff
 class TestMathBoxesWithDesc:
     def test_theorem_box(self) -> None:
         text = r"""lorem [theorem title="some description"]some random stuff[/theorem] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(theorem)(.*?)\]"),
@@ -152,7 +152,7 @@ some random stuff
 
     def test_lemma_box(self) -> None:
         text = r"""lorem [lemma title="some description"]some random stuff[/lemma] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(lemma)(.*?)\]"),
@@ -168,7 +168,7 @@ some random stuff
 
     def test_prop_box(self) -> None:
         text = r"""lorem [proposition title="some description"]some random stuff[/proposition] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(proposition)(.*?)\]"),
@@ -184,7 +184,7 @@ some random stuff
 
     def test_corollary_box(self) -> None:
         text = r"""lorem [corollary title="some description"]some random stuff[/corollary] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(corollary)(.*?)\]"),
@@ -200,7 +200,7 @@ some random stuff
 
     def test_example_box(self) -> None:
         text = r"""lorem [example title="some description"]some random stuff[/example] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(example)(.*?)\]"),
@@ -216,7 +216,7 @@ some random stuff
 
     def test_claim_box(self) -> None:
         text = r"""lorem [claim title="some description"]some random stuff[/claim] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(claim)(.*?)\]"),
@@ -232,7 +232,7 @@ some random stuff
 
     def test_problem_box(self) -> None:
         text = r"""lorem [problem title="some description"]some random stuff[/problem] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(problem)(.*?)\]"),
@@ -248,7 +248,7 @@ some random stuff
 
     def test_exercise_box(self) -> None:
         text = r"""lorem [exercise title="some description"]some random stuff[/exercise] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(exercise)(.*?)\]"),

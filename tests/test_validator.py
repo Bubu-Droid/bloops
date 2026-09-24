@@ -3,7 +3,7 @@ import re
 
 import pytest
 
-from bloops.validator import validate_args, validate_tags_and_setup_asy
+from bloops.validator import _validate_args, validate_bbcode_and_compile_asy
 
 
 class TestValidateArgs:
@@ -13,7 +13,7 @@ lorem [asy src=/home/bubu/meow.png label=hello meow=hi width=50 alt="meow neow" 
 [/asy]"""
 
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 11,
                 re.compile(r"\[(asy)(.*?)\]"),
@@ -27,7 +27,7 @@ lorem [asy src=/home/bubu/meow.png label=hello meow=hi width=50 alt="meow neow" 
         text = r"""meow
 lorem [asy src=/home/bubu/meow.png label=hello width=50 alt="meow neow" caption=this]some random stuff
 [/asy]"""
-        validate_args(
+        _validate_args(
             text,
             11,
             re.compile(r"\[(asy)(.*?)\]"),
@@ -39,7 +39,7 @@ lorem [asy src=/home/bubu/meow.png label=hello width=50 alt="meow neow" caption=
 lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
 [/asy]"""
 
-        validate_args(
+        _validate_args(
             text,
             11,
             re.compile(r"\[(asy)(.*?)\]"),
@@ -49,7 +49,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
     def test_asy_without_src(self) -> None:
         text = r"""lorem [asy label=hello]some random stuff[/asy] lorem"""
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(asy)(.*?)\]"),
@@ -61,7 +61,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
     def test_asy_without_label(self) -> None:
         text = r"""lorem [asy src=/home/bubu/meow.png]some random stuff[/asy] lorem"""
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(asy)(.*?)\]"),
@@ -73,7 +73,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
     def test_img_without_src(self) -> None:
         text = r"""lorem [img]some random stuff[/img] lorem"""
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(img)(.*?)\]"),
@@ -87,7 +87,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             r"""lorem [list type=ul style=meow]some random stuff[/list] lorem"""
         )
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(list)(.*?)\]"),
@@ -101,7 +101,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             r"""lorem [list type=ol style=meow]some random stuff[/list] lorem"""
         )
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(list)(.*?)\]"),
@@ -113,7 +113,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
     def test_color_without_hex(self) -> None:
         text = r"""lorem [color]some random stuff[/color] lorem"""
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(color)(.*?)\]"),
@@ -125,7 +125,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
     def test_url_without_link(self) -> None:
         text = r"""lorem [url]some random stuff[/url] lorem"""
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(url)(.*?)\]"),
@@ -137,7 +137,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
     def test_url_with_invalid_target(self) -> None:
         text = r"""lorem [url link=https://www.bubudroid.me target=meow]some random stuff[/url] lorem"""
         with pytest.raises(ValueError) as context:
-            _ = validate_args(
+            _ = _validate_args(
                 text,
                 6,
                 re.compile(r"\[(url)(.*?)\]"),
@@ -189,7 +189,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
 
         some more random lorem text"""
         with pytest.raises(SyntaxError) as context:
-            _ = validate_tags_and_setup_asy(
+            _ = validate_bbcode_and_compile_asy(
                 text, pathlib.Path("./"), pathlib.Path("./build/")
             )
         assert context.type is SyntaxError

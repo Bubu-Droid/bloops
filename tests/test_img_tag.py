@@ -1,12 +1,12 @@
 import re
 
-from bloops.bloopser import convert_to_html
+from bloops.bloopser import _convert_tag_to_html
 
 
 class TestImgTag:
     def test_img(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png][/img] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(img)(.*?)\]"),
@@ -21,7 +21,7 @@ class TestImgTag:
 
     def test_img_with_width(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png width=50][/img] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(img)(.*?)\]"),
@@ -36,7 +36,7 @@ class TestImgTag:
 
     def test_img_with_alt(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png alt="hello kitty"][/img] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(img)(.*?)\]"),
@@ -51,7 +51,7 @@ class TestImgTag:
 
     def test_img_with_caption(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png caption="some random stuff"][/img] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(img)(.*?)\]"),
@@ -67,7 +67,7 @@ class TestImgTag:
 
     def test_img_with_all(self) -> None:
         text = r"""lorem [img src=/home/bubu/meow.png width=50 alt="hello kitty" caption="some random stuff"][/img] lorem"""
-        res = convert_to_html(
+        res = _convert_tag_to_html(
             text,
             6,
             re.compile(r"\[(img)(.*?)\]"),
