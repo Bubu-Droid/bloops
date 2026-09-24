@@ -1,3 +1,10 @@
+"""Provides live-reloading and continuous building capabilities.
+
+Monitors file system modifications in input directories and updates
+rendered HTML documents or serves them over a local development
+server.
+"""
+
 import pathlib
 import threading
 import time
@@ -17,9 +24,30 @@ from bloops.vars import ERROR_CODE, STYLESHEET
 
 
 class _Handler(PatternMatchingEventHandler):
+    """Custom event handler for file system modification events.
+
+    Listens for changes in the BBCode source file and triggers a rebuild
+    of the rendered HTML and dependent diagram assets.
+
+    Attributes:
+        in_dir: Directory path containing the source BBCode file.
+        out_dir: Output directory path for static assets.
+        input_file: Path to the BBCode source file.
+        output_file: Path to the destination HTML file.
+        file_content: Cached string content of the source file.
+    """
+
     def __init__(
         self, in_dir: pathlib.Path, out_dir: pathlib.Path, file_content: str
     ) -> None:
+        """Initialize the file watcher event handler and perform an initial build.
+
+        Args:
+            in_dir: Path to the directory containing input files.
+            out_dir: Path to the directory for compiled static output.
+            file_content: Initial text content of the BBCode file.
+        """
+
         super().__init__(
             patterns=["content.bbcode"],
             ignore_directories=True,
@@ -28,13 +56,22 @@ class _Handler(PatternMatchingEventHandler):
         self.in_dir: pathlib.Path = in_dir
         self.out_dir: pathlib.Path = out_dir
         self.input_file: pathlib.Path = in_dir / "content.bbcode"
-        self.file_content: str = file_content
         self.output_file: pathlib.Path = in_dir / "index.html"
+        self.file_content: str = file_content
         self._build()
         print("Build successful. Output written to index.html.\n")
 
     @override
     def on_modified(self, event: DirModifiedEvent | FileModifiedEvent) -> None:
+        """Handle file or directory modification events.
+
+        Reads the updated source file, compares it against cached content,
+        and re-runs the build process if changes are detected.
+
+        Args:
+            event: File system event describing the modification.
+        """
+
         with self.input_file.open(mode="r", encoding="utf-8") as f:
             new_content = f.read().strip()
         if self.file_content == new_content:
@@ -46,6 +83,16 @@ class _Handler(PatternMatchingEventHandler):
         print("Watching for file update. Use ctrl/C to stop...\n")
 
     def _build(self) -> None:
+        """Validate BBCode syntax, compile diagrams, and output HTML.
+
+        Catches rendering errors and writes a predefined error template to
+        the output file if compilation fails.
+
+        Raises:
+            Exception: Re-raises any syntax or compilation exception encountered
+                during execution.
+        """
+
         try:
             print(
                 "Verifying syntax and generating newly added / changed asymptote diagrams (if any)..."
@@ -76,6 +123,23 @@ def main(
     build_cont: bool = False,
     preview: bool = False,
 ) -> None:
+    """Coordinate continuous build tasks and local server preview.
+
+    Ensures required directories and default files exist, sets up
+    file watchers, and optionally serves content using a live-reload
+    server.
+
+    Args:
+        in_dir: Directory path containing source files.
+        out_dir: Directory path for generated output assets.
+        build_cont: If True, continuously watch for source changes.
+        preview: If True, launch a local web server for live preview.
+
+    Raises:
+        FileNotFoundError: If the input directory or source file is missing.
+        NotADirectoryError: If specified paths are not valid directories.
+    """
+
     input_file = in_dir / "content.bbcode"
     output_file = in_dir / "index.html"
     style_file = out_dir / "style.css"
@@ -87,7 +151,6 @@ def main(
     if not input_file.exists():
         raise FileNotFoundError("BBCode file (content.bbcode) not found.")
     if not out_dir.exists():
-        # raise FileNotFoundError("Output directory not found.")
         out_dir.mkdir()
     if not out_dir.is_dir():
         raise NotADirectoryError("Output directory is not a directory.")
@@ -129,6 +192,11 @@ def main(
 # alright, i've opened an issue and i'll try adding type-hint support
 # if no one else does
 def _run_server(output_file: pathlib.Path) -> None:
+    """Start a local web server with automatic browser live-reload.
+
+    Args:
+        output_file: Path to the HTML file to watch and serve.
+    """
     server = Server()
     server.watch(str(output_file.absolute()))  # pyright: ignore[reportUnknownMemberType]
     server.serve(root=str(output_file.parent.resolve()))  # pyright: ignore[reportUnknownMemberType]

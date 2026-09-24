@@ -1,3 +1,9 @@
+"""Validation and diagram compilation utilities for BBCode tags.
+
+Verifies element parameters, enforces structural constraints, and
+compiles Asymptote diagrams to SVG format.
+"""
+
 import json
 import pathlib
 import re
@@ -20,6 +26,23 @@ def validate_bbcode_and_compile_asy(
         tuple[re.Pattern[str], re.Pattern[str], list[str]]
     ] = BBCODE_TAGS,
 ) -> None:
+    """Validate BBCode tag arguments and compile Asymptote diagrams.
+
+    Scans the text for registered BBCode tags, verifies argument validity,
+    checks for duplicate diagram labels, and compiles new or modified
+    Asymptote blocks.
+
+    Args:
+        text: Raw BBCode input string.
+        in_dir: Directory path containing the input source files.
+        out_dir: Directory path for generated output assets.
+        bbcode_tags: List of tag matching rules and permitted arguments.
+
+    Raises:
+        TypeError: If in_dir or out_dir are not provided.
+        ValueError: If duplicate diagram labels are detected.
+    """
+
     if not (in_dir and out_dir):
         raise TypeError(
             "Input and output directory paths are mandatory arguments."
@@ -61,6 +84,19 @@ def _validate_args(
     open_delim: re.Pattern[str],
     valid_args: list[str],
 ) -> None:
+    """Validate arguments and mandatory attributes for a BBCode tag.
+
+    Args:
+        text: Entire input text containing the BBCode.
+        open_delim_start_index: Starting character index of opening tag.
+        open_delim: Compiled regex pattern for the opening tag.
+        valid_args: List of valid attribute names for the tag.
+
+    Raises:
+        ValueError: If unknown attributes or missing required parameters
+            are encountered, or if attribute values are invalid.
+    """
+
     tag_and_args = get_tag_and_args(text, open_delim_start_index, open_delim)
     tag, args = tag_and_args
 
@@ -174,6 +210,21 @@ def _compile_asy_diags(
     in_dir: pathlib.Path,
     out_dir: pathlib.Path,
 ) -> None:
+    """Compile Asymptote diagram source code into SVG files.
+
+    Tracks cached diagram contents to skip unchanged diagrams and invokes
+    the external `asy` command-line tool for new or modified figures.
+
+    Args:
+        label_dict: Mapping of diagram labels to their character indices.
+        text: Entire input text containing the BBCode.
+        in_dir: Input directory containing the build cache.
+        out_dir: Output directory where compiled SVGs are saved.
+
+    Raises:
+        ValueError: If external Asymptote compilation fails.
+    """
+
     build_dir = in_dir / "build/"
     build_dir.mkdir(exist_ok=True)
     asy_cache_file = build_dir / "cache.json"

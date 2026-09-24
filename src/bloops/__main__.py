@@ -1,3 +1,9 @@
+"""CLI entrypoint module for the bloops package.
+
+Handles command-line argument parsing and delegates execution
+to the build and preview controller.
+"""
+
 import argparse
 import pathlib
 from typing import cast
@@ -6,6 +12,13 @@ from bloops import _build_and_preview
 
 
 def main() -> None:
+    """Parse command-line arguments and run the build and preview process.
+
+    Reads input/output paths and continuous build or live preview flags
+    from CLI arguments, setting default fallback paths when necessary,
+    and invokes the build and preview pipeline.
+    """
+
     parser = argparse.ArgumentParser(
         prog="bloops",
         description="An AoPS-like BBCode to HTML transpiler written in Python,\

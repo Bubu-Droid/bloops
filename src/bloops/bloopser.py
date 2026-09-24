@@ -1,3 +1,5 @@
+"""Core conversion engine transforming BBCode source to HTML."""
+
 import re
 
 from bloops._helper import get_tag_and_args
@@ -11,6 +13,20 @@ def convert_bbcode_to_html(
         tuple[re.Pattern[str], re.Pattern[str], list[str]]
     ] = BBCODE_TAGS,
 ) -> str:
+    """Transpile a BBCode string into a complete HTML document.
+
+    Iteratively processes configured BBCode tags, converts them into HTML
+    equivalents, and wraps the result in a boilerplate HTML template
+    with MathJax and Syntax Highlighting support.
+
+    Args:
+        text: Raw BBCode text content.
+        bbcode_tags: List of tag configurations and rule definitions.
+
+    Returns:
+        A fully formatted HTML document string.
+    """
+
     for tag_tuple in bbcode_tags:
         open_delim = tag_tuple[0]
         close_delim = tag_tuple[1]
@@ -97,6 +113,18 @@ def _convert_tag_to_html(
     open_delim: re.Pattern[str],
     close_delim: re.Pattern[str],
 ) -> str:
+    """Convert a single BBCode tag instance to its HTML counterpart.
+
+    Args:
+        text: Full input text being processed.
+        open_delim_start_index: Starting character index of the tag.
+        open_delim: Regex pattern matching opening tag structure.
+        close_delim: Regex pattern matching closing tag structure.
+
+    Returns:
+        The rendered HTML replacement string for the BBCode element.
+    """
+
     tag_and_args = get_tag_and_args(text, open_delim_start_index, open_delim)
     tag, args = tag_and_args
 

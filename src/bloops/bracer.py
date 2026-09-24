@@ -1,3 +1,5 @@
+"""Utility functions for parsing nested delimiter pairs and tags."""
+
 import re
 
 from bloops._helper import get_error_line
@@ -9,6 +11,18 @@ def gobble_inside_delim(
     open_delim: re.Pattern[str],
     close_delim: re.Pattern[str],
 ) -> str:
+    """Extract text content located between matching delimiter pairs.
+
+    Args:
+        text: Input text containing delimited structures.
+        open_delim_start_index: Index where the opening tag begins.
+        open_delim: Regex pattern matching the opening delimiter.
+        close_delim: Regex pattern matching the closing delimiter.
+
+    Returns:
+        The inner text string enclosed by the matching delimiters.
+    """
+
     close_delim_end_index = get_close_delim_end_index(
         text, open_delim_start_index, open_delim, close_delim
     )
@@ -28,6 +42,18 @@ def gobble_around_delim(
     open_delim: re.Pattern[str],
     close_delim: re.Pattern[str],
 ) -> str:
+    """Extract text string including the opening and closing delimiters.
+
+    Args:
+        text: Input text containing delimited structures.
+        open_delim_start_index: Index where the opening tag begins.
+        open_delim: Regex pattern matching the opening delimiter.
+        close_delim: Regex pattern matching the closing delimiter.
+
+    Returns:
+        Substring spanning from opening tag start to closing tag end.
+    """
+
     close_delim_end_index = get_close_delim_end_index(
         text, open_delim_start_index, open_delim, close_delim
     )
@@ -41,6 +67,26 @@ def get_close_delim_end_index(
     open_delim: re.Pattern[str],
     close_delim: re.Pattern[str],
 ) -> int:
+    """Find the end index of the matching closing delimiter for a tag.
+
+    Supports nested tag pairs by maintaining a count of open and close
+    delimiters.
+
+    Args:
+        text: Full input text being parsed.
+        open_delim_start_index: Index where opening delimiter begins.
+        open_delim: Regex pattern matching opening delimiters.
+        close_delim: Regex pattern matching closing delimiters.
+
+    Returns:
+        The index of the final character of the matching closing tag.
+
+    Raises:
+        SyntaxError: If no opening tag exists at the index or if a
+            matching closing tag cannot be found.
+        RuntimeError: If parser enters an unexpected state.
+    """
+
     open_delim_counter = 1
     close_delim_counter = 0
 
