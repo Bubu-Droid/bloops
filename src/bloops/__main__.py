@@ -2,11 +2,10 @@ import argparse
 import pathlib
 from typing import cast
 
-from bloops import build_and_preview
+from bloops import _build_and_preview
 
 
 def main() -> None:
-    # TODO: ensure that the description here matches with that in the github repo desc
     parser = argparse.ArgumentParser(
         prog="bloops",
         description="An AoPS-like BBCode to HTML transpiler written in Python,\
@@ -58,7 +57,7 @@ def main() -> None:
     build_cont_flag = cast(bool, args.build_cont)
     preview_flag = cast(bool, args.preview)
 
-    build_and_preview.main(
+    _build_and_preview.main(
         in_dir, out_dir, build_cont=build_cont_flag, preview=preview_flag
     )
 
