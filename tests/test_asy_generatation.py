@@ -2,7 +2,7 @@ import pathlib
 
 import pytest
 
-from bloops.validator import _compile_asy_diags
+from bloops.validator import compile_asy_diagrams
 
 
 class TestGenerateAsyDiags:
@@ -17,7 +17,7 @@ class TestGenerateAsyDiags:
                 path.unlink()
 
     def test_correct_asy(self) -> None:
-        _compile_asy_diags(
+        compile_asy_diagrams(
             {"meow-1": 6},
             correct_asy,
             pathlib.Path("./"),
@@ -26,7 +26,7 @@ class TestGenerateAsyDiags:
 
     def test_incorrect_asy(self) -> None:
         with pytest.raises(ValueError) as context:
-            _compile_asy_diags(
+            compile_asy_diagrams(
                 {"meow-2": 6},
                 incorrect_asy,
                 pathlib.Path("./"),

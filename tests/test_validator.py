@@ -3,7 +3,11 @@ import re
 
 import pytest
 
-from bloops.validator import _validate_args, validate_bbcode_and_compile_asy
+from bloops.validator import (
+    _validate_args,
+    compile_asy_diagrams,
+    validate_bbcode,
+)
 
 
 class TestValidateArgs:
@@ -189,8 +193,11 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
 
         some more random lorem text"""
         with pytest.raises(SyntaxError) as context:
-            _ = validate_bbcode_and_compile_asy(
-                text, pathlib.Path("./"), pathlib.Path("./build/")
+            _ = compile_asy_diagrams(
+                validate_bbcode(text),
+                text,
+                pathlib.Path("./"),
+                pathlib.Path("./build/"),
             )
         assert context.type is SyntaxError
         assert "Failed to find an opening pair for delimiter." in str(
