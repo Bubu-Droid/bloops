@@ -18,35 +18,30 @@ from bloops.bracer import (
 from bloops.vars import BBCODE_TAGS
 
 
-def validate_bbcode_and_compile_asy(
+def validate_bbcode(
     text: str,
-    in_dir: pathlib.Path | None = None,
-    out_dir: pathlib.Path | None = None,
     bbcode_tags: list[
         tuple[re.Pattern[str], re.Pattern[str], list[str]]
     ] = BBCODE_TAGS,
-) -> None:
-    """Validate BBCode tag arguments and compile Asymptote diagrams.
+) -> dict[str, int]:
+    """Validate BBCode syntax and collect diagram label mappings.
 
-    Scans the text for registered BBCode tags, verifies argument validity,
-    checks for duplicate diagram labels, and compiles new or modified
-    Asymptote blocks.
+    Scans the input string for supported BBCode tags, validates their
+    attributes, checks for duplicate Asymptote labels, and returns a
+    dictionary mapping each diagram label to its character index.
 
     Args:
         text: Raw BBCode input string.
-        in_dir: Directory path containing the input source files.
-        out_dir: Directory path for generated output assets.
-        bbcode_tags: List of tag matching rules and permitted arguments.
+        bbcode_tags: List of tag configurations, matching patterns,
+            and permitted argument lists.
+
+    Returns:
+        A dictionary mapping diagram labels to their starting index.
 
     Raises:
-        TypeError: If in_dir or out_dir are not provided.
-        ValueError: If duplicate diagram labels are detected.
+        ValueError: If an invalid argument is supplied or duplicate
+            diagram labels are encountered.
     """
-
-    if not (in_dir and out_dir):
-        raise TypeError(
-            "Input and output directory paths are mandatory arguments."
-        )
 
     label_dict: dict[str, int] = {}
     for tag_tuple in bbcode_tags:
@@ -74,8 +69,87 @@ def validate_bbcode_and_compile_asy(
                 label_dict[args["label"]] = index
             match = open_delim.search(text, match.end())
 
-    if label_dict:
-        _compile_asy_diags(label_dict, text, in_dir, out_dir)
+    return label_dict
+
+
+def compile_asy_diagrams(
+    label_dict: dict[str, int],
+    text: str,
+    in_dir: pathlib.Path,
+    out_dir: pathlib.Path,
+) -> None:
+    """Compile Asymptote diagram source blocks into SVG files.
+
+    Checks diagram source strings against a local JSON cache, writing
+    and rendering updated or new `.asy` files via the external Asymptote
+    CLI.
+
+    Args:
+        label_dict: Dictionary mapping diagram labels to character
+            indices in the source text.
+        text: Entire input text containing BBCode and Asymptote code.
+        in_dir: Source directory containing the build cache folder.
+        out_dir: Target directory where compiled SVG images are stored.
+
+    Raises:
+        ValueError: If Asymptote compilation fails.
+    """
+
+    build_dir = in_dir / "build/"
+    build_dir.mkdir(exist_ok=True)
+    asy_cache_file = build_dir / "cache.json"
+    if not asy_cache_file.exists():
+        asy_cache_file.touch()
+        with asy_cache_file.open("w", encoding="utf-8") as f:
+            _ = f.write("{}")
+    with asy_cache_file.open("r", encoding="utf-8") as f:
+        asy_cache_content = cast(dict[str, str], json.load(f))
+
+    for label, index in label_dict.items():
+        changed = False
+        # TODO: ensure that we remove this hardcoded patterns after changing
+        # BBCODE_TAGS to a dict
+        inner_content = gobble_inside_delim(
+            text,
+            index,
+            re.compile(r"\[(asy)(.*?)\]"),
+            re.compile(r"\[/asy\]"),
+        ).strip()
+        if label not in asy_cache_content:
+            asy_cache_content[label] = inner_content
+            changed = True
+        else:
+            if asy_cache_content[label] != inner_content:
+                asy_cache_content[label] = inner_content
+                changed = True
+        if changed:
+            asy_code_file = build_dir / f"{label}.asy"
+            with asy_code_file.open("w", encoding="utf-8") as f:
+                _ = f.write(inner_content)
+
+            res = subprocess.run(
+                [
+                    "asy",
+                    asy_code_file.absolute(),
+                    "-f",
+                    "svg",
+                    "-o",
+                    (out_dir / label).absolute(),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            if res.returncode == 0:
+                with asy_cache_file.open("w", encoding="utf-8") as f:
+                    json.dump(asy_cache_content, f)
+            else:
+                error_line = get_error_line(text, index)
+                error_message = res.stderr
+                raise ValueError(
+                    f"{error_line[0]}: {error_line[1]}" + "\n\n" + error_message
+                )
 
 
 def _validate_args(
@@ -202,81 +276,3 @@ def _validate_args(
                 + "\n\n"
                 + f"{error_line[0]}: {error_line[1]}"
             )
-
-
-def _compile_asy_diags(
-    label_dict: dict[str, int],
-    text: str,
-    in_dir: pathlib.Path,
-    out_dir: pathlib.Path,
-) -> None:
-    """Compile Asymptote diagram source code into SVG files.
-
-    Tracks cached diagram contents to skip unchanged diagrams and invokes
-    the external `asy` command-line tool for new or modified figures.
-
-    Args:
-        label_dict: Mapping of diagram labels to their character indices.
-        text: Entire input text containing the BBCode.
-        in_dir: Input directory containing the build cache.
-        out_dir: Output directory where compiled SVGs are saved.
-
-    Raises:
-        ValueError: If external Asymptote compilation fails.
-    """
-
-    build_dir = in_dir / "build/"
-    build_dir.mkdir(exist_ok=True)
-    asy_cache_file = build_dir / "cache.json"
-    if not asy_cache_file.exists():
-        asy_cache_file.touch()
-        with asy_cache_file.open("w", encoding="utf-8") as f:
-            _ = f.write("{}")
-    with asy_cache_file.open("r", encoding="utf-8") as f:
-        asy_cache_content = cast(dict[str, str], json.load(f))
-
-    for label, index in label_dict.items():
-        changed = False
-        # TODO: ensure that we remove this hardcoded patterns after changing
-        # BBCODE_TAGS to a dict
-        inner_content = gobble_inside_delim(
-            text,
-            index,
-            re.compile(r"\[(asy)(.*?)\]"),
-            re.compile(r"\[/asy\]"),
-        ).strip()
-        if label not in asy_cache_content:
-            asy_cache_content[label] = inner_content
-            changed = True
-        else:
-            if asy_cache_content[label] != inner_content:
-                asy_cache_content[label] = inner_content
-                changed = True
-        if changed:
-            asy_code_file = build_dir / f"{label}.asy"
-            with asy_code_file.open("w", encoding="utf-8") as f:
-                _ = f.write(inner_content)
-
-            res = subprocess.run(
-                [
-                    "asy",
-                    asy_code_file.absolute(),
-                    "-f",
-                    "svg",
-                    "-o",
-                    (out_dir / label).absolute(),
-                ],
-                capture_output=True,
-                text=True,
-                check=False,
-            )
-
-            if res.returncode == 0:
-                with asy_cache_file.open("w", encoding="utf-8") as f:
-                    json.dump(asy_cache_content, f)
-            else:
-                error_line = get_error_line(text, index)
-                error_message = res.stderr
-                raise ValueError(
-                    f"{error_line[0]}: {error_line[1]}" + "\n\n" + error_message
-                )
