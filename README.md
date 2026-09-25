@@ -66,6 +66,7 @@ Install `bloops` from PyPI. Here is the PyPI listing.
 | Flag | Long Flag      | Description                                                               |
 | ---- | -------------- | ------------------------------------------------------------------------- |
 | `-h` | `--help`       | Show help message for usage of `bloops`.                                  |
+| `-v` | `--version`    | Show the version of `bloops`.                                             |
 | `-c` | `--build-cont` | Watch `content.bbcode` for changes and continuously rebuild `index.html`. |
 | `-p` | `--preview`    | Launch a local web live-server to preview `index.html`.                   |
 | `-i` | `--input`      | (**Required**) Input directory containing `content.bbcode`.               |
@@ -79,12 +80,13 @@ Install `bloops` from PyPI. Here is the PyPI listing.
 <details><summary>Help Summary</summary>
 
 ```bash
-usage: bloops [-h] [-c] [-p] -i INDIR [-o OUTDIR]
+usage: bloops [-h] [-v] [-c] [-p] -i INDIR [-o OUTDIR]
 
 An AoPS-like BBCode to HTML transpiler written in Python, featuring live-preview support and dynamic Asymptote geometry diagram compilation.
 
 options:
   -h, --help           show this help message and exit
+  -v, --version        show program's version number and exit
   -c, --build-cont     convert BBCode to HTML and continuously write to index.html on change
   -p, --preview        run a preview of index.html on the web-browser
   -i, --input INDIR    directory path which contains the BBCode file
