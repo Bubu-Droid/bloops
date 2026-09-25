@@ -15,6 +15,13 @@ class TestGenerateAsyDiags:
         ]:
             if path.exists():
                 path.unlink()
+        pathlib.Path("./build/cache.json").parent.mkdir(
+            parents=True, exist_ok=True
+        )
+        with pathlib.Path("./build/cache.json").open(
+            "w", encoding="utf-8"
+        ) as f:
+            _ = f.write("{}")
 
     def test_correct_asy(self) -> None:
         compile_asy_diagrams(
