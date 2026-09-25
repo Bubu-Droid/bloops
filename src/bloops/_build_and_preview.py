@@ -145,7 +145,7 @@ def main(
 
     input_file = in_dir / "content.bbcode"
     output_file = in_dir / "index.html"
-    style_file = out_dir / "style.css"
+    style_file = in_dir / "static" / "style.css"
 
     if not in_dir.exists():
         raise FileNotFoundError("Input directory not found.")
