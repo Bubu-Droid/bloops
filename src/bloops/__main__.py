@@ -9,6 +9,7 @@ import pathlib
 from typing import cast
 
 from bloops import _build_and_preview
+from bloops.__about__ import __version__ as VERSION
 
 
 def main() -> None:
@@ -27,8 +28,12 @@ def main() -> None:
         allow_abbrev=False,
     )
 
-    # TODO: maybe add a version argument if i make this a package later on
-
+    _ = parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"%(prog)s {VERSION}",
+    )
     _ = parser.add_argument(
         "-c",
         "--build-cont",
