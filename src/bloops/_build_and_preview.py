@@ -19,8 +19,8 @@ from watchdog.events import (
 from watchdog.observers import Observer
 
 from bloops.bloopser import convert_bbcode_to_html
-from bloops.validator import validate_bbcode_and_compile_asy
-from bloops.vars import ERROR_CODE, STYLESHEET
+from bloops.validator import compile_asy_diagrams, validate_bbcode
+from bloops.vars import ERROR_TEMPLATE, STYLESHEET
 
 
 class _Handler(PatternMatchingEventHandler):
@@ -97,8 +97,11 @@ class _Handler(PatternMatchingEventHandler):
             print(
                 "Verifying syntax and generating newly added / changed asymptote diagrams (if any)..."
             )
-            validate_bbcode_and_compile_asy(
-                self.file_content, self.in_dir, self.out_dir
+            compile_asy_diagrams(
+                validate_bbcode(self.file_content),
+                self.file_content,
+                self.in_dir,
+                self.out_dir,
             )
 
             print("Converting BBCode into HTML...")
@@ -106,7 +109,7 @@ class _Handler(PatternMatchingEventHandler):
                 _ = f.write(convert_bbcode_to_html(self.file_content))
         except Exception:
             with self.output_file.open("w", encoding="utf-8") as f:
-                _ = f.write(ERROR_CODE)
+                _ = f.write(ERROR_TEMPLATE)
             # HACK: the liveserver plugin takes short time span before
             # it can reflect the updates.
             # if we raise the exception immediately, then the program
