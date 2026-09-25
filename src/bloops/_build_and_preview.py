@@ -128,9 +128,9 @@ def main(
 ) -> None:
     """Coordinate continuous build tasks and local server preview.
 
-    Ensures required directories and default files exist, sets up
-    file watchers, and optionally serves content using a live-reload
-    server.
+    Ensures required directories and assets exist, resets the Asymptote
+    diagram cache, sets up file watchers, and optionally launches a
+    live-reload preview server.
 
     Args:
         in_dir: Directory path containing source files.
@@ -146,22 +146,28 @@ def main(
     input_file = in_dir / "content.bbcode"
     output_file = in_dir / "index.html"
     style_file = in_dir / "static" / "style.css"
+    style_file.parent.mkdir(parents=True, exist_ok=True)
+    build_dir = in_dir / "build/"
+    build_dir.mkdir(parents=True, exist_ok=True)
+    asy_cache_file = build_dir / "cache.json"
 
     if not in_dir.exists():
         raise FileNotFoundError("Input directory not found.")
     if not in_dir.is_dir():
-        raise NotADirectoryError("Input directory is not a directory.")
+        raise NotADirectoryError(f"{in_dir} is not a directory.")
     if not input_file.exists():
         raise FileNotFoundError("BBCode file (content.bbcode) not found.")
     if not out_dir.exists():
-        out_dir.mkdir()
+        out_dir.mkdir(parents=True, exist_ok=True)
     if not out_dir.is_dir():
-        raise NotADirectoryError("Output directory is not a directory.")
+        raise NotADirectoryError(f"{out_dir} is not a directory.")
     with input_file.open(mode="r", encoding="utf-8") as f:
         file_content = f.read().strip()
     if not style_file.exists():
         with style_file.open("w", encoding="utf-8") as f:
             _ = f.write(STYLESHEET)
+    with asy_cache_file.open("w", encoding="utf-8") as f:
+        _ = f.write("{}")
 
     handler = _Handler(in_dir, out_dir, file_content)
 

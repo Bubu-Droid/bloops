@@ -96,12 +96,7 @@ def compile_asy_diagrams(
     """
 
     build_dir = in_dir / "build/"
-    build_dir.mkdir(exist_ok=True)
     asy_cache_file = build_dir / "cache.json"
-    if not asy_cache_file.exists():
-        asy_cache_file.touch()
-        with asy_cache_file.open("w", encoding="utf-8") as f:
-            _ = f.write("{}")
     with asy_cache_file.open("r", encoding="utf-8") as f:
         asy_cache_content = cast(dict[str, str], json.load(f))
 
