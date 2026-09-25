@@ -22,7 +22,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         prog="bloops",
         description="An AoPS-like BBCode to HTML transpiler written in Python,\
-        with live-preview and support for Asymptote geometry diagrams.",
+        featuring live-preview support and dynamic Asymptote geometry\
+        diagram compilation.",
         allow_abbrev=False,
     )
 
