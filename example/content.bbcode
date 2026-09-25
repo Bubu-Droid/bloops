@@ -1,0 +1,225 @@
+[h1]Page Heading[/h1]
+
+Here is a [color hex=#9ece6a]code[/color] block:
+[code lang=python]
+print("hello world!")
+[/code]
+
+Here's an [b]Asymptote[/b] diagram:
+[asy src=static/meow.svg label=meow width=60 caption="some caption text"]
+import graph;
+size(10cm);
+
+pen tnFg      = rgb("c0caf5");
+pen tnRed     = rgb("f7768e");
+pen tnBlue    = rgb("7aa2f7");
+pen tnOrange  = rgb("ff9e64");
+pen tnMagenta = rgb("bb9af7");
+
+pen dps = linewidth(0.5) + fontsize(13) + tnFg;
+defaultpen(dps);
+
+real xmin = -5, xmax = 5, ymin = -5, ymax = 5;
+
+pair A = (24.81281, -5.45037);
+pair B = (-6.39088, -5.19529);
+pair C = (0.26530, 21.43292);
+pair P = (18.77311, 1.16403);
+pair Q = (18.92617, 19.88811);
+pair O = (9.29559, 5.02962);
+pair D = (27.95646, 3.48480);
+pair F = (26.85608, 19.23164);
+pair S = (18.71945, -5.40056);
+pair E = (26.32491, 12.81529);
+pair X = (25.56886, 3.68246);
+pair Y = (23.63508, 11.33449);
+
+draw((24.64484, 9.50029)--(26.47904, 10.51004)--(25.46928, 12.34425)--Y--cycle,
+     linewidth(0.6) + tnBlue);
+draw((27.65551, 3.50972)--(27.82825, 5.59636)--(25.74160, 5.76910)--X--cycle,
+     linewidth(0.6) + tnBlue);
+draw((15.86788, 11.32006)--(17.00668, 13.07706)--(15.24968, 14.21586)--(14.11088, 12.45886)--cycle,
+     linewidth(0.6) + tnBlue);
+
+draw(A--B, linewidth(0.6) + tnFg);
+draw(B--C, linewidth(0.6) + tnFg);
+draw(C--A, linewidth(0.6) + tnFg);
+
+draw(circle(O, 18.72470), linewidth(0.6) + tnFg);
+draw(circle((27.14069, 8.15005), 4.73602),
+     linewidth(0.6) + linetype("4 4") + tnRed);
+
+draw(C--O, linewidth(0.6) + tnFg);
+draw(D--Q, linewidth(0.6) + tnFg);
+draw(A--F, linewidth(0.6) + tnFg);
+draw(Q--S, linewidth(0.6) + tnFg);
+draw(B--E, linewidth(0.6) + tnFg);
+draw(C--D, linewidth(0.6) + tnFg);
+draw(O--Q, linewidth(0.6) + tnFg);
+
+draw(O--D, linewidth(0.6) + tnOrange);
+draw((20.10150, 4.13506)--(19.29048, 3.31085), linewidth(0.6) + tnOrange);
+draw((20.10150, 4.13506)--(19.43705, 5.08142), linewidth(0.6) + tnOrange);
+draw((18.62602, 4.25721)--(17.81500, 3.43300), linewidth(0.6) + tnOrange);
+draw((18.62602, 4.25721)--(17.96157, 5.20357), linewidth(0.6) + tnOrange);
+
+draw(Q--F, linewidth(0.6) + tnOrange);
+
+draw(C--Q, linewidth(0.6) + tnOrange);
+draw((11.07121, 20.53837)--(10.26018, 19.71415), linewidth(0.6) + tnOrange);
+draw((11.07121, 20.53837)--(10.40676, 21.48473), linewidth(0.6) + tnOrange);
+draw((9.59573, 20.66051)--(8.78471, 19.83630), linewidth(0.6) + tnOrange);
+draw((9.59573, 20.66051)--(8.93128, 21.60687), linewidth(0.6) + tnOrange);
+
+dot("$A$", A, SE,       tnMagenta);
+dot("$B$", B, SW,       tnMagenta);
+dot("$C$", C, NW,       tnMagenta);
+dot("$P$", P, W,        tnMagenta);
+dot("$Q$", Q, NW,       tnMagenta);
+dot("$O$", O, W,        tnMagenta);
+dot("$D$", D, SE,       tnMagenta);
+dot("$F$", F, NE,       tnMagenta);
+dot("$S$", S, dir(270), tnMagenta);
+dot("$E$", E, NE,       tnMagenta);
+dot("$X$", X, SW,       tnMagenta);
+dot("$Y$", Y, NW,       tnMagenta);
+[/asy]
+
+Here's a cute diagram from my
+[url link="https://aops.com/community/c6h3106748p32782057"]IMO 2023 G4[/url]
+solve.
+
+[asy src=static/mewtwo.svg label=mewtwo width=80 caption="cute diagram from IMO 2023 P2"]
+import graph;
+size(12cm);
+
+pen tnFg      = rgb("c0caf5");  // default lines, labels
+pen tnRed     = rgb("f7768e");
+pen tnBlue    = rgb("7aa2f7");
+pen tnOrange  = rgb("ff9e64");
+pen tnMagenta = rgb("bb9af7");  // dots
+
+pen dps = linewidth(0.5) + fontsize(13) + tnFg;
+defaultpen(dps);
+
+real xmin = -5, xmax = 5, ymin = -5, ymax = 5;
+
+pair A = (7.17699, 14.19874);
+pair B = (0.24096, -13.95274);
+pair C = (38.92675, -14.03776);
+pair S = (19.65434, 18.07435);
+pair X = (19.55821, -25.66198);
+pair O = (19.60628, -3.79381);
+pair D = (7.14014, -2.57086);
+pair K = (32.03556, -21.78637);
+pair P = (-0.94805, 3.67199);
+pair L = (-9.82506, -2.53358);
+pair V = (19.58785, -12.17862);
+pair E = (7.09803, -21.73156);
+pair G = (10.60853, 3.15108);
+pair M = (40.74894, 1.79251);
+pair Q = (-9.83673, -7.84409);
+pair R = (7.12847, -7.88137);
+
+draw(A--B, linewidth(0.6) + tnFg);
+draw(B--C, linewidth(0.6) + tnFg);
+draw(C--A, linewidth(0.6) + tnFg);
+
+draw(circle(O, 21.86822), linewidth(0.6) + tnFg);
+draw(circle((-1.34829, -5.20748), 8.88849), linewidth(0.6) + tnFg);
+
+draw(B--S, linewidth(0.6) + tnFg);
+draw(E--K, linewidth(0.6) + tnFg);
+draw(A--E, linewidth(0.6) + tnFg);
+draw(X--S, linewidth(0.6) + tnFg);
+draw(L--D, linewidth(0.6) + tnFg);
+draw(Q--R, linewidth(0.6) + tnFg);
+draw(G--M, linewidth(0.6) + tnFg);
+
+draw(A--X, linewidth(0.6) + linetype("4 4") + tnBlue);
+draw(A--K, linewidth(0.6) + linetype("4 4") + tnBlue);
+draw(A--Q, linewidth(0.6) + linetype("4 4") + tnBlue);
+draw(Q--X, linewidth(0.6) + linetype("4 4") + tnBlue);
+draw(P--X, linewidth(0.6) + linetype("4 4") + tnBlue);
+draw(L--S, linewidth(0.6) + linetype("4 4") + tnBlue);
+draw(L--E, linewidth(0.6) + linetype("4 4") + tnBlue);
+
+draw(P--K, linewidth(0.6) + tnOrange);
+draw((16.86098, -10.07389)--(15.59234, -10.35588), linewidth(0.6) + tnOrange);
+draw((16.86098, -10.07389)--(16.81239, -8.77519),  linewidth(0.6) + tnOrange);
+draw((15.54375, -9.05718)--(14.27511, -9.33917),   linewidth(0.6) + tnOrange);
+draw((15.54375, -9.05718)--(15.49515, -7.75849),   linewidth(0.6) + tnOrange);
+
+draw(S--M, linewidth(0.6) + tnOrange);
+draw((31.51887, 8.91672)--(30.25023, 8.63474),  linewidth(0.6) + tnOrange);
+draw((31.51887, 8.91672)--(31.47028, 10.21542), linewidth(0.6) + tnOrange);
+draw((30.20164, 9.93343)--(28.93300, 9.65144),  linewidth(0.6) + tnOrange);
+draw((30.20164, 9.93343)--(30.15305, 11.23213), linewidth(0.6) + tnOrange);
+
+draw(R--G, linewidth(0.6) + tnRed);
+draw((8.15031, -2.42940)--(9.41983, -2.82985), linewidth(0.6) + tnRed);
+draw((8.31717, -1.90043)--(9.58668, -2.30088), linewidth(0.6) + tnRed);
+
+draw(P--G, linewidth(0.6) + tnRed);
+draw((4.58316, 4.08894)--(4.52321, 2.75911), linewidth(0.6) + tnRed);
+draw((5.13725, 4.06396)--(5.07731, 2.73414), linewidth(0.6) + tnRed);
+
+dot("$A$", A, NW,      tnMagenta);
+dot("$B$", B, SW,      tnMagenta);
+dot("$C$", C, SE,      tnMagenta);
+dot("$S$", S, N,       tnMagenta);
+dot("$X$", X, dir(270), tnMagenta);
+dot("$O$", O, NE,      tnMagenta);
+dot("$D$", D, NW,      tnMagenta);
+dot("$K$", K, SE,      tnMagenta);
+dot("$P$", P, NW,      tnMagenta);
+dot("$L$", L, NW,      tnMagenta);
+dot("$V$", V, NE,      tnMagenta);
+dot("$E$", E, SW,      tnMagenta);
+dot("$G$", G, NW,      tnMagenta);
+dot("$M$", M, NE,      tnMagenta);
+dot("$Q$", Q, SW,      tnMagenta);
+dot("$R$", R, dir(0),  tnMagenta);
+[/asy]
+
+Time for some math!
+$$
+\begin{align*}
+M_X(t) &= E[e^{tX}] \\
+&= \int_{-\infty}^{\infty} e^{tx} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx \\
+&= \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( tx - \frac{(x-\mu)^2}{2\sigma^2} \right) dx \\
+&= \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( \frac{2\sigma^2 tx - (x^2 - 2\mu x + \mu^2)}{2\sigma^2} \right) dx \\
+&= \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( \frac{-x^2 + 2(\mu + \sigma^2 t)x - \mu^2}{2\sigma^2} \right) dx \\
+&= \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( \frac{-[x - (\mu + \sigma^2 t)]^2 + 2\mu\sigma^2 t + \sigma^4 t^2}{2\sigma^2} \right) dx \\
+&= \exp\left( \frac{2\mu\sigma^2 t + \sigma^4 t^2}{2\sigma^2} \right) \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{[x - (\mu + \sigma^2 t)]^2}{2\sigma^2} \right) dx \\
+&= \exp\left( \mu t + \frac{1}{2}\sigma^2 t^2 \right) \cdot 1 \\
+&= e^{\mu t + \frac{1}{2}\sigma^2 t^2}
+\end{align*}
+$$
+
+
+[quote author="sun tzu" link="www.google.com"]
+To confuse your enemy, you must first confuse yourself
+[/quote]
+
+Time for some math boxes!
+
+[proposition title=meow]
+some theorem statement.
+[/proposition]
+
+[lemma title="trivial lemma"]
+Consider the following operation on an arbitrary positive integer:
+
+[list style=disc]
+[*]If the number is even, divide it by two.[/*]
+[*]If the number is odd, triple it and add one.[/*]
+[/list]
+
+Prove that this process will eventually reach the number 1,
+regardless of which positive integer is chosen initially.
+[/lemma]
+
+[proof]
+[s]Left as an exercise to the reader[/s] Skipped, too easy.
+[/proof]

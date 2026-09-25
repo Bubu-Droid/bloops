@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bloops Preview</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
+    />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: { "[+]": [["$", "$"]] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+        output: {
+          displayOverflow: "linebreak",
+          linebreaks: {
+            inline: true,
+            width: "100%",
+            lineleading: 0.2,
+            LinebreakVisitor: null,
+          },
+        },
+      };
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
+    ></script>
+  </head>
+  <body>
+    <h1>Page Heading</h1>
+
+    Here is a <span style="color: #9ece6a">code</span> block:
+    <pre>
+<code class="language-python">
+print("hello world!")
+</code>
+</pre>
+
+    Here's an <strong>Asymptote</strong> diagram:
+    <figure>
+      <img src="static/meow.svg" style="width: 60%; height: auto" />
+      <figcaption>some caption text</figcaption>
+    </figure>
+
+    Here's a cute diagram from my
+    <a href="https://aops.com/community/c6h3106748p32782057" target="_blank"
+      >IMO 2023 G4</a
+    >
+    solve.
+
+    <figure>
+      <img src="static/mewtwo.svg" style="width: 80%; height: auto" />
+      <figcaption>cute diagram from IMO 2023 P2</figcaption>
+    </figure>
+
+    Time for some math! $$ \begin{align*} M_X(t) &= E[e^{tX}] \\ &=
+    \int_{-\infty}^{\infty} e^{tx} \frac{1}{\sigma \sqrt{2\pi}} \exp\left(
+    -\frac{(x-\mu)^2}{2\sigma^2} \right) dx \\ &= \int_{-\infty}^{\infty}
+    \frac{1}{\sigma \sqrt{2\pi}} \exp\left( tx - \frac{(x-\mu)^2}{2\sigma^2}
+    \right) dx \\ &= \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}}
+    \exp\left( \frac{2\sigma^2 tx - (x^2 - 2\mu x + \mu^2)}{2\sigma^2} \right)
+    dx \\ &= \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left(
+    \frac{-x^2 + 2(\mu + \sigma^2 t)x - \mu^2}{2\sigma^2} \right) dx \\ &=
+    \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( \frac{-[x -
+    (\mu + \sigma^2 t)]^2 + 2\mu\sigma^2 t + \sigma^4 t^2}{2\sigma^2} \right) dx
+    \\ &= \exp\left( \frac{2\mu\sigma^2 t + \sigma^4 t^2}{2\sigma^2} \right)
+    \int_{-\infty}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{[x -
+    (\mu + \sigma^2 t)]^2}{2\sigma^2} \right) dx \\ &= \exp\left( \mu t +
+    \frac{1}{2}\sigma^2 t^2 \right) \cdot 1 \\ &= e^{\mu t + \frac{1}{2}\sigma^2
+    t^2} \end{align*} $$
+
+    <figure>
+      <blockquote cite="www.google.com">
+        <p>To confuse your enemy, you must first confuse yourself</p>
+      </blockquote>
+      <figcaption>
+        <cite>sun tzu</cite>
+      </figcaption>
+    </figure>
+
+    Time for some math boxes!
+
+    <div class="boxproposition">
+      <span class="title-block">Proposition (meow).</span>
+      some theorem statement.
+    </div>
+
+    <div class="boxtheorem">
+      <span class="title-block">Lemma (trivial lemma).</span>
+      Consider the following operation on an arbitrary positive integer:
+
+      <ul style="list-style-type: disc">
+        <li>If the number is even, divide it by two.</li>
+        <li>If the number is odd, triple it and add one.</li>
+      </ul>
+
+      Prove that this process will eventually reach the number 1, regardless of
+      which positive integer is chosen initially.
+    </div>
+
+    <div>
+      <i class="proof">Proof.</i>
+      <s>Left as an exercise to the reader</s> Skipped, too easy.<span
+        class="qed"
+        >&#9633;</span
+      >
+    </div>
+  </body>
+</html>
