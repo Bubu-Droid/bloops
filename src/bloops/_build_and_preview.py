@@ -168,7 +168,7 @@ def main(
     if preview:
         if build_cont:
             server_thread = threading.Thread(
-                target=_run_server, daemon=False, args=(output_file,)
+                target=_run_server, daemon=True, args=(output_file,)
             )
             server_thread.start()
         else:
