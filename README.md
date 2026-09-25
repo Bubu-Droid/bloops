@@ -314,4 +314,4 @@ every disjoint block of HTML code.
 - [ ] Handle `]` inside arguments of BBCode tags.
 - [ ] Add script placeholder to HTML templates.
 
-<p align="right"><a href="#top">&uarr; Back to top</a></p>
+<p align="right"><a href="#index">&uarr; Back to top</a></p>
