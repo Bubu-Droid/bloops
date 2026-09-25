@@ -11,7 +11,7 @@ class TestCodeTag:
         )
         assert res == (
             r"""<pre>
-<code class="language-plaintext">
+<code>
 some random stuff
 </code>
 </pre>"""
