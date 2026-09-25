@@ -159,7 +159,7 @@ def _convert_tag_to_html(
             content.append("<pre>")
             code_dict = args
             if "lang" not in code_dict:
-                content.append('<code class="language-plaintext">')
+                content.append("<code>")
             else:
                 content.append(f'<code class="language-{code_dict["lang"]}">')
             content.append(inner_content)
