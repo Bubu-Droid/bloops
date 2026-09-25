@@ -379,7 +379,7 @@ div:has(> .proof) {
 }"""
 
 # TODO: shift the avatar to integration server and use the static link
-ERROR_CODE = r"""<!doctype html>
+ERROR_TEMPLATE = r"""<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
