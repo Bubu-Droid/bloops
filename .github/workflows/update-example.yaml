@@ -26,7 +26,7 @@ jobs:
       - name: "install dependencies"
         run: uv sync
       - name: "generate html for bbcode example"
-        run: python .github/scripts/update-example.py
+        run: uv run .github/scripts/update-example.py
       - name: "format html using prettier"
         run: uv run prek run prettier --all-files
         continue-on-error: true
