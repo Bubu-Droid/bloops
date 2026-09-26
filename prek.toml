@@ -43,7 +43,6 @@ repo = "https://github.com/astral-sh/ruff-pre-commit"
 rev = "v0.16.8"
 hooks = [{ id = "ruff-format" }, { id = "ruff-check" }]
 
-# move this to pre-push if this slows down commits too much
 [[repos]]
 repo = "https://github.com/DetachHead/basedpyright-prek-mirror"
 rev = "1.40.1"
@@ -94,6 +93,11 @@ hooks = [
   { id = "rumdl-fmt" },
   { id = "rumdl" },
 ]
+
+[[repos]]
+repo = "https://github.com/JoC0de/pre-commit-prettier"
+rev = "v3.9.9"
+hooks = [{ id = "prettier", types_or = ["html", "css", "javascript"] }]
 
 [[repos]]
 repo = "https://github.com/codespell-project/codespell"
