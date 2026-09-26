@@ -5,7 +5,7 @@ from bloops.validator import validate_bbcode
 
 REPO_ROOT: Path = Path(__file__).resolve().parent.parent.parent
 INPUT_FILE: Path = REPO_ROOT / "example" / "content.bbcode"
-OUTPUT_FILE: Path = REPO_ROOT / "index.html"
+OUTPUT_FILE: Path = REPO_ROOT / "example" / "index.html"
 
 
 def main() -> None:
