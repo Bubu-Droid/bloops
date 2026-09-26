@@ -22,8 +22,8 @@ jobs:
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           delete-branch: true
-          commit-message: "docs(api): generate new docs and write to API.md"
-          title: "Update API docs"
+          commit-message: "docs(api): rebuild new docs and write to API.md"
+          title: "docs(api): rebuild and update docs"
           body: >
             New API.md has been generated using
             [update-api-docs.py](.github/scripts/update-api-docs.py).
