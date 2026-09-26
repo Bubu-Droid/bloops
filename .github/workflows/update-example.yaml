@@ -37,5 +37,5 @@ jobs:
           commit-message: "docs(example): rebuild index.html for new content.bbcode"
           title: "docs(example): update index.html to conform with updated content.bbcode"
           body: >
-            "New index.html has been generated using
-            [update-example.py](.github/scripts/update-example.py)."
+            New index.html has been generated using
+            [update-example.py](.github/scripts/update-example.py).
