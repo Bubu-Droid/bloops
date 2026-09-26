@@ -24,9 +24,9 @@ hooks = [
   { id = "check-executables-have-shebangs" },
 ]
 
-# [[repos]]
-# repo = "meta"
-# hooks = [{ id = "check-useless-excludes" }]
+[[repos]]
+repo = "meta"
+hooks = [{ id = "check-useless-excludes" }]
 
 [[repos]]
 repo = "https://github.com/gitleaks/gitleaks"
