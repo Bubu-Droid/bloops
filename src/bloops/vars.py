@@ -91,6 +91,7 @@ STYLESHEET = r""":root {
 
   /* fonts */
   --lora: "Lora", serif;
+  --open-sans: "Open Sans", sans-serif;
   --jetbrains-mono: "JetBrains Mono", monospace;
 }
 
@@ -107,7 +108,7 @@ body {
   padding: 5rem 1.5rem 8rem;
   background: var(--tn-bg);
   color: var(--tn-fg);
-  font-family: var(--lora);
+  font-family: var(--open-sans);
   font-optical-sizing: auto;
   font-size: 1.125rem;
   line-height: 1.75;
