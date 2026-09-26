@@ -4,7 +4,7 @@ from bloops.bloopser import convert_bbcode_to_html
 from bloops.validator import validate_bbcode
 
 REPO_ROOT: Path = Path(__file__).resolve().parent.parent.parent
-INPUT_FILE: Path = REPO_ROOT / "examples" / "content.bbcode"
+INPUT_FILE: Path = REPO_ROOT / "example" / "content.bbcode"
 OUTPUT_FILE: Path = REPO_ROOT / "index.html"
 
 
