@@ -315,5 +315,7 @@ every disjoint block of HTML code.
 - [ ] Change `BBCODE_TAGS` to a dict instead of a list.
 - [ ] Handle `]` inside arguments of BBCode tags.
 - [ ] Add script placeholder to HTML templates.
+- [ ] De-couple templates and stylesheets by moving them
+to their independent files.
 
 <p align="right"><a href="#index">&uarr; Back to top</a></p>
