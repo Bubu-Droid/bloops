@@ -9,7 +9,39 @@ written in Python, with **live-preview**
 and support for **Asymptote geometry diagrams**.
 
 <div align="center">
-    add badges here
+    <a href="https://github.com/Bubu-Droid/bloops/releases/latest">
+        <img alt="PyPI Version" src="https://img.shields.io/pypi/v/bloops?label=PyPI&style=for-the-badge&logo=pypi&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7" />
+    </a>
+    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/prek.yaml">
+        <img alt="Prek CI Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/prek.yaml?label=CI&style=for-the-badge&logo=githubactions&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
+    </a>
+    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/pytest.yaml">
+        <img alt="Unit Tests Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/pytest.yaml?label=Unit%20Tests&style=for-the-badge&logo=pytest&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
+    </a>
+</div>
+
+<div align="center">
+    <a href="https://github.com/Bubu-Droid/bloops/issues">
+        <img alt="GitHub Issues" src="https://img.shields.io/github/issues/Bubu-Droid/bloops?label=Issues&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=e0af68" />
+    </a>
+    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/codeql.yaml">
+        <img alt="CodeQL Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/codeql.yaml?label=CodeQL&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=bb9af7" />
+    </a>
+</div>
+
+<div align="center">
+    <a href="https://github.com/Bubu-Droid/bloops/blob/main/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/Bubu-Droid/bloops?label=License&style=for-the-badge&labelColor=1a1b26&color=7dcfff" />
+    </a>
+    <a href="https://github.com/Bubu-Droid/bloops/stargazers">
+        <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Bubu-Droid/bloops?label=Stars&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=ff9e64" />
+    </a>
+    <a href="https://github.com/astral-sh/ruff">
+        <img alt="Ruff" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json&style=for-the-badge&labelColor=1a1b26" />
+    </a>
+    <a href="https://docs.basedpyright.com">
+        <img alt="basedpyright - checked" src="https://img.shields.io/endpoint?url=https://docs.basedpyright.com/latest/badge.json&style=for-the-badge&labelColor=1a1b26" />
+    </a>
 </div>
 
 ## Index
