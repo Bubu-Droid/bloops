@@ -1,3 +1,3 @@
-__version__ = "0.0.2"
+__version__ = "0.1.3"
 __author__ = "Bubu-Droid"
 __license__ = "MIT"
