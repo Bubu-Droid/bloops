@@ -16,16 +16,14 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: "Set up Python"
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version-file: .python-version
       - name: "Install uv"
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
           enable-cache: true
+      - name: "Set up Python"
+        run: uv python install
       - name: "Install dependencies"
-        run: uv sync
+        run: uv sync --locked --all-extras --dev
       - name: "Rebuild index.html from content.bbcode"
         run: uv run .github/scripts/update-example.py
       - name: "Format index.html using prettier"
@@ -34,7 +32,6 @@ jobs:
       - name: "Create pull request"
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          delete-branch: true
           commit-message: "docs(example): rebuild index.html for new content.bbcode"
           title: "docs(example): update index.html to conform with updated content.bbcode"
           body: >
