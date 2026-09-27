@@ -21,6 +21,9 @@ and support for **Asymptote geometry diagrams**.
 </div>
 
 <div align="center">
+    <a href="https://pypi.org/project/bloops/">
+        <img alt="PyPI Python Version" src="https://img.shields.io/pypi/pyversions/bloops?style=for-the-badge&logo=python&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7" />
+    </a>
     <a href="https://github.com/Bubu-Droid/bloops/issues">
         <img alt="GitHub Issues" src="https://img.shields.io/github/issues/Bubu-Droid/bloops?label=Issues&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=e0af68" />
     </a>
@@ -81,9 +84,9 @@ for vector diagram rendering
 
 ## Installation
 
-<!-- TODO: add pypi listing link here -->
 <!-- TODO: add AUR entry for bloops -->
-Install `bloops` from PyPI. Here is the PyPI listing.
+Install `bloops` from PyPI. Here is the
+[PyPI listing](https://pypi.org/project/bloops/).
 
 - I suggest using `uv`: run ```uv tool install bloops```.
 - Or, if you want to use `pip`: run `pip install bloops`.
