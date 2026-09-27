@@ -1,4 +1,4 @@
-name: Lint PR
+name: "Lint PR"
 on:
   pull_request:
     types:
@@ -9,12 +9,12 @@ on:
 permissions: {}
 jobs:
   validate-pr-title:
-    name: Validate PR title
+    name: "Validate PR title"
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
     steps:
-      - name: Lint PR
+      - name: "Lint PR"
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
