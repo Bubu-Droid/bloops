@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/banner.png" style="width: 90%; height: auto;">
+    <img src="https://raw.githubusercontent.com/Bubu-Droid/bloops/main/assets/banner.png" style="width: 90%; height: auto;">
 </div>
 
 <hr>
@@ -10,7 +10,7 @@ and support for **Asymptote geometry diagrams**.
 
 <div align="center">
     <a href="https://github.com/Bubu-Droid/bloops/releases/latest">
-        <img alt="PyPI Version" src="https://img.shields.io/pypi/v/bloops?label=PyPI&style=for-the-badge&logo=pypi&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7" />
+        <img alt="PyPI Version" src="https://img.shields.io/pypi/v/bloops?label=PyPI&style=for-the-badge&logo=pypi&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
     <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/prek.yaml">
         <img alt="Prek CI Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/prek.yaml?label=CI&style=for-the-badge&logo=githubactions&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
@@ -22,7 +22,7 @@ and support for **Asymptote geometry diagrams**.
 
 <div align="center">
     <a href="https://pypi.org/project/bloops/">
-        <img alt="PyPI Python Version" src="https://img.shields.io/pypi/pyversions/bloops?style=for-the-badge&logo=python&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7" />
+        <img alt="PyPI Python Version" src="https://img.shields.io/pypi/pyversions/bloops?style=for-the-badge&logo=python&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
     <a href="https://github.com/Bubu-Droid/bloops/issues">
         <img alt="GitHub Issues" src="https://img.shields.io/github/issues/Bubu-Droid/bloops?label=Issues&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=e0af68" />
