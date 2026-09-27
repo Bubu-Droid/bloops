@@ -1,6 +1,7 @@
 name: "Rebuild example/index.html"
 on:
   push:
+    branches: [main]
     paths: "example/content.bbcode"
   workflow_dispatch:
 permissions: {}
