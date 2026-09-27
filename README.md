@@ -75,7 +75,7 @@ code syntax highlighting.
 
 ## Requirements
 
-- **Python >= 3.10**
+- **Python >= 3.12**
 - **Asymptote** (`asy` executable available in your system `PATH`)
 for vector diagram rendering
 
