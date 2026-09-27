@@ -46,11 +46,7 @@ hooks = [{ id = "ruff-format" }, { id = "ruff-check" }]
 [[repos]]
 repo = "https://github.com/DetachHead/basedpyright-prek-mirror"
 rev = "1.40.1"
-hooks = [
-  {
-    id = "basedpyright",
-  }
-]
+hooks = [{ id = "basedpyright" }]
 
 [[repos]]
 repo = "https://github.com/tox-dev/pyproject-fmt"
@@ -62,15 +58,13 @@ repo = "https://github.com/tombi-toml/tombi-pre-commit"
 rev = "v1.5.5"
 hooks = [
   { id = "tombi-format", exclude = "(^pyproject\\.toml$|^uv\\.lock$)" },
-  { id = "tombi-lint" },
+  { id = "tombi-lint" }
 ]
 
 [[repos]]
 repo = "https://github.com/google/yamlfmt"
 rev = "v0.21.0"
-hooks = [
-  { id = "yamlfmt" },
-]
+hooks = [{ id = "yamlfmt" }]
 
 [[repos]]
 repo = "https://github.com/rhysd/actionlint"
@@ -89,10 +83,7 @@ hooks = [
 [[repos]]
 repo = "https://github.com/rvben/rumdl-pre-commit"
 rev = "v0.2.77"
-hooks = [
-  { id = "rumdl-fmt" },
-  { id = "rumdl" },
-]
+hooks = [{ id = "rumdl-fmt" }, { id = "rumdl" }]
 
 [[repos]]
 repo = "https://github.com/JoC0de/pre-commit-prettier"
@@ -118,8 +109,6 @@ hooks = [
     entry = "uv run pytest",
     pass_filenames = false,
     language = "system",
-    stages = [
-      "pre-push",
-    ]
+    stages = ["pre-push"]
   },
 ]
