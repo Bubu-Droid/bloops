@@ -40,7 +40,7 @@ hooks = [{ id = "zizmor" }]
 
 [[repos]]
 repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.16.8"
+rev = "v0.16.9"
 hooks = [{ id = "ruff-format" }, { id = "ruff-check" }]
 
 [[repos]]
@@ -97,7 +97,7 @@ hooks = [{ id = "codespell" }]
 
 [[repos]]
 repo = "https://github.com/astral-sh/uv-pre-commit"
-rev = "0.12.18"
+rev = "0.12.19"
 hooks = [{ id = "uv-lock" }]
 
 [[repos]]
