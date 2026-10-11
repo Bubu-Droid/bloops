@@ -40,7 +40,7 @@ repos:
     hooks:
       - id: "basedpyright"
   - repo: "https://github.com/tox-dev/pyproject-fmt"
-    rev: "v2.29.4"
+    rev: "v2.30.0"
     hooks:
       - id: "pyproject-fmt"
         files: "^pyproject\\.toml$"
