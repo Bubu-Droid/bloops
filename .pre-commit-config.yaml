@@ -36,7 +36,7 @@ repos:
       - id: "ruff-format"
       - id: "ruff-check"
   - repo: "https://github.com/DetachHead/basedpyright-prek-mirror"
-    rev: "1.40.1"
+    rev: "1.40.2"
     hooks:
       - id: "basedpyright"
   - repo: "https://github.com/tox-dev/pyproject-fmt"
