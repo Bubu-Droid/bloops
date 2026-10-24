@@ -38,7 +38,7 @@ dependencies = [
   "livereload>=2.7.1",
   "watchdog>=6",
 ]
-urls.Documentation = "https://github.com/Bubu-Droid/bloops/blob/main/docs/API.md"
+urls.Documentation = "https://github.com/Bubu-Droid/bloops/blob/main/docs/api.md"
 urls.Issues = "https://github.com/Bubu-Droid/bloops/issues"
 urls.Repository = "https://github.com/Bubu-Droid/bloops"
 scripts.bloops = "bloops.cli:main"
@@ -52,6 +52,7 @@ dev = [
 [tool.hatch]
 version.path = "src/bloops/__about__.py"
 build.targets.wheel.packages = [ "src/bloops" ]
+build.targets.sdist.include = [ "/src", "/tests", "/docs", "/example" ]
 
 [tool.ruff]
 line-length = 80
