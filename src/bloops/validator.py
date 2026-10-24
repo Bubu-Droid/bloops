@@ -97,8 +97,10 @@ def compile_asy_diagrams(
 
     build_dir = in_dir / "build/"
     asy_cache_file = build_dir / "cache.json"
-    with asy_cache_file.open("r", encoding="utf-8") as f:
-        asy_cache_content = cast(dict[str, str], json.load(f))
+
+    asy_cache_content = cast(
+        dict[str, str], json.loads(asy_cache_file.read_text(encoding="utf-8"))
+    )
 
     for label, index in label_dict.items():
         changed = False
@@ -119,8 +121,7 @@ def compile_asy_diagrams(
                 changed = True
         if changed:
             asy_code_file = build_dir / f"{label}.asy"
-            with asy_code_file.open("w", encoding="utf-8") as f:
-                _ = f.write(inner_content)
+            _ = asy_code_file.write_text(inner_content, encoding="utf-8")
 
             res = subprocess.run(
                 [
@@ -137,8 +138,10 @@ def compile_asy_diagrams(
             )
 
             if res.returncode == 0:
-                with asy_cache_file.open("w", encoding="utf-8") as f:
-                    json.dump(asy_cache_content, f)
+                _ = asy_cache_file.write_text(
+                    json.dumps(asy_cache_content), encoding="utf-8"
+                )
+
             else:
                 error_line = get_error_line(text, index)
                 error_message = res.stderr

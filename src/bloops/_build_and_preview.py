@@ -77,8 +77,7 @@ class _Handler(PatternMatchingEventHandler):
             event: File system event describing the modification.
         """
 
-        with self.input_file.open(mode="r", encoding="utf-8") as f:
-            new_content = f.read().strip()
+        new_content = self.input_file.read_text(encoding="utf-8").strip()
         if self.file_content == new_content:
             return
         print("---------- File change detected ----------")
@@ -110,11 +109,11 @@ class _Handler(PatternMatchingEventHandler):
             )
 
             print("Converting BBCode into HTML...")
-            with self.output_file.open("w", encoding="utf-8") as f:
-                _ = f.write(convert_bbcode_to_html(self.file_content))
+            _ = self.output_file.write_text(
+                convert_bbcode_to_html(self.file_content), encoding="utf-8"
+            )
         except Exception:
-            with self.output_file.open("w", encoding="utf-8") as f:
-                _ = f.write(ERROR_TEMPLATE)
+            _ = self.output_file.write_text(ERROR_TEMPLATE, encoding="utf-8")
             # HACK: the liveserver plugin takes short time span before
             # it can reflect the updates.
             # if we raise the exception immediately, then the program
@@ -166,13 +165,10 @@ def main(
         out_dir.mkdir(parents=True, exist_ok=True)
     if not out_dir.is_dir():
         raise NotADirectoryError(f"{out_dir} is not a directory.")
-    with input_file.open(mode="r", encoding="utf-8") as f:
-        file_content = f.read().strip()
+    file_content = input_file.read_text(encoding="utf-8").strip()
     if not style_file.exists():
-        with style_file.open("w", encoding="utf-8") as f:
-            _ = f.write(STYLESHEET)
-    with asy_cache_file.open("w", encoding="utf-8") as f:
-        _ = f.write("{}")
+        _ = style_file.write_text(STYLESHEET, encoding="utf-8")
+    _ = asy_cache_file.write_text("{}", encoding="utf-8")
 
     handler = _Handler(in_dir, out_dir, file_content)
 
