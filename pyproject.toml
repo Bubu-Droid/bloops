@@ -41,7 +41,7 @@ dependencies = [
 urls.Documentation = "https://github.com/Bubu-Droid/bloops/blob/main/docs/API.md"
 urls.Issues = "https://github.com/Bubu-Droid/bloops/issues"
 urls.Repository = "https://github.com/Bubu-Droid/bloops"
-scripts.bloops = "bloops.__main__:main"
+scripts.bloops = "bloops.cli:main"
 
 [dependency-groups]
 dev = [
