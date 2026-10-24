@@ -8,6 +8,7 @@ server.
 import pathlib
 import threading
 import time
+from importlib.resources import files
 from typing import override
 
 from livereload import Server  # pyright: ignore[reportMissingTypeStubs]
@@ -20,7 +21,11 @@ from watchdog.observers import Observer
 
 from bloops.bloopser import convert_bbcode_to_html
 from bloops.validator import compile_asy_diagrams, validate_bbcode
-from bloops.vars import ERROR_TEMPLATE, STYLESHEET
+
+_static = files("bloops") / "static"
+
+STYLESHEET = (_static / "style.css").read_text(encoding="utf-8")
+ERROR_TEMPLATE = (_static / "error_template.html").read_text(encoding="utf-8")
 
 
 class _Handler(PatternMatchingEventHandler):
