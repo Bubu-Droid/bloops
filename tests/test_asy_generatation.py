@@ -18,10 +18,9 @@ class TestGenerateAsyDiags:
         pathlib.Path("./build/cache.json").parent.mkdir(
             parents=True, exist_ok=True
         )
-        with pathlib.Path("./build/cache.json").open(
-            "w", encoding="utf-8"
-        ) as f:
-            _ = f.write("{}")
+        _ = pathlib.Path("./build/cache.json").write_text(
+            "{}", encoding="utf-8"
+        )
 
     def test_correct_asy(self) -> None:
         compile_asy_diagrams(
