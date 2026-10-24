@@ -5,7 +5,7 @@ from pathlib import Path
 
 REPO_ROOT: Path = Path(__file__).resolve().parent.parent.parent
 SRC_DIR: Path = REPO_ROOT / "src" / "bloops"
-OUTPUT_FILE: Path = REPO_ROOT / "docs" / "API.md"
+OUTPUT_FILE: Path = REPO_ROOT / "docs" / "api.md"
 
 MISSING_DOCSTRING_NOTICE: str = "⚠️ **No docstring — needs manual review.**"
 
