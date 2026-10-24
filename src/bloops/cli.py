@@ -1,0 +1,79 @@
+"""CLI entrypoint module for the bloops package.
+
+Handles command-line argument parsing and delegates execution
+to the build and preview controller.
+"""
+
+import argparse
+import pathlib
+from typing import cast
+
+from bloops import _build_and_preview
+from bloops.__about__ import __version__ as VERSION
+
+
+def main() -> None:
+    """Parse command-line arguments and run the build and preview process.
+
+    Reads input/output paths and continuous build or live preview flags
+    from CLI arguments, setting default fallback paths when necessary,
+    and invokes the build and preview pipeline.
+    """
+
+    parser = argparse.ArgumentParser(
+        prog="bloops",
+        description="An AoPS-like BBCode to HTML transpiler written in Python,\
+        featuring live-preview support and dynamic Asymptote geometry\
+        diagram compilation.",
+        allow_abbrev=False,
+    )
+
+    _ = parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"%(prog)s {VERSION}",
+    )
+    _ = parser.add_argument(
+        "-c",
+        "--build-cont",
+        action="store_true",
+        help="convert BBCode to HTML and continuously write to index.html on change",
+    )
+    _ = parser.add_argument(
+        "-p",
+        "--preview",
+        action="store_true",
+        help="run a preview of index.html on the web-browser",
+    )
+    _ = parser.add_argument(
+        "-i",
+        "--input",
+        nargs=1,
+        type=pathlib.Path,
+        required=True,
+        metavar="INDIR",
+        help="directory path which contains the BBCode file",
+    )
+    _ = parser.add_argument(
+        "-o",
+        "--output",
+        nargs=1,
+        type=pathlib.Path,
+        metavar="OUTDIR",
+        help="optional directory path where generated Asymptote diagrams are to be saved",
+    )
+
+    args = parser.parse_args()
+
+    # I LOVE TYPE HINTING!!!!
+    in_dir = cast(pathlib.Path, args.input[0])
+    out_arg = cast(list[pathlib.Path] | None, args.output)
+    out_dir = out_arg[0] if out_arg else in_dir / "static/"
+
+    build_cont_flag = cast(bool, args.build_cont)
+    preview_flag = cast(bool, args.preview)
+
+    _build_and_preview.main(
+        in_dir, out_dir, build_cont=build_cont_flag, preview=preview_flag
+    )
