@@ -1,15 +1,3 @@
-<style>
-.badge-container {
-  height: 28px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  margin: 6px 0;
-}
-</style>
-
 <div align="center">
     <img src="https://raw.githubusercontent.com/Bubu-Droid/bloops/main/assets/banner.png" style="width: 90%; height: auto;">
 </div>
@@ -20,7 +8,7 @@ Bloops is an AoPS-like **BBCode to HTML transpiler**
 written in Python, with **live-preview**
 and support for **Asymptote geometry diagrams**.
 
-<div align="center" class="badge-container">
+<div align="center" style="height: 28px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 6px 0;">
     <a href="https://github.com/Bubu-Droid/bloops/releases/latest">
         <img alt="PyPI Version" src="https://img.shields.io/pypi/v/bloops?label=PyPI&style=for-the-badge&logo=pypi&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
@@ -32,7 +20,7 @@ and support for **Asymptote geometry diagrams**.
     </a>
 </div>
 
-<div align="center" class="badge-container">
+<div align="center" style="height: 28px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 6px 0;">
     <a href="https://pypi.org/project/bloops/">
         <img alt="PyPI Python Version" src="https://img.shields.io/pypi/pyversions/bloops?style=for-the-badge&logo=python&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
@@ -44,7 +32,7 @@ and support for **Asymptote geometry diagrams**.
     </a>
 </div>
 
-<div align="center" class="badge-container">
+<div align="center" style="height: 28px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 6px 0;">
     <a href="https://github.com/Bubu-Droid/bloops/blob/main/LICENSE">
         <img alt="License" src="https://img.shields.io/github/license/Bubu-Droid/bloops?label=License&style=for-the-badge&labelColor=1a1b26&color=7dcfff" />
     </a>
