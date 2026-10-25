@@ -31,6 +31,9 @@ BBCODE_TAGS: list[tuple[re.Pattern[str], re.Pattern[str], list[str]]] = [
         re.compile(r"\[/url\]"),
         ["link", "target"],
     ),
+    (re.compile(r"\[(sidemark)\]"), re.compile(r"\[/sidemark\]"), []),
+    (re.compile(r"\[(sidenote)\]"), re.compile(r"\[/sidenote\]"), []),
+    (re.compile(r"\[(hide)(.*?)\]"), re.compile(r"\[/hide\]"), ["label"]),
     (re.compile(r"\[(theorem)(.*?)\]"), re.compile(r"\[/theorem\]"), ["title"]),
     (re.compile(r"\[(lemma)(.*?)\]"), re.compile(r"\[/lemma\]"), ["title"]),
     (

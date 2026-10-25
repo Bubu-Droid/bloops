@@ -274,3 +274,13 @@ def _validate_args(
                 + "\n\n"
                 + f"{error_line[0]}: {error_line[1]}"
             )
+
+    elif tag == "hide":
+        hide_dict = args
+        if "label" not in hide_dict:
+            error_line = get_error_line(text, open_delim_start_index)
+            raise ValueError(
+                'Missing mandatory parameter "label."'
+                + "\n\n"
+                + f"{error_line[0]}: {error_line[1]}"
+            )
