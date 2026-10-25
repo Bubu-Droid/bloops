@@ -22,7 +22,6 @@ def gobble_inside_delim(
     Returns:
         The inner text string enclosed by the matching delimiters.
     """
-
     close_delim_end_index = get_close_delim_end_index(
         text, open_delim_start_index, open_delim, close_delim
     )
@@ -53,7 +52,6 @@ def gobble_around_delim(
     Returns:
         Substring spanning from opening tag start to closing tag end.
     """
-
     close_delim_end_index = get_close_delim_end_index(
         text, open_delim_start_index, open_delim, close_delim
     )
@@ -86,7 +84,6 @@ def get_close_delim_end_index(
             matching closing tag cannot be found.
         RuntimeError: If parser enters an unexpected state.
     """
-
     open_delim_counter = 1
     close_delim_counter = 0
 
@@ -109,7 +106,7 @@ def get_close_delim_end_index(
         if not close_delim_match:
             error_line = get_error_line(text, index - 1)
             raise SyntaxError(
-                "Failed to find an opening pair for delimiter."
+                "Failed to find a closing pair for delimiter."
                 + "\n\n"
                 + f"{error_line[0]}: {error_line[1]}"
             )
