@@ -14,10 +14,14 @@ with MathJax and Syntax Highlighting support.
 
 Args:
     text: Raw BBCode text content.
-    bbcode_tags: List of tag configurations and rule definitions.
+    bbcode_tags: Mapping of tag names to their opening pattern,
+        closing pattern and permitted arguments. See `BBCODE_TAGS`.
 
 Returns:
     A fully formatted HTML document string.
+
+Raises:
+    SyntaxError: If a tag has no matching closing tag.
 
 ## `bracer.py`
 
@@ -68,6 +72,16 @@ Raises:
         matching closing tag cannot be found.
     RuntimeError: If parser enters an unexpected state.
 
+## `cli.py`
+
+### `main` (Function)
+
+Parse command-line arguments and run the build and preview process.
+
+Reads input/output paths and continuous build or live preview flags
+from CLI arguments, setting default fallback paths when necessary,
+and invokes the build and preview pipeline.
+
 ## `validator.py`
 
 ### `validate_bbcode` (Function)
@@ -80,13 +94,14 @@ dictionary mapping each diagram label to its character index.
 
 Args:
     text: Raw BBCode input string.
-    bbcode_tags: List of tag configurations, matching patterns,
-        and permitted argument lists.
+    bbcode_tags: Mapping of tag names to their opening pattern,
+        closing pattern and permitted arguments. See `BBCODE_TAGS`.
 
 Returns:
     A dictionary mapping diagram labels to their starting index.
 
 Raises:
+    SyntaxError: If a tag has no matching closing tag.
     ValueError: If an invalid argument is supplied or duplicate
         diagram labels are encountered.
 
@@ -104,6 +119,10 @@ Args:
     text: Entire input text containing BBCode and Asymptote code.
     in_dir: Source directory containing the build cache folder.
     out_dir: Target directory where compiled SVG images are stored.
+    bbcode_tags: Mapping of tag names to their opening pattern,
+        closing pattern and permitted arguments. See `BBCODE_TAGS`.
 
 Raises:
+    FileNotFoundError: If `build/cache.json` does not exist in
+        `in_dir`, or the `asy` executable is not installed.
     ValueError: If Asymptote compilation fails.
