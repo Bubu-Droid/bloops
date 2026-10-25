@@ -13,8 +13,8 @@ INDEX_TEMPLATE = (_static / "index.html").read_text(encoding="utf-8")
 
 def convert_bbcode_to_html(
     text: str,
-    bbcode_tags: list[
-        tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    bbcode_tags: dict[
+        str, tuple[re.Pattern[str], re.Pattern[str], list[str]]
     ] = BBCODE_TAGS,
 ) -> str:
     """Transpile a BBCode string into a complete HTML document.
@@ -31,7 +31,7 @@ def convert_bbcode_to_html(
         A fully formatted HTML document string.
     """
 
-    for tag_tuple in bbcode_tags:
+    for tag_tuple in bbcode_tags.values():
         open_delim = tag_tuple[0]
         close_delim = tag_tuple[1]
         index = 0

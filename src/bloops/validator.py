@@ -20,8 +20,8 @@ from bloops.vars import BBCODE_TAGS
 
 def validate_bbcode(
     text: str,
-    bbcode_tags: list[
-        tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    bbcode_tags: dict[
+        str, tuple[re.Pattern[str], re.Pattern[str], list[str]]
     ] = BBCODE_TAGS,
 ) -> dict[str, int]:
     """Validate BBCode syntax and collect diagram label mappings.
@@ -44,13 +44,12 @@ def validate_bbcode(
     """
 
     label_dict: dict[str, int] = {}
-    for tag_tuple in bbcode_tags:
+    for tag, tag_tuple in bbcode_tags.items():
         open_delim = tag_tuple[0]
         valid_args = tag_tuple[2]
         index = 0
         match = open_delim.search(text, index)
-        # TODO: fix this hack after changing BBCODE_TAGS to dict
-        is_asy = bool("label" in valid_args)
+        is_asy = tag == "asy"
         while match:
             index = match.start()
             _ = get_close_delim_end_index(
@@ -77,6 +76,9 @@ def compile_asy_diagrams(
     text: str,
     in_dir: pathlib.Path,
     out_dir: pathlib.Path,
+    bbcode_tags: dict[
+        str, tuple[re.Pattern[str], re.Pattern[str], list[str]]
+    ] = BBCODE_TAGS,
 ) -> None:
     """Compile Asymptote diagram source blocks into SVG files.
 
@@ -104,13 +106,11 @@ def compile_asy_diagrams(
 
     for label, index in label_dict.items():
         changed = False
-        # TODO: ensure that we remove this hardcoded patterns after changing
-        # BBCODE_TAGS to a dict
         inner_content = gobble_inside_delim(
             text,
             index,
-            re.compile(r"\[(asy)(.*?)\]"),
-            re.compile(r"\[/asy\]"),
+            bbcode_tags["asy"][0],
+            bbcode_tags["asy"][1],
         ).strip()
         if label not in asy_cache_content:
             asy_cache_content[label] = inner_content
