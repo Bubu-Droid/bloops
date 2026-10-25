@@ -217,7 +217,7 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
       defer
       src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
     ></script>
-    <script src="script.js" defer></script>
+    <script src="static/script.js" defer></script>
   </head>
   <body>
     <h1>This is The Main Heading of This Page</h1>
