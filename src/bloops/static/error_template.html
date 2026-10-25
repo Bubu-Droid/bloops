@@ -10,10 +10,19 @@
       href="https://avatar.artofproblemsolving.com/avatar_778606.png"
     />
     <link rel="stylesheet" href="static/style.css" />
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches
+            ? "night"
+            : "day");
+      } catch {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -30,26 +39,35 @@
       }
 
       body {
+        padding-inline: 1.5rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
       }
 
-      svg {
-        width: 35%;
-        min-width: 300px;
-        min-height: 300px;
+      body > svg {
+        max-width: 100%;
+        height: auto;
       }
 
       #qr-bg {
-        fill: var(--tn-fg);
+        fill: var(--ctp-base);
       }
 
       #qr-fg {
-        fill: var(--tn-bg);
+        fill: var(--ctp-text);
+      }
+
+      [data-theme="night"] #qr-bg {
+        fill: var(--ctp-text);
+      }
+
+      [data-theme="night"] #qr-fg {
+        fill: var(--ctp-base);
       }
     </style>
+    <script src="static/script.js" defer></script>
   </head>
   <body>
     <h1 class="error-msg">
@@ -57,18 +75,18 @@
       <span>Check the terminal logs.</span>
     </h1>
     <svg
-      width="328"
-      height="328"
+      width="246"
+      height="246"
       viewBox="0 0 328 328"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:ev="http://www.w3.org/2001/xml-events"
     >
-      <rect x="0" y="0" width="328" height="328" fill="#ffffff" />
+      <rect id="qr-bg" x="0" y="0" width="328" height="328" fill="#ffffff" />
       <defs>
         <rect id="p" width="8" height="8" />
       </defs>
-      <g fill="#000000">
+      <g id="qr-fg" fill="#000000">
         <use xlink:href="#p" x="32" y="32" />
         <use xlink:href="#p" x="32" y="40" />
         <use xlink:href="#p" x="32" y="48" />

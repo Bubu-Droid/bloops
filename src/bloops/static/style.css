@@ -1,134 +1,103 @@
+/* catppuccin latte */
 :root {
-  /* base */
-  --tn-bg: #1a1b26;
-  --tn-bg-raised: #1e2030;
-  --tn-border: #2a2e42;
-  --tn-border-soft: #22253a;
+  color-scheme: light;
 
-  /* text */
-  --tn-fg: #c0caf5;
-  --tn-fg-dim: #7a82ac;
-  --tn-fg-faint: #565f89;
+  --ctp-base: #eff1f5;
+  --ctp-mantle: #e6e9ef;
+  --ctp-surface0: #ccd0da;
+  --ctp-text: #4c4f69;
+  --ctp-subtext1: #5c5f77;
+  --ctp-subtext0: #6c6f85;
+  --ctp-overlay1: #8c8fa1;
+  --ctp-overlay2: #7c7f93;
+  --ctp-blue: #1e66f5;
+  --ctp-sky: #04a5e5;
+  --ctp-sapphire: #209fb5;
+  --ctp-teal: #179299;
+  --ctp-green: #40a02b;
+  --ctp-mauve: #8839ef;
+  --ctp-peach: #fe640b;
+  --ctp-red: #d20f39;
+  --ctp-yellow: #df8e1d;
+  --ctp-pink: #ea76cb;
+  --ctp-flamingo: #dd7878;
+  /* the asymptote diagrams are drawn with dark-theme colours */
+  --diagram-filter: invert(1) hue-rotate(180deg) saturate(1.4);
+}
 
-  /* accents */
-  --tn-blue: #7aa2f7;
-  --tn-cyan: #7dcfff;
-  --tn-green: #9ece6a;
-  --tn-magenta: #bb9af7;
-  --tn-orange: #ff9e64;
-  --tn-red: #f7768e;
-  --tn-yellow: #e0af68;
+/* catppuccin mocha */
+:root[data-theme="night"] {
+  color-scheme: dark;
 
-  /* fonts */
-  --lora: "Lora", serif;
-  --open-sans: "Open Sans", sans-serif;
-  --jetbrains-mono: "JetBrains Mono", monospace;
+  --ctp-base: #1e1e2e;
+  --ctp-mantle: #181825;
+  --ctp-surface0: #313244;
+  --ctp-text: #cdd6f4;
+  --ctp-subtext1: #bac2de;
+  --ctp-subtext0: #a6adc8;
+  --ctp-overlay1: #7f849c;
+  --ctp-overlay2: #9399b2;
+  --ctp-blue: #89b4fa;
+  --ctp-sky: #89dceb;
+  --ctp-sapphire: #74c7ec;
+  --ctp-teal: #94e2d5;
+  --ctp-green: #a6e3a1;
+  --ctp-mauve: #cba6f7;
+  --ctp-peach: #fab387;
+  --ctp-red: #f38ba8;
+  --ctp-yellow: #f9e2af;
+  --ctp-pink: #f5c2e7;
+  --ctp-flamingo: #f2cdcd;
+  --diagram-filter: none;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  background: var(--tn-bg);
-}
-
 body {
-  margin: 0;
-  padding: 5rem 1.5rem 8rem;
-  background: var(--tn-bg);
-  color: var(--tn-fg);
-  font-family: var(--open-sans);
-  font-optical-sizing: auto;
-  font-size: 1.125rem;
-  line-height: 1.75;
   max-width: 660px;
-  margin-inline: auto;
-  /* stylelint-disable-next-line value-keyword-case */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 8rem;
+  background: var(--ctp-base);
+  color: var(--ctp-text);
+  font:
+    1.125rem/1.75 Literata,
+    serif;
+  counter-reset: sidenote;
 }
 
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--lora);
+h3 {
   font-weight: normal;
-  line-height: initial;
+  line-height: 1.2;
 }
 
 h1 {
   font-style: italic;
 }
 
-/* ---------------- text formatting ---------------- */
-
-strong {
-  color: var(--tn-fg);
-  font-weight: 600;
-}
-
-em {
-  font-style: italic;
-}
-
-s {
-  color: var(--tn-fg-faint);
-  text-decoration-color: var(--tn-red);
-}
-
-u {
-  text-decoration-color: var(--tn-cyan);
-  text-underline-offset: 3px;
-}
-
-sup,
-sub {
-  font-family: var(--jetbrains-mono);
-  font-size: 0.7em;
-  color: var(--tn-fg-dim);
-}
-
-p {
-  margin: 1.4em 0;
-}
-
-/* ---------------- links ---------------- */
-
 a {
-  color: var(--tn-blue);
+  color: var(--ctp-blue);
   text-decoration: none;
-  border-bottom: 1px solid #7aa2f759;
-  transition:
-    border-color 0.15s ease,
-    color 0.15s ease;
+  border-bottom: 1px solid color-mix(in srgb, currentcolor 35%, transparent);
 }
 
 a:hover {
-  color: var(--tn-cyan);
-  border-bottom-color: var(--tn-cyan);
+  color: var(--ctp-sapphire);
 }
 
-/* ---------------- lists ---------------- */
-
-ul,
-ol {
-  padding-left: 1.4em;
-  margin: 1.4em 0;
-}
-
-li {
-  margin: 0.4em 0;
+s {
+  color: var(--ctp-overlay1);
+  text-decoration-color: var(--ctp-red);
 }
 
 li::marker {
-  color: var(--tn-magenta);
+  color: var(--ctp-mauve);
 }
 
-/* ---------------- figures & images ---------------- */
+/* figures, quotes */
 
 figure {
   margin: 2.5rem 0;
@@ -138,168 +107,204 @@ figure {
 figure img {
   display: block;
   margin: 0 auto;
-  border-radius: 3px;
+}
+
+figure img[src$=".svg"] {
+  filter: var(--diagram-filter);
 }
 
 figcaption {
   margin-top: 0.75rem;
-  font-family: var(--lora);
-  font-style: italic;
   font-size: 1rem;
-  color: var(--tn-fg-dim);
+  font-style: italic;
+  color: var(--ctp-subtext1);
 }
 
 figcaption cite {
-  font-style: italic;
-  color: var(--tn-orange);
-}
-
-/* ---------------- blockquote ---------------- */
-
-blockquote {
-  margin: 0;
-  padding: 0;
-  color: var(--tn-fg);
-  font-family: var(--lora);
-  font-style: italic;
-}
-
-blockquote p {
-  margin: 0.6em 0;
+  color: var(--ctp-peach);
 }
 
 figure:has(blockquote) {
-  text-align: left;
-  margin: 2.5rem 0;
   padding: 0.3em 1.3em;
-  border-left: 2px solid var(--tn-yellow);
+  border-left: 2px solid var(--ctp-yellow);
+  text-align: left;
 }
 
 figure:has(blockquote) figcaption {
-  margin-top: 0.4em;
   text-align: right;
 }
 
-/* ---------------- code ---------------- */
-
-pre {
-  background: var(--tn-bg-raised);
-  border: 1px solid var(--tn-border);
-  border-radius: 6px;
-  overflow-x: auto;
-  line-height: initial;
+blockquote {
+  margin: 0;
+  font-style: italic;
 }
 
+summary {
+  font-style: italic;
+}
+
+/* code */
+
 code {
-  font-family: var(--jetbrains-mono);
+  font-family: "JetBrains Mono", monospace;
+}
+
+pre {
+  padding: 0.6rem 0.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--ctp-surface0);
+  background: var(--ctp-mantle);
+  line-height: 1.4;
 }
 
 pre code.hljs {
-  background: transparent;
-  padding: 0 1em !important;
+  background: none;
 }
 
-/* ---------------- theorem-style boxes ---------------- */
+/* theorem-style boxes */
 
 [class^="box"] {
+  --accent: var(--ctp-overlay1);
+
   margin: 2rem 0;
   padding: 0.75rem 1.3rem;
-  background: var(--tn-bg-raised);
-  border-left: 3px solid var(--tn-fg-faint);
-  border-radius: 0 4px 4px 0;
-  font-size: 1.05rem;
-}
-
-[class^="box"] p {
-  margin: 0.8em 0 0;
-}
-
-[class^="box"] .title-block {
-  display: block;
-  margin-bottom: 0.5em;
-  font-weight: 600;
-  font-family: var(--lora);
-  font-style: italic;
-}
-
-[class^="box"] .title-inline {
-  font-weight: 600;
-  margin-right: 0.35em;
-  font-family: var(--lora);
-  font-style: italic;
+  border-left: 3px solid var(--accent);
+  background: var(--ctp-mantle);
 }
 
 .boxtheorem {
-  border-left-color: var(--tn-blue);
-}
-
-.boxtheorem .title-block,
-.boxtheorem .title-inline {
-  color: var(--tn-blue);
+  --accent: var(--ctp-blue);
 }
 
 .boxproposition {
-  border-left-color: var(--tn-cyan);
-}
-
-.boxproposition .title-block,
-.boxproposition .title-inline {
-  color: var(--tn-cyan);
-}
-
-.boxexample {
-  background: transparent;
-  border: 1px solid var(--tn-green);
-  border-radius: 0;
-}
-
-.boxexample .title-block,
-.boxexample .title-inline {
-  color: var(--tn-green);
+  --accent: var(--ctp-sapphire);
 }
 
 .boxclaim {
-  border-left-color: var(--tn-magenta);
-}
-
-.boxclaim .title-block,
-.boxclaim .title-inline {
-  color: var(--tn-magenta);
+  --accent: var(--ctp-mauve);
 }
 
 .boxproblem {
-  border-left-color: var(--tn-orange);
+  --accent: var(--ctp-peach);
 }
 
-.boxproblem .title-block,
-.boxproblem .title-inline {
-  color: var(--tn-orange);
+.boxexample {
+  --accent: var(--ctp-green);
+
+  border: 1px solid var(--accent);
+  background: none;
 }
 
-/* proof / solution */
-div:has(> .proof) {
-  margin: 1.8rem 0;
-  padding-left: 0.1rem;
+.title-block,
+.title-inline {
+  margin-right: 0.35em;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.title-block {
+  display: block;
+  margin-bottom: 0.5em;
 }
 
 .proof {
-  font-family: var(--lora);
-  font-style: italic;
-  color: var(--tn-fg-dim);
+  color: var(--ctp-subtext1);
 }
 
 .qed {
   float: right;
-  font-size: 0.8em;
-  margin-top: 0.2em;
-  color: var(--tn-fg-faint);
+  color: var(--ctp-overlay1);
 }
 
-/* ---------------- misc ---------------- */
+/* sidenotes: below the sidemark's line, or beside it on wide screens */
 
-::selection {
-  background: #7aa2f740;
-  color: var(--tn-fg);
+.sidemark {
+  counter-increment: sidenote;
+}
+
+.sidemark::after,
+.sidenote::before {
+  content: counter(sidenote);
+  font:
+    600 0.7em "JetBrains Mono",
+    monospace;
+  color: var(--ctp-mauve);
+}
+
+.sidemark::after {
+  position: relative;
+  top: -0.6em;
+  margin-left: 0.1em;
+}
+
+.sidenote::before {
+  position: relative;
+  top: -0.6em;
+  margin-right: 0.5em;
+}
+
+.sidenote {
+  display: block;
+  margin: 0.6rem 0 1rem;
+  padding: 0.5rem 0.9rem;
+  border-left: 2px solid var(--ctp-mauve);
+  background: var(--ctp-mantle);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ctp-subtext1);
+}
+
+@media (width >= 1040px) {
+  body {
+    position: relative;
+    max-width: calc(660px + 17.5rem);
+    padding-right: calc(1.5rem + 17.5rem);
+  }
+
+  .sidenote {
+    position: absolute;
+    right: 1.5rem;
+    width: 15rem;
+    margin: 0;
+    padding: 0 0 0 0.75rem;
+    background: none;
+  }
+}
+
+/* theme toggle: moon in day mode, sun in night mode */
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--ctp-surface0);
+  border-radius: 50%;
+  background: var(--ctp-mantle);
+  color: var(--ctp-subtext1);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--ctp-yellow);
+}
+
+.theme-toggle svg {
+  width: 1.2rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:root:not([data-theme="night"]) .icon-sun,
+:root[data-theme="night"] .icon-moon {
+  display: none;
 }
 
 @media (width <= 480px) {
