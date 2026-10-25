@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/Bubu-Droid/bloops/main/assets/banner.png" style="width: 90%; height: auto;">
+    <img src="https://raw.githubusercontent.com/Bubu-Droid/bloops/main/assets/banner.png" width="90%">
 </div>
 
 <hr>
@@ -8,7 +8,7 @@ Bloops is an AoPS-like **BBCode to HTML transpiler**
 written in Python, with **live-preview**
 and support for **Asymptote geometry diagrams**.
 
-<div align="center" style="height: 28px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 6px 0;">
+<div align="center">
     <a href="https://github.com/Bubu-Droid/bloops/releases/latest">
         <img alt="PyPI Version" src="https://img.shields.io/pypi/v/bloops?label=PyPI&style=for-the-badge&logo=pypi&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
@@ -20,7 +20,7 @@ and support for **Asymptote geometry diagrams**.
     </a>
 </div>
 
-<div align="center" style="height: 28px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 6px 0;">
+<div align="center">
     <a href="https://pypi.org/project/bloops/">
         <img alt="PyPI Python Version" src="https://img.shields.io/pypi/pyversions/bloops?style=for-the-badge&logo=python&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
@@ -32,7 +32,7 @@ and support for **Asymptote geometry diagrams**.
     </a>
 </div>
 
-<div align="center" style="height: 28px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; margin: 6px 0;">
+<div align="center">
     <a href="https://github.com/Bubu-Droid/bloops/blob/main/LICENSE">
         <img alt="License" src="https://img.shields.io/github/license/Bubu-Droid/bloops?label=License&style=for-the-badge&labelColor=1a1b26&color=7dcfff" />
     </a>
@@ -105,7 +105,7 @@ Install `bloops` from PyPI. Here is the
 | Flag | Long Flag      | Description                                                               |
 | ---- | -------------- | ------------------------------------------------------------------------- |
 | `-h` | `--help`       | Show help message for usage of `bloops`.                                  |
-| `-v` | `--version`    | Show the version of `bloops`.                                             |
+| `-V` | `--version`    | Show the version of `bloops`.                                             |
 | `-c` | `--build-cont` | Watch `content.bbcode` for changes and continuously rebuild `index.html`. |
 | `-p` | `--preview`    | Launch a local web live-server to preview `index.html`.                   |
 | `-i` | `--input`      | (**Required**) Input directory containing `content.bbcode`.               |
@@ -173,9 +173,9 @@ Here are reference tables for each BBCode tag bloops uses:
 
 <details><summary>[color]</summary>
 
-| Option  | Mandatory | Description                              |
-| ------- | :-------: | ---------------------------------------- |
-| `color` |    YES    | Color code in hex (with the leading \#). |
+| Option | Mandatory | Description                              |
+| ------ | :-------: | ---------------------------------------- |
+| `hex`  |    YES    | Color code in hex (with the leading \#). |
 
 </details>
 
