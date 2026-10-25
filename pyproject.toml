@@ -26,12 +26,23 @@ license-files = [ "LICEN[CS]E*" ]
 authors = [ { name = "Bubu-Droid", email = "bubu@bubudroid.me" } ]
 requires-python = ">=3.12"
 classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: 3.15",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Education",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Text Processing :: Markup",
+  "Topic :: Text Processing :: Markup :: HTML",
+  "Typing :: Typed",
 ]
 dynamic = [ "version" ]
 dependencies = [
@@ -56,8 +67,13 @@ build.targets.sdist.include = [ "/src", "/tests", "/docs", "/example" ]
 
 [tool.ruff]
 line-length = 80
-lint.extend-select = [ "ANN" ]
+lint.extend-select = [ "ANN", "D", "DOC" ]
+lint.per-file-ignores.".github/**" = [ "D", "DOC" ]
+lint.per-file-ignores."tests/**" = [ "D", "DOC" ]
 lint.unfixable = [ "F401" ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.basedpyright]
 executionEnvironments = [
