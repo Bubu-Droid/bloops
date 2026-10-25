@@ -165,6 +165,7 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bloops Preview</title>
+    <!-- TODO: shift the avatar to integration server and use the static link -->
     <link
       rel="icon"
       type="image/x-icon"
@@ -196,10 +197,10 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
     <script>
       MathJax = {
         tex: {
-          inlineMath: {"[+]": [['$', '$']]}
+          inlineMath: { "[+]": [["$", "$"]] },
         },
         svg: {
-          fontCache: 'global'
+          fontCache: "global",
         },
         output: {
           displayOverflow: "linebreak",
@@ -216,6 +217,7 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
       defer
       src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
     ></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <h1>This is The Main Heading of This Page</h1>
@@ -373,6 +375,7 @@ Now some text formatting.
 <strong><em>bold and italic</em></strong> with some <s>strikethrough</s>
 and <u>underline</u> to top it off. <sup>14</sup>P<sub>3</sub>.
   </body>
-</html>"""
+</html>
+"""
         res = convert_bbcode_to_html(text)
         assert res == output_text
