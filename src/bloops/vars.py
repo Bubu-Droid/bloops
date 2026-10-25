@@ -1,72 +1,110 @@
 import re
 
 # TODO: handle the case when there is a ] inside the string
-# TODO: maybe convert this into a dict to not hardcode re.Pattern(s)
-# in tests
-BBCODE_TAGS: list[tuple[re.Pattern[str], re.Pattern[str], list[str]]] = [
-    (
+BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
+    "asy": (
         re.compile(r"\[(asy)(.*?)\]"),
         re.compile(r"\[/asy\]"),
         ["src", "label", "width", "alt", "caption"],
     ),
-    (re.compile(r"\[(code)(.*?)\]"), re.compile(r"\[/code\]"), ["lang"]),
-    (re.compile(r"\[(color)(.*?)\]"), re.compile(r"\[/color\]"), ["hex"]),
-    (
+    "code": (
+        re.compile(r"\[(code)(.*?)\]"),
+        re.compile(r"\[/code\]"),
+        ["lang"],
+    ),
+    "color": (
+        re.compile(r"\[(color)(.*?)\]"),
+        re.compile(r"\[/color\]"),
+        ["hex"],
+    ),
+    "img": (
         re.compile(r"\[(img)(.*?)\]"),
         re.compile(r"\[/img\]"),
         ["src", "width", "alt", "caption"],
     ),
-    (
+    "list": (
         re.compile(r"\[(list)(.*?)\]"),
         re.compile(r"\[/list\]"),
         ["type", "style"],
     ),
-    (
+    "quote": (
         re.compile(r"\[(quote)(.*?)\]"),
         re.compile(r"\[/quote\]"),
         ["author", "link"],
     ),
-    (
+    "url": (
         re.compile(r"\[(url)(.*?)\]"),
         re.compile(r"\[/url\]"),
         ["link", "target"],
     ),
-    (re.compile(r"\[(sidemark)\]"), re.compile(r"\[/sidemark\]"), []),
-    (re.compile(r"\[(sidenote)\]"), re.compile(r"\[/sidenote\]"), []),
-    (re.compile(r"\[(hide)(.*?)\]"), re.compile(r"\[/hide\]"), ["label"]),
-    (re.compile(r"\[(theorem)(.*?)\]"), re.compile(r"\[/theorem\]"), ["title"]),
-    (re.compile(r"\[(lemma)(.*?)\]"), re.compile(r"\[/lemma\]"), ["title"]),
-    (
+    "sidemark": (
+        re.compile(r"\[(sidemark)\]"),
+        re.compile(r"\[/sidemark\]"),
+        [],
+    ),
+    "sidenote": (
+        re.compile(r"\[(sidenote)\]"),
+        re.compile(r"\[/sidenote\]"),
+        [],
+    ),
+    "hide": (
+        re.compile(r"\[(hide)(.*?)\]"),
+        re.compile(r"\[/hide\]"),
+        ["label"],
+    ),
+    "theorem": (
+        re.compile(r"\[(theorem)(.*?)\]"),
+        re.compile(r"\[/theorem\]"),
+        ["title"],
+    ),
+    "lemma": (
+        re.compile(r"\[(lemma)(.*?)\]"),
+        re.compile(r"\[/lemma\]"),
+        ["title"],
+    ),
+    "proposition": (
         re.compile(r"\[(proposition)(.*?)\]"),
         re.compile(r"\[/proposition\]"),
         ["title"],
     ),
-    (
+    "corollary": (
         re.compile(r"\[(corollary)(.*?)\]"),
         re.compile(r"\[/corollary\]"),
         ["title"],
     ),
-    (re.compile(r"\[(example)(.*?)\]"), re.compile(r"\[/example\]"), ["title"]),
-    (re.compile(r"\[(claim)(.*?)\]"), re.compile(r"\[/claim\]"), ["title"]),
-    (re.compile(r"\[(problem)(.*?)\]"), re.compile(r"\[/problem\]"), ["title"]),
-    (
+    "example": (
+        re.compile(r"\[(example)(.*?)\]"),
+        re.compile(r"\[/example\]"),
+        ["title"],
+    ),
+    "claim": (
+        re.compile(r"\[(claim)(.*?)\]"),
+        re.compile(r"\[/claim\]"),
+        ["title"],
+    ),
+    "problem": (
+        re.compile(r"\[(problem)(.*?)\]"),
+        re.compile(r"\[/problem\]"),
+        ["title"],
+    ),
+    "exercise": (
         re.compile(r"\[(exercise)(.*?)\]"),
         re.compile(r"\[/exercise\]"),
         ["title"],
     ),
-    (re.compile(r"\[(b)\]"), re.compile(r"\[/b\]"), []),
-    (re.compile(r"\[(i)\]"), re.compile(r"\[/i\]"), []),
-    (re.compile(r"\[(u)\]"), re.compile(r"\[/u\]"), []),
-    (re.compile(r"\[(s)\]"), re.compile(r"\[/s\]"), []),
-    (re.compile(r"\[(\*)\]"), re.compile(r"\[/\*\]"), []),
-    (re.compile(r"\[(sub)\]"), re.compile(r"\[/sub\]"), []),
-    (re.compile(r"\[(sup)\]"), re.compile(r"\[/sup\]"), []),
-    (re.compile(r"\[(proof)\]"), re.compile(r"\[/proof\]"), []),
-    (re.compile(r"\[(soln)\]"), re.compile(r"\[/soln\]"), []),
-    (re.compile(r"\[(h1)\]"), re.compile(r"\[/h1\]"), []),
-    (re.compile(r"\[(h2)\]"), re.compile(r"\[/h2\]"), []),
-    (re.compile(r"\[(h3)\]"), re.compile(r"\[/h3\]"), []),
-    (re.compile(r"\[(h4)\]"), re.compile(r"\[/h4\]"), []),
-    (re.compile(r"\[(h5)\]"), re.compile(r"\[/h5\]"), []),
-    (re.compile(r"\[(h6)\]"), re.compile(r"\[/h6\]"), []),
-]
+    "b": (re.compile(r"\[(b)\]"), re.compile(r"\[/b\]"), []),
+    "i": (re.compile(r"\[(i)\]"), re.compile(r"\[/i\]"), []),
+    "u": (re.compile(r"\[(u)\]"), re.compile(r"\[/u\]"), []),
+    "s": (re.compile(r"\[(s)\]"), re.compile(r"\[/s\]"), []),
+    "*": (re.compile(r"\[(\*)\]"), re.compile(r"\[/\*\]"), []),
+    "sub": (re.compile(r"\[(sub)\]"), re.compile(r"\[/sub\]"), []),
+    "sup": (re.compile(r"\[(sup)\]"), re.compile(r"\[/sup\]"), []),
+    "proof": (re.compile(r"\[(proof)\]"), re.compile(r"\[/proof\]"), []),
+    "soln": (re.compile(r"\[(soln)\]"), re.compile(r"\[/soln\]"), []),
+    "h1": (re.compile(r"\[(h1)\]"), re.compile(r"\[/h1\]"), []),
+    "h2": (re.compile(r"\[(h2)\]"), re.compile(r"\[/h2\]"), []),
+    "h3": (re.compile(r"\[(h3)\]"), re.compile(r"\[/h3\]"), []),
+    "h4": (re.compile(r"\[(h4)\]"), re.compile(r"\[/h4\]"), []),
+    "h5": (re.compile(r"\[(h5)\]"), re.compile(r"\[/h5\]"), []),
+    "h6": (re.compile(r"\[(h6)\]"), re.compile(r"\[/h6\]"), []),
+}
