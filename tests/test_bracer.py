@@ -35,7 +35,7 @@ asdf [/asy]"""
                 text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
         assert context.type is SyntaxError
-        assert "Failed to find an opening pair for delimiter." in str(
+        assert "Failed to find a closing pair for delimiter." in str(
             context.value
         )
         assert "4:" in str(context.value)
