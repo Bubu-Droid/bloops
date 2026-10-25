@@ -9,24 +9,25 @@
       type="image/x-icon"
       href="https://avatar.artofproblemsolving.com/avatar_778606.png"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@catppuccin/highlightjs@1.0.1/css/catppuccin-variables.css"
+    />
     <link rel="stylesheet" href="static/style.css" />
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches
+            ? "night"
+            : "day");
+      } catch {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
     <script>
@@ -55,16 +56,13 @@
       defer
       src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
     ></script>
+    <script src="static/script.js" defer></script>
   </head>
   <body>
     <h1>Page Heading</h1>
 
     Here is a <span style="color: #9ece6a">code</span> block:
-    <pre>
-<code class="language-python">
-print("hello world!")
-</code>
-</pre>
+    <pre><code class="language-python">print("hello world!")</code></pre>
 
     Here's an <strong>Asymptote</strong> diagram:
     <figure>
@@ -76,7 +74,9 @@ print("hello world!")
     <a href="https://aops.com/community/c6h3106748p32782057" target="_blank"
       >IMO 2023 G4</a
     >
-    solve.
+    solve.<span class="sidemark"></span>
+
+    <span class="sidenote">One of my favorite problems ever. :)</span>
 
     <figure>
       <img src="static/mewtwo.svg" style="width: 80%; height: auto" />
@@ -128,12 +128,15 @@ print("hello world!")
       which positive integer is chosen initially.
     </div>
 
-    <div>
-      <i class="proof">Proof.</i>
-      <s>Left as an exercise to the reader</s> Skipped, too easy.<span
-        class="qed"
-        >&#9633;</span
-      >
-    </div>
+    <details>
+      <summary>The proof is hidden inside this block.</summary>
+      <div>
+        <i class="proof">Proof.</i>
+        <s>Left as an exercise to the reader</s> Skipped, too easy.<span
+          class="qed"
+          >&#9633;</span
+        >
+      </div>
+    </details>
   </body>
 </html>
