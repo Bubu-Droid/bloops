@@ -24,8 +24,9 @@ from bloops.validator import compile_asy_diagrams, validate_bbcode
 
 _static = files("bloops") / "static"
 
-STYLESHEET = (_static / "style.css").read_text(encoding="utf-8")
 ERROR_TEMPLATE = (_static / "error_template.html").read_text(encoding="utf-8")
+STYLESHEET = (_static / "style.css").read_text(encoding="utf-8")
+SCRIPT = (_static / "script.js").read_text(encoding="utf-8")
 
 
 class _Handler(PatternMatchingEventHandler):
@@ -151,6 +152,8 @@ def main(
     output_file = in_dir / "index.html"
     style_file = in_dir / "static" / "style.css"
     style_file.parent.mkdir(parents=True, exist_ok=True)
+    script_file = in_dir / "static" / "script.js"
+    script_file.parent.mkdir(parents=True, exist_ok=True)
     build_dir = in_dir / "build/"
     build_dir.mkdir(parents=True, exist_ok=True)
     asy_cache_file = build_dir / "cache.json"
@@ -168,6 +171,8 @@ def main(
     file_content = input_file.read_text(encoding="utf-8").strip()
     if not style_file.exists():
         _ = style_file.write_text(STYLESHEET, encoding="utf-8")
+    if not script_file.exists():
+        _ = script_file.write_text(SCRIPT, encoding="utf-8")
     _ = asy_cache_file.write_text("{}", encoding="utf-8")
 
     handler = _Handler(in_dir, out_dir, file_content)
