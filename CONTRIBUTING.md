@@ -1,4 +1,4 @@
-# Contributer's Guide
+# Contributor's Guide
 
 This guide will help you set up necessary dev tools for contributing
 to this project. It isn't obligatory to set these tools up
