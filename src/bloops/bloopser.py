@@ -113,15 +113,13 @@ def _convert_tag_to_html(
             content.append("</figure>")
 
         elif tag == "code":
-            content.append("<pre>")
             code_dict = args
             if "lang" not in code_dict:
-                content.append("<code>")
+                content.append(f"<pre><code>{inner_content}</code></pre>")
             else:
-                content.append(f'<code class="language-{code_dict["lang"]}">')
-            content.append(inner_content)
-            content.append("</code>")
-            content.append("</pre>")
+                content.append(
+                    f'<pre><code class="language-{code_dict["lang"]}">{inner_content}</code></pre>'
+                )
 
         elif tag == "color":
             color_dict = args
