@@ -369,6 +369,7 @@ how to implement it.
   (I'll be very glad if someone suggests me a solution for this;
   I've thought about it myself, but couldn't really come up with
   anything.)
+- [ ] Switch lists to sets to optimize speed.
 
 <p align="right"><a href="#index">&uarr; Back to top</a></p>
 
