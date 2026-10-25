@@ -53,7 +53,6 @@ class _Handler(PatternMatchingEventHandler):
             out_dir: Path to the directory for compiled static output.
             file_content: Initial text content of the BBCode file.
         """
-
         super().__init__(
             patterns=["content.bbcode"],
             ignore_directories=True,
@@ -77,7 +76,6 @@ class _Handler(PatternMatchingEventHandler):
         Args:
             event: File system event describing the modification.
         """
-
         new_content = self.input_file.read_text(encoding="utf-8").strip()
         if self.file_content == new_content:
             return
@@ -97,7 +95,6 @@ class _Handler(PatternMatchingEventHandler):
             Exception: Re-raises any syntax or compilation exception encountered
                 during execution.
         """
-
         try:
             print(
                 "Verifying syntax and generating newly added / changed asymptote diagrams (if any)..."
@@ -147,16 +144,8 @@ def main(
         FileNotFoundError: If the input directory or source file is missing.
         NotADirectoryError: If specified paths are not valid directories.
     """
-
     input_file = in_dir / "content.bbcode"
     output_file = in_dir / "index.html"
-    style_file = in_dir / "static" / "style.css"
-    style_file.parent.mkdir(parents=True, exist_ok=True)
-    script_file = in_dir / "static" / "script.js"
-    script_file.parent.mkdir(parents=True, exist_ok=True)
-    build_dir = in_dir / "build/"
-    build_dir.mkdir(parents=True, exist_ok=True)
-    asy_cache_file = build_dir / "cache.json"
 
     if not in_dir.exists():
         raise FileNotFoundError("Input directory not found.")
@@ -168,6 +157,14 @@ def main(
         out_dir.mkdir(parents=True, exist_ok=True)
     if not out_dir.is_dir():
         raise NotADirectoryError(f"{out_dir} is not a directory.")
+
+    style_file = in_dir / "static" / "style.css"
+    script_file = in_dir / "static" / "script.js"
+    style_file.parent.mkdir(exist_ok=True)
+    build_dir = in_dir / "build/"
+    build_dir.mkdir(exist_ok=True)
+    asy_cache_file = build_dir / "cache.json"
+
     file_content = input_file.read_text(encoding="utf-8").strip()
     if not style_file.exists():
         _ = style_file.write_text(STYLESHEET, encoding="utf-8")
