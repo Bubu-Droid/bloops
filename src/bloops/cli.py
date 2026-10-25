@@ -29,7 +29,7 @@ def main() -> None:
     )
 
     _ = parser.add_argument(
-        "-v",
+        "-V",
         "--version",
         action="version",
         version=f"%(prog)s {VERSION}",
