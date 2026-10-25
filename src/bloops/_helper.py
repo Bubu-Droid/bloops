@@ -13,7 +13,6 @@ def get_error_line(text: str, index: int) -> tuple[int, str]:
     Returns:
         A tuple containing the 1-based line number and line text string.
     """
-
     line_num = text.count("\n", 0, index)
 
     return (line_num + 1, text.splitlines()[line_num])
@@ -38,7 +37,6 @@ def get_tag_and_args(
     Raises:
         SyntaxError: If no valid match is found at the given index.
     """
-
     match = open_delim.match(text, open_delim_start_index)
     if not match:
         error_line = get_error_line(text, open_delim_start_index)

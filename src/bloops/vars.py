@@ -1,3 +1,5 @@
+"""Definitions of the BBCode tags supported by bloops."""
+
 import re
 
 BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
@@ -107,3 +109,14 @@ BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
     "h5": (re.compile(r"\[(h5)\]"), re.compile(r"\[/h5\]"), []),
     "h6": (re.compile(r"\[(h6)\]"), re.compile(r"\[/h6\]"), []),
 }
+"""Mapping of each tag name to `(open_pattern, close_pattern, valid_args)`.
+
+- `open_pattern` matches the opening tag. Group 1 captures the tag name
+  and, for tags that take arguments, group 2 captures the raw argument
+  string.
+- `close_pattern` matches the closing tag.
+- `valid_args` lists the argument names the tag accepts, and is empty
+  for tags without arguments.
+
+Tags are processed in the order they appear here.
+"""
