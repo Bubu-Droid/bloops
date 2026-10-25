@@ -1,3 +1,15 @@
+<style>
+.badge-container {
+  height: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 6px 0;
+}
+</style>
+
 <div align="center">
     <img src="https://raw.githubusercontent.com/Bubu-Droid/bloops/main/assets/banner.png" style="width: 90%; height: auto;">
 </div>
@@ -8,31 +20,31 @@ Bloops is an AoPS-like **BBCode to HTML transpiler**
 written in Python, with **live-preview**
 and support for **Asymptote geometry diagrams**.
 
-<div align="center">
+<div align="center" class="badge-container">
     <a href="https://github.com/Bubu-Droid/bloops/releases/latest">
         <img alt="PyPI Version" src="https://img.shields.io/pypi/v/bloops?label=PyPI&style=for-the-badge&logo=pypi&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
-    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/prek.yaml">
-        <img alt="Prek CI Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/prek.yaml?label=CI&style=for-the-badge&logo=githubactions&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
+    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/prek.yml">
+        <img alt="Prek CI Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/prek.yml?label=CI&style=for-the-badge&logo=githubactions&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
     </a>
-    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/pytest.yaml">
-        <img alt="Unit Tests Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/pytest.yaml?label=Unit%20Tests&style=for-the-badge&logo=pytest&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
+    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/pytest.yml">
+        <img alt="Unit Tests Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/pytest.yml?label=Unit%20Tests&style=for-the-badge&logo=pytest&logoColor=c0caf5&labelColor=1a1b26&color=9ece6a" />
     </a>
 </div>
 
-<div align="center">
+<div align="center" class="badge-container">
     <a href="https://pypi.org/project/bloops/">
         <img alt="PyPI Python Version" src="https://img.shields.io/pypi/pyversions/bloops?style=for-the-badge&logo=python&logoColor=c0caf5&labelColor=1a1b26&color=7aa2f7&v=1" />
     </a>
     <a href="https://github.com/Bubu-Droid/bloops/issues">
         <img alt="GitHub Issues" src="https://img.shields.io/github/issues/Bubu-Droid/bloops?label=Issues&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=e0af68" />
     </a>
-    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/codeql.yaml">
-        <img alt="CodeQL Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/codeql.yaml?label=CodeQL&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=bb9af7" />
+    <a href="https://github.com/Bubu-Droid/bloops/actions/workflows/codeql.yml">
+        <img alt="CodeQL Status" src="https://img.shields.io/github/actions/workflow/status/Bubu-Droid/bloops/codeql.yml?label=CodeQL&style=for-the-badge&logo=github&logoColor=c0caf5&labelColor=1a1b26&color=bb9af7" />
     </a>
 </div>
 
-<div align="center">
+<div align="center" class="badge-container">
     <a href="https://github.com/Bubu-Droid/bloops/blob/main/LICENSE">
         <img alt="License" src="https://img.shields.io/github/license/Bubu-Droid/bloops?label=License&style=for-the-badge&labelColor=1a1b26&color=7dcfff" />
     </a>
@@ -88,7 +100,11 @@ for vector diagram rendering
 Install `bloops` from PyPI. Here is the
 [PyPI listing](https://pypi.org/project/bloops/).
 
-- I suggest using `uv`: run ```uv tool install bloops```.
+- I suggest using `uv`:
+  - Run `uv tool install bloops` if you'd like to use `bloops`
+  just as a CLI tool.
+  - Run `uv add bloops` if you you'd like to import `bloops`
+  as a package in your project.
 - Or, if you want to use `pip`: run `pip install bloops`.
 - AUR entry is yet to be added.
 
@@ -219,6 +235,14 @@ Here are reference tables for each BBCode tag bloops uses:
 
 </details>
 
+<details><summary>[hide]</summary>
+
+| Option  | Mandatory | Description                                         |
+| ------- | :-------: | --------------------------------------------------- |
+| `label` |    YES    | Label to be used as the summary for hidden details. |
+
+</details>
+
 <details><summary>math environments</summary>
 
 Currently, the following math box tags are supported:
@@ -237,6 +261,11 @@ proof and solutions.
 </details>
 
 <details><summary>tags without any options</summary>
+
+| Tag                                | Purpose                                          |
+| ---------------------------------- | ------------------------------------------------ |
+| `[sidemark][/sidemark]`            | To put a number in the subscript for a sidenote. |
+| `[sidenote]<your-note>[/sidenote]` | To write a note to be put aside.                 |
 
 | Tag     | HTML Counterpart |
 | ------- | ---------------- |
@@ -259,9 +288,9 @@ proof and solutions.
 <br>
 
 An example showcasing the use of tags mentioned above has been
-provided in [example/content.bbcode](example/content.bbcode)
+provided in [example/content.bbcode][content.bbcode]
 and the corresponding generated HTML file is present in
-[example/index.html](example/index.html).
+[example/index.html][example.html].
 
 ## API Reference
 
@@ -277,11 +306,11 @@ If you want to convert a BBCode text into HTML using `bloops`,
 first run `validate_bbcode`, then `compile_asy_diagrams`, and
 finally `convert_bbcode_to_html` on the text.
 
-Bloops also provides the global constants under the `vars` module
-which provides `BBCODE_TAGS`, `STYLESHEET`, and `ERROR_TEMPLATE`.
+Bloops also provides the `BBCODE_TAGS` global constant
+under the `vars` module.
 
 A detailed documentation of these API endpoints can be found in
-[docs/API.md](docs/API.md).
+[docs/api.md][api.md].
 
 ## FAQs
 
@@ -331,7 +360,7 @@ need JS for running simple static pages.
 ## Contribution
 
 Contributions are very welcome!
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for a guide on
+Please read [CONTRIBUTING.md][CONTRIBUTING.md] for a guide on
 how to contribute. I'm against the idea of using AI
 for writing hobby projects; however, I have no
 problem if someone else uses them. If you're using AI assistance
@@ -346,11 +375,25 @@ how to implement it.
 ## TODOs
 
 - [ ] Implement a post-processor which adds paragraph tags around
-every disjoint block of HTML code.
-- [ ] Change `BBCODE_TAGS` to a dict instead of a list.
-- [ ] Handle `]` inside arguments of BBCode tags.
-- [ ] Add script placeholder to HTML templates.
-- [ ] De-couple templates and stylesheets by moving them
+  every disjoint block of HTML code.
+- [ ] Shift avatar to integration server.
+- [ ] Handle unbalanced `[` or `]` inside arguments of BBCode tags.
+  (I'll be very glad if someone suggests me a solution for this;
+  I've thought about it myself, but couldn't really come up with
+  anything.)
+- [x] Change `BBCODE_TAGS` to a dict instead of a list.
+- [x] Add script placeholder to HTML templates.
+- [x] De-couple templates and stylesheets by moving them
 to their independent files.
+- [x] Add `python -m bloops` invocation.
+- [x] Add sidenote tag.
+- [x] Add hide tag.
+- [x] Change all `with open ___` invocations for pathlib to
+  `___.open()`.
 
 <p align="right"><a href="#index">&uarr; Back to top</a></p>
+
+[content.bbcode]: https://github.com/Bubu-Droid/bloops/blob/main/example/content.bbcode
+[example.html]: https://github.com/Bubu-Droid/bloops/blob/main/example/index.html
+[api.md]: https://github.com/Bubu-Droid/bloops/blob/main/docs/api.md
+[CONTRIBUTING.md]: https://github.com/Bubu-Droid/bloops/blob/main/CONTRIBUTING.md
