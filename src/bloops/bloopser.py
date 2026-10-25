@@ -2,14 +2,13 @@
 
 import re
 from importlib.resources import files
-from string import Template
 
 from bloops._helper import get_tag_and_args
 from bloops.bracer import get_close_delim_end_index, gobble_inside_delim
 from bloops.vars import BBCODE_TAGS
 
 _static = files("bloops") / "static"
-INDEX_TEMPLATE = Template((_static / "index.html").read_text(encoding="utf-8"))
+INDEX_TEMPLATE = (_static / "index.html").read_text(encoding="utf-8")
 
 
 def convert_bbcode_to_html(
@@ -51,7 +50,7 @@ def convert_bbcode_to_html(
             )
             match = open_delim.search(text, index + 1)
 
-    return INDEX_TEMPLATE.substitute(text=text)
+    return INDEX_TEMPLATE.replace("__body_text__", text)
 
 
 def _convert_tag_to_html(
