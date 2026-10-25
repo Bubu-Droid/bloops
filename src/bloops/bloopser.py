@@ -1,10 +1,15 @@
 """Core conversion engine transforming BBCode source to HTML."""
 
 import re
+from importlib.resources import files
+from string import Template
 
 from bloops._helper import get_tag_and_args
 from bloops.bracer import get_close_delim_end_index, gobble_inside_delim
 from bloops.vars import BBCODE_TAGS
+
+_static = files("bloops") / "static"
+INDEX_TEMPLATE = Template((_static / "index.html").read_text(encoding="utf-8"))
 
 
 def convert_bbcode_to_html(
@@ -46,69 +51,7 @@ def convert_bbcode_to_html(
             )
             match = open_delim.search(text, index + 1)
 
-    # TODO: shift the avatar to integration server and use the static link
-    return f"""<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bloops Preview</title>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://avatar.artofproblemsolving.com/avatar_778606.png"
-    />
-    <link rel="stylesheet" href="static/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
-    <script>
-      hljs.highlightAll();
-    </script>
-    <script>
-      MathJax = {{
-        tex: {{
-          inlineMath: {{"[+]": [['$', '$']]}}
-        }},
-        svg: {{
-          fontCache: 'global'
-        }},
-        output: {{
-          displayOverflow: "linebreak",
-          linebreaks: {{
-            inline: true,
-            width: "100%",
-            lineleading: 0.2,
-            LinebreakVisitor: null,
-          }},
-        }},
-      }};
-    </script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
-    ></script>
-  </head>
-  <body>
-    {text}
-  </body>
-</html>"""
+    return INDEX_TEMPLATE.substitute(text=text)
 
 
 def _convert_tag_to_html(
@@ -138,7 +81,18 @@ def _convert_tag_to_html(
         text, open_delim_start_index, open_delim, close_delim
     ).strip()
 
-    if tag in ["asy", "code", "color", "img", "list", "quote", "url"]:
+    if tag in [
+        "asy",
+        "code",
+        "color",
+        "img",
+        "list",
+        "quote",
+        "url",
+        "sidemark",
+        "sidenote",
+        "hide",
+    ]:
         if tag == "asy":
             asy_dict = args
             content.append("<figure>")
@@ -243,8 +197,17 @@ def _convert_tag_to_html(
                 content.append(
                     f'<a href="{url_dict["link"]}" target="_blank">{inner_content}</a>'
                 )
+        elif tag == "sidemark":
+            content.append('<span class="sidemark"></span>')
+        elif tag == "sidenote":
+            content.append(f'<span class="sidenote">{inner_content}</span>')
+        elif tag == "hide":
+            hide_dict = args
+            content.append(f"<details><summary>{hide_dict['label']}</summary>")
+            content.append(inner_content)
+            content.append("</details>")
 
-    if tag in [
+    elif tag in [
         "theorem",
         "lemma",
         "proposition",
@@ -293,7 +256,7 @@ def _convert_tag_to_html(
         content.append(inner_content)
         content.append("</div>")
 
-    if tag in [
+    elif tag in [
         "b",
         "i",
         "u",
