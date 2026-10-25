@@ -32,17 +32,17 @@ def validate_bbcode(
 
     Args:
         text: Raw BBCode input string.
-        bbcode_tags: List of tag configurations, matching patterns,
-            and permitted argument lists.
+        bbcode_tags: Mapping of tag names to their opening pattern,
+            closing pattern and permitted arguments. See `BBCODE_TAGS`.
 
     Returns:
         A dictionary mapping diagram labels to their starting index.
 
     Raises:
+        SyntaxError: If a tag has no matching closing tag.
         ValueError: If an invalid argument is supplied or duplicate
             diagram labels are encountered.
     """
-
     label_dict: dict[str, int] = {}
     for tag, tag_tuple in bbcode_tags.items():
         open_delim = tag_tuple[0]
@@ -92,11 +92,14 @@ def compile_asy_diagrams(
         text: Entire input text containing BBCode and Asymptote code.
         in_dir: Source directory containing the build cache folder.
         out_dir: Target directory where compiled SVG images are stored.
+        bbcode_tags: Mapping of tag names to their opening pattern,
+            closing pattern and permitted arguments. See `BBCODE_TAGS`.
 
     Raises:
+        FileNotFoundError: If `build/cache.json` does not exist in
+            `in_dir`, or the `asy` executable is not installed.
         ValueError: If Asymptote compilation fails.
     """
-
     build_dir = in_dir / "build/"
     asy_cache_file = build_dir / "cache.json"
 
@@ -168,7 +171,6 @@ def _validate_args(
         ValueError: If unknown attributes or missing required parameters
             are encountered, or if attribute values are invalid.
     """
-
     tag_and_args = get_tag_and_args(text, open_delim_start_index, open_delim)
     tag, args = tag_and_args
 

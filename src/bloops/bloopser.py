@@ -25,12 +25,15 @@ def convert_bbcode_to_html(
 
     Args:
         text: Raw BBCode text content.
-        bbcode_tags: List of tag configurations and rule definitions.
+        bbcode_tags: Mapping of tag names to their opening pattern,
+            closing pattern and permitted arguments. See `BBCODE_TAGS`.
 
     Returns:
         A fully formatted HTML document string.
-    """
 
+    Raises:
+        SyntaxError: If a tag has no matching closing tag.
+    """
     for tag_tuple in bbcode_tags.values():
         open_delim = tag_tuple[0]
         close_delim = tag_tuple[1]
@@ -70,7 +73,6 @@ def _convert_tag_to_html(
     Returns:
         The rendered HTML replacement string for the BBCode element.
     """
-
     tag_and_args = get_tag_and_args(text, open_delim_start_index, open_delim)
     tag, args = tag_and_args
 
