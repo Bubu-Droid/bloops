@@ -1,6 +1,5 @@
 import re
 
-# TODO: handle the case when there is a ] inside the string
 BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
     "asy": (
         re.compile(r"\[(asy)(.*?)\]"),
@@ -36,16 +35,6 @@ BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
         re.compile(r"\[(url)(.*?)\]"),
         re.compile(r"\[/url\]"),
         ["link", "target"],
-    ),
-    "sidemark": (
-        re.compile(r"\[(sidemark)\]"),
-        re.compile(r"\[/sidemark\]"),
-        [],
-    ),
-    "sidenote": (
-        re.compile(r"\[(sidenote)\]"),
-        re.compile(r"\[/sidenote\]"),
-        [],
     ),
     "hide": (
         re.compile(r"\[(hide)(.*?)\]"),
@@ -99,6 +88,16 @@ BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
     "*": (re.compile(r"\[(\*)\]"), re.compile(r"\[/\*\]"), []),
     "sub": (re.compile(r"\[(sub)\]"), re.compile(r"\[/sub\]"), []),
     "sup": (re.compile(r"\[(sup)\]"), re.compile(r"\[/sup\]"), []),
+    "sidemark": (
+        re.compile(r"\[(sidemark)\]"),
+        re.compile(r"\[/sidemark\]"),
+        [],
+    ),
+    "sidenote": (
+        re.compile(r"\[(sidenote)\]"),
+        re.compile(r"\[/sidenote\]"),
+        [],
+    ),
     "proof": (re.compile(r"\[(proof)\]"), re.compile(r"\[/proof\]"), []),
     "soln": (re.compile(r"\[(soln)\]"), re.compile(r"\[/soln\]"), []),
     "h1": (re.compile(r"\[(h1)\]"), re.compile(r"\[/h1\]"), []),
