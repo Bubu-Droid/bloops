@@ -19,7 +19,6 @@ def main() -> None:
     from CLI arguments, setting default fallback paths when necessary,
     and invokes the build and preview pipeline.
     """
-
     parser = argparse.ArgumentParser(
         prog="bloops",
         description="An AoPS-like BBCode to HTML transpiler written in Python,\
