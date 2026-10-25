@@ -1,5 +1,4 @@
 import pathlib
-import re
 
 import pytest
 
@@ -8,6 +7,7 @@ from bloops.validator import (
     compile_asy_diagrams,
     validate_bbcode,
 )
+from bloops.vars import BBCODE_TAGS
 
 
 class TestValidateArgs:
@@ -20,7 +20,7 @@ lorem [asy src=/home/bubu/meow.png label=hello meow=hi width=50 alt="meow neow" 
             _ = _validate_args(
                 text,
                 11,
-                re.compile(r"\[(asy)(.*?)\]"),
+                BBCODE_TAGS["asy"][0],
                 ["src", "label", "width", "alt", "caption"],
             )
         assert context.type is ValueError
@@ -34,7 +34,7 @@ lorem [asy src=/home/bubu/meow.png label=hello width=50 alt="meow neow" caption=
         _validate_args(
             text,
             11,
-            re.compile(r"\[(asy)(.*?)\]"),
+            BBCODE_TAGS["asy"][0],
             ["src", "label", "width", "alt", "caption"],
         )
 
@@ -46,7 +46,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
         _validate_args(
             text,
             11,
-            re.compile(r"\[(asy)(.*?)\]"),
+            BBCODE_TAGS["asy"][0],
             ["src", "label", "width", "alt", "caption"],
         )
 
@@ -56,7 +56,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(asy)(.*?)\]"),
+                BBCODE_TAGS["asy"][0],
                 ["src", "label", "width", "alt", "caption"],
             )
         assert context.type is ValueError
@@ -68,7 +68,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(asy)(.*?)\]"),
+                BBCODE_TAGS["asy"][0],
                 ["src", "label", "width", "alt", "caption"],
             )
         assert context.type is ValueError
@@ -80,7 +80,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(img)(.*?)\]"),
+                BBCODE_TAGS["img"][0],
                 ["width", "alt", "caption"],
             )
         assert context.type is ValueError
@@ -94,7 +94,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(list)(.*?)\]"),
+                BBCODE_TAGS["list"][0],
                 ["type", "style"],
             )
         assert context.type is ValueError
@@ -108,7 +108,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(list)(.*?)\]"),
+                BBCODE_TAGS["list"][0],
                 ["type", "style"],
             )
         assert context.type is ValueError
@@ -120,7 +120,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(color)(.*?)\]"),
+                BBCODE_TAGS["color"][0],
                 ["hex"],
             )
         assert context.type is ValueError
@@ -132,7 +132,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(url)(.*?)\]"),
+                BBCODE_TAGS["url"][0],
                 ["link", "target"],
             )
         assert context.type is ValueError
@@ -144,7 +144,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             _ = _validate_args(
                 text,
                 6,
-                re.compile(r"\[(url)(.*?)\]"),
+                BBCODE_TAGS["url"][0],
                 ["link", "target"],
             )
         assert context.type is ValueError

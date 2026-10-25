@@ -1,6 +1,5 @@
-import re
-
 from bloops.bloopser import _convert_tag_to_html
+from bloops.vars import BBCODE_TAGS
 
 
 class TestImgTag:
@@ -9,8 +8,8 @@ class TestImgTag:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(img)(.*?)\]"),
-            re.compile(r"\[/img\]"),
+            BBCODE_TAGS["img"][0],
+            BBCODE_TAGS["img"][1],
         )
         assert (
             res
@@ -24,8 +23,8 @@ class TestImgTag:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(img)(.*?)\]"),
-            re.compile(r"\[/img\]"),
+            BBCODE_TAGS["img"][0],
+            BBCODE_TAGS["img"][1],
         )
         assert (
             res
@@ -39,8 +38,8 @@ class TestImgTag:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(img)(.*?)\]"),
-            re.compile(r"\[/img\]"),
+            BBCODE_TAGS["img"][0],
+            BBCODE_TAGS["img"][1],
         )
         assert (
             res
@@ -54,8 +53,8 @@ class TestImgTag:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(img)(.*?)\]"),
-            re.compile(r"\[/img\]"),
+            BBCODE_TAGS["img"][0],
+            BBCODE_TAGS["img"][1],
         )
         assert (
             res
@@ -70,8 +69,8 @@ class TestImgTag:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(img)(.*?)\]"),
-            re.compile(r"\[/img\]"),
+            BBCODE_TAGS["img"][0],
+            BBCODE_TAGS["img"][1],
         )
         assert (
             res

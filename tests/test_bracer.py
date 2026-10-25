@@ -1,5 +1,3 @@
-import re
-
 import pytest
 
 from bloops.bracer import (
@@ -7,6 +5,7 @@ from bloops.bracer import (
     gobble_around_delim,
     gobble_inside_delim,
 )
+from bloops.vars import BBCODE_TAGS
 
 
 class TestGetCloseDelimEndIndex:
@@ -16,7 +15,7 @@ lorem [ay]some random stuff
 [/asy]"""
         with pytest.raises(SyntaxError) as context:
             _ = get_close_delim_end_index(
-                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+                text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
         assert context.type is SyntaxError
         assert "No opening delimiter at the current position." in str(
@@ -33,7 +32,7 @@ asdf [/asy]"""
 
         with pytest.raises(SyntaxError) as context:
             _ = get_close_delim_end_index(
-                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+                text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
         assert context.type is SyntaxError
         assert "Failed to find an opening pair for delimiter." in str(
@@ -49,7 +48,7 @@ lorem [asy]some[asy] [asy]random stuff[/asy]
 
         assert (
             get_close_delim_end_index(
-                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+                text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
             == len(text) - 1
         )
@@ -66,7 +65,7 @@ lorem [asy]some[asy] [asy]random stuff[/asy]
 """
         assert (
             gobble_inside_delim(
-                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+                text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
             == out_text
         )
@@ -77,7 +76,7 @@ lorem [asy][/asy]"""
         out_text = r""""""
         assert (
             gobble_inside_delim(
-                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+                text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
             == out_text
         )
@@ -95,7 +94,7 @@ lorem [asy]some[asy] [asy]random stuff[/asy]
 [/asy]"""
         assert (
             gobble_around_delim(
-                text, 11, re.compile(r"\[(asy)(.*?)\]"), re.compile(r"\[/asy\]")
+                text, 11, BBCODE_TAGS["asy"][0], BBCODE_TAGS["asy"][1]
             )
             == out_text
         )

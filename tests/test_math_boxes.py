@@ -1,6 +1,5 @@
-import re
-
 from bloops.bloopser import _convert_tag_to_html
+from bloops.vars import BBCODE_TAGS
 
 
 class TestMathBoxesWithoutDesc:
@@ -9,8 +8,8 @@ class TestMathBoxesWithoutDesc:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(theorem)(.*?)\]"),
-            re.compile(r"\[/theorem\]"),
+            BBCODE_TAGS["theorem"][0],
+            BBCODE_TAGS["theorem"][1],
         )
         assert (
             res
@@ -25,8 +24,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(lemma)(.*?)\]"),
-            re.compile(r"\[/lemma\]"),
+            BBCODE_TAGS["lemma"][0],
+            BBCODE_TAGS["lemma"][1],
         )
         assert (
             res
@@ -41,8 +40,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(proposition)(.*?)\]"),
-            re.compile(r"\[/proposition\]"),
+            BBCODE_TAGS["proposition"][0],
+            BBCODE_TAGS["proposition"][1],
         )
         assert (
             res
@@ -57,8 +56,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(corollary)(.*?)\]"),
-            re.compile(r"\[/corollary\]"),
+            BBCODE_TAGS["corollary"][0],
+            BBCODE_TAGS["corollary"][1],
         )
         assert (
             res
@@ -73,8 +72,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(example)(.*?)\]"),
-            re.compile(r"\[/example\]"),
+            BBCODE_TAGS["example"][0],
+            BBCODE_TAGS["example"][1],
         )
         assert (
             res
@@ -89,8 +88,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(claim)(.*?)\]"),
-            re.compile(r"\[/claim\]"),
+            BBCODE_TAGS["claim"][0],
+            BBCODE_TAGS["claim"][1],
         )
         assert (
             res
@@ -105,8 +104,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(problem)(.*?)\]"),
-            re.compile(r"\[/problem\]"),
+            BBCODE_TAGS["problem"][0],
+            BBCODE_TAGS["problem"][1],
         )
         assert (
             res
@@ -121,8 +120,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(exercise)(.*?)\]"),
-            re.compile(r"\[/exercise\]"),
+            BBCODE_TAGS["exercise"][0],
+            BBCODE_TAGS["exercise"][1],
         )
         assert (
             res
@@ -139,8 +138,8 @@ class TestMathBoxesWithDesc:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(theorem)(.*?)\]"),
-            re.compile(r"\[/theorem\]"),
+            BBCODE_TAGS["theorem"][0],
+            BBCODE_TAGS["theorem"][1],
         )
         assert (
             res
@@ -155,8 +154,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(lemma)(.*?)\]"),
-            re.compile(r"\[/lemma\]"),
+            BBCODE_TAGS["lemma"][0],
+            BBCODE_TAGS["lemma"][1],
         )
         assert (
             res
@@ -171,8 +170,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(proposition)(.*?)\]"),
-            re.compile(r"\[/proposition\]"),
+            BBCODE_TAGS["proposition"][0],
+            BBCODE_TAGS["proposition"][1],
         )
         assert (
             res
@@ -187,8 +186,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(corollary)(.*?)\]"),
-            re.compile(r"\[/corollary\]"),
+            BBCODE_TAGS["corollary"][0],
+            BBCODE_TAGS["corollary"][1],
         )
         assert (
             res
@@ -203,8 +202,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(example)(.*?)\]"),
-            re.compile(r"\[/example\]"),
+            BBCODE_TAGS["example"][0],
+            BBCODE_TAGS["example"][1],
         )
         assert (
             res
@@ -219,8 +218,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(claim)(.*?)\]"),
-            re.compile(r"\[/claim\]"),
+            BBCODE_TAGS["claim"][0],
+            BBCODE_TAGS["claim"][1],
         )
         assert (
             res
@@ -235,8 +234,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(problem)(.*?)\]"),
-            re.compile(r"\[/problem\]"),
+            BBCODE_TAGS["problem"][0],
+            BBCODE_TAGS["problem"][1],
         )
         assert (
             res
@@ -251,8 +250,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(exercise)(.*?)\]"),
-            re.compile(r"\[/exercise\]"),
+            BBCODE_TAGS["exercise"][0],
+            BBCODE_TAGS["exercise"][1],
         )
         assert (
             res

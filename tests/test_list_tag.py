@@ -1,6 +1,5 @@
-import re
-
 from bloops.bloopser import _convert_tag_to_html
+from bloops.vars import BBCODE_TAGS
 
 
 class TestListTag:
@@ -9,8 +8,8 @@ class TestListTag:
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(list)(.*?)\]"),
-            re.compile(r"\[/list\]"),
+            BBCODE_TAGS["list"][0],
+            BBCODE_TAGS["list"][1],
         )
         assert (
             res
@@ -24,8 +23,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(list)(.*?)\]"),
-            re.compile(r"\[/list\]"),
+            BBCODE_TAGS["list"][0],
+            BBCODE_TAGS["list"][1],
         )
         assert (
             res
@@ -39,8 +38,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(list)(.*?)\]"),
-            re.compile(r"\[/list\]"),
+            BBCODE_TAGS["list"][0],
+            BBCODE_TAGS["list"][1],
         )
         assert (
             res
@@ -56,8 +55,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(list)(.*?)\]"),
-            re.compile(r"\[/list\]"),
+            BBCODE_TAGS["list"][0],
+            BBCODE_TAGS["list"][1],
         )
         assert (
             res
@@ -71,8 +70,8 @@ some random stuff
         res = _convert_tag_to_html(
             text,
             6,
-            re.compile(r"\[(list)(.*?)\]"),
-            re.compile(r"\[/list\]"),
+            BBCODE_TAGS["list"][0],
+            BBCODE_TAGS["list"][1],
         )
         assert (
             res
