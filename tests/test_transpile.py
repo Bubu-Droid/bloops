@@ -165,30 +165,30 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bloops Preview</title>
-    <!-- TODO: shift the avatar to integration server and use the static link -->
     <link
       rel="icon"
       type="image/x-icon"
       href="https://avatar.artofproblemsolving.com/avatar_778606.png"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@catppuccin/highlightjs@1.0.1/css/catppuccin-variables.css"
+    />
     <link rel="stylesheet" href="static/style.css" />
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches
+            ? "night"
+            : "day");
+      } catch {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/tokyo-night-dark.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
     <script>
@@ -237,12 +237,8 @@ This is an asy diagram with some caption text.
 </figure>
 
 This is some dummy python code.
-<pre>
-<code class="language-python">
-from bloops import bigfatW
-print("hello")
-</code>
-</pre>
+<pre><code class="language-python">from bloops import bigfatW
+print("hello")</code></pre>
 
 Some <span style="color: #4B0082;">fancy colored text</span>.
 

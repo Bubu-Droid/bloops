@@ -8,13 +8,7 @@ class TestCodeTag:
         res = _convert_tag_to_html(
             text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
         )
-        assert res == (
-            r"""<pre>
-<code>
-some random stuff
-</code>
-</pre>"""
-        )
+        assert res == (r"""<pre><code>some random stuff</code></pre>""")
 
     def test_code_with_lang(self) -> None:
         text = r"""lorem [code lang=html]some random stuff[/code] lorem"""
@@ -22,11 +16,7 @@ some random stuff
             text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
         )
         assert res == (
-            r"""<pre>
-<code class="language-html">
-some random stuff
-</code>
-</pre>"""
+            r"""<pre><code class="language-html">some random stuff</code></pre>"""
         )
 
 
