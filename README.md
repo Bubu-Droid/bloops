@@ -365,19 +365,10 @@ how to implement it.
 - [ ] Implement a post-processor which adds paragraph tags around
   every disjoint block of HTML code.
 - [ ] Shift avatar to integration server.
-- [ ] Handle unbalanced `[` or `]` inside arguments of BBCode tags.
+- [ ] Handle `[` or `]` inside arguments of BBCode tags.
   (I'll be very glad if someone suggests me a solution for this;
   I've thought about it myself, but couldn't really come up with
   anything.)
-- [x] Change `BBCODE_TAGS` to a dict instead of a list.
-- [x] Add script placeholder to HTML templates.
-- [x] De-couple templates and stylesheets by moving them
-to their independent files.
-- [x] Add `python -m bloops` invocation.
-- [x] Add sidenote tag.
-- [x] Add hide tag.
-- [x] Change all `with open ___` invocations for pathlib to
-  `___.open()`.
 
 <p align="right"><a href="#index">&uarr; Back to top</a></p>
 
