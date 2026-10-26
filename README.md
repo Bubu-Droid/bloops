@@ -47,9 +47,16 @@ and support for **Asymptote geometry diagrams**.
     </a>
 </div>
 
+<br>
+
+<div align="center">
+    <img alt="Quick demo" src="https://raw.githubusercontent.com/Bubu-Droid/bloops/main/assets/bloops-quick-demo.gif" width="90%">
+</div>
+
 ## Index
 
 - [Features](#features)
+- [Demo](#demo)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -75,6 +82,11 @@ into the browser.
 - **Math & Syntax Highlighthing**: Pre-configured with **MathJax v4**
 for TeX rendering and **Highlight.js** (Tokyo Night Dark) for
 code syntax highlighting.
+
+## Demo
+
+Writing a document block by block with `bloops -pc` running:
+every save rebuilds `index.html` and the browser reloads instantly.
 
 ## Requirements
 
@@ -340,9 +352,7 @@ So, there are two ways you could use a custom stylesheet:
 **Q: How do I use my own javascript code?**
 <details><summary>Answer.</summary>
 
-I haven't added this feature yet, just open an issue and I'll add it.
-The reason for not having added it yet is because I hate JS and you don't
-need JS for running simple static pages.
+Same as the previous FAQ. Use `static/script.js`.
 </details>
 
 ## Contribution
@@ -355,10 +365,6 @@ problem if someone else uses them. If you're using AI assistance
 for contributing, please mention so in your PR.
 (No AI has been used in this project except for generating docstrings
 and the TokyoNight-Night based CSS stylesheet.)
-
-The fourth TODO is a good first issue that you could work on.
-Open an issue mentioning this and I'll guide you out on
-how to implement it.
 
 ## TODOs
 
