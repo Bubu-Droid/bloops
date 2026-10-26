@@ -88,6 +88,8 @@ code syntax highlighting.
 Writing a document block by block with `bloops -pc` running:
 every save rebuilds `index.html` and the browser reloads instantly.
 
+<https://github.com/user-attachments/assets/11d13c10-ab78-4a98-98f0-b6d798ac834a>
+
 ## Requirements
 
 - **Python >= 3.12**
