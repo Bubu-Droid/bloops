@@ -11,7 +11,7 @@ BBCODE_TAGS: dict[str, tuple[re.Pattern[str], re.Pattern[str], list[str]]] = {
     "code": (
         re.compile(r"\[(code)(.*?)\]"),
         re.compile(r"\[/code\]"),
-        ["lang"],
+        ["lang", "mode"],
     ),
     "color": (
         re.compile(r"\[(color)(.*?)\]"),

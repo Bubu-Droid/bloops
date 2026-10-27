@@ -200,6 +200,28 @@ def _validate_args(
                 + f"{error_line[0]}: {error_line[1]}"
             )
 
+    elif tag == "code":
+        code_dict = args
+        if "mode" in code_dict and code_dict["mode"] not in ["inline", "block"]:
+            error_line = get_error_line(text, open_delim_start_index)
+            raise ValueError(
+                'Invalid mode provided. Mode can only be "inline" or "block."'
+                + "\n\n"
+                + f"{error_line[0]}: {error_line[1]}"
+            )
+
+        if (
+            "mode" in code_dict
+            and code_dict["mode"] == "inline"
+            and "lang" in code_dict
+        ):
+            error_line = get_error_line(text, open_delim_start_index)
+            raise ValueError(
+                '"lang" cannot be used with "mode=inline"'
+                + "\n\n"
+                + f"{error_line[0]}: {error_line[1]}"
+            )
+
     elif tag == "color":
         color_dict = args
         if "hex" not in color_dict:
@@ -266,10 +288,7 @@ def _validate_args(
                 + "\n\n"
                 + f"{error_line[0]}: {error_line[1]}"
             )
-        if "target" in url_dict and url_dict["target"] not in [
-            "self",
-            "blank",
-        ]:
+        if "target" in url_dict and url_dict["target"] not in ["self", "blank"]:
             error_line = get_error_line(text, open_delim_start_index)
             raise ValueError(
                 'Invalid target value provided. Target can only be "self" or "blank."'
