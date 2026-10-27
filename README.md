@@ -182,6 +182,7 @@ Here are reference tables for each BBCode tag bloops uses:
 | Option | Mandatory | Description                                                                                 |
 | ------ | :-------: | ------------------------------------------------------------------------------------------- |
 | `lang` |     -     | Language used in the code block (tries to detect the language if argument is not provided). |
+| `mode` |     -     | `inline` or `block` (default: `block`)                                                      |
 
 </details>
 
@@ -365,8 +366,8 @@ how to contribute. I'm against the idea of using AI
 for writing hobby projects; however, I have no
 problem if someone else uses them. If you're using AI assistance
 for contributing, please mention so in your PR.
-(No AI has been used in this project except for generating docstrings
-and the TokyoNight-Night based CSS stylesheet.)
+(No AI has been used in this project except for generating docstrings,
+the TokyoNight-Night based CSS stylesheet, and the preview demos/banner.)
 
 ## TODOs
 
@@ -378,6 +379,8 @@ and the TokyoNight-Night based CSS stylesheet.)
   I've thought about it myself, but couldn't really come up with
   anything.)
 - [ ] Switch lists to sets to optimize speed.
+- [ ] Currently, using BBCODE content inside `[code]` is broken,
+  since bloops eagerly formats the BBCODE inside `[code]` too.
 
 <p align="right"><a href="#index">&uarr; Back to top</a></p>
 
