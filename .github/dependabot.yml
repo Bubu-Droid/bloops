@@ -12,15 +12,36 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
+    groups:
+      python-deps:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
+    groups:
+      pre-commit-hooks:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
