@@ -1,5 +1,6 @@
 """Core conversion engine transforming BBCode source to HTML."""
 
+import html
 import re
 from importlib.resources import files
 
@@ -116,12 +117,16 @@ def _convert_tag_to_html(
 
         elif tag == "code":
             code_dict = args
-            if "lang" not in code_dict:
-                content.append(f"<pre><code>{inner_content}</code></pre>")
+            escaped_content = html.escape(inner_content)
+            if "mode" in code_dict and code_dict["mode"] == "inline":
+                content.append(f"<code>{escaped_content}</code>")
             else:
-                content.append(
-                    f'<pre><code class="language-{code_dict["lang"]}">{inner_content}</code></pre>'
-                )
+                if "lang" not in code_dict:
+                    content.append(f"<pre><code>{escaped_content}</code></pre>")
+                else:
+                    content.append(
+                        f'<pre><code class="language-{code_dict["lang"]}">{escaped_content}</code></pre>'
+                    )
 
         elif tag == "color":
             color_dict = args
@@ -196,10 +201,13 @@ def _convert_tag_to_html(
                 content.append(
                     f'<a href="{url_dict["link"]}" target="_blank">{inner_content}</a>'
                 )
+
         elif tag == "sidemark":
             content.append('<span class="sidemark"></span>')
+
         elif tag == "sidenote":
             content.append(f'<span class="sidenote">{inner_content}</span>')
+
         elif tag == "hide":
             hide_dict = args
             content.append(f"<details><summary>{hide_dict['label']}</summary>")
@@ -272,7 +280,7 @@ def _convert_tag_to_html(
         "h5",
         "h6",
     ]:
-        inline_code_dict = {
+        inline_tag_dict = {
             "b": "strong",
             "i": "em",
             "u": "u",
@@ -302,7 +310,7 @@ def _convert_tag_to_html(
             content.append("</div>")
         else:
             content.append(
-                f"<{inline_code_dict[tag]}>{inner_content}</{inline_code_dict[tag]}>"
+                f"<{inline_tag_dict[tag]}>{inner_content}</{inline_tag_dict[tag]}>"
             )
 
     return "\n".join(content)
