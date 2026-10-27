@@ -238,7 +238,7 @@ This is an asy diagram with some caption text.
 
 This is some dummy python code.
 <pre><code class="language-python">from bloops import bigfatW
-print("hello")</code></pre>
+print(&quot;hello&quot;)</code></pre>
 
 Some <span style="color: #4B0082;">fancy colored text</span>.
 

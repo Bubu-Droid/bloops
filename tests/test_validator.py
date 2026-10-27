@@ -21,7 +21,7 @@ lorem [asy src=/home/bubu/meow.png label=hello meow=hi width=50 alt="meow neow" 
                 text,
                 11,
                 BBCODE_TAGS["asy"][0],
-                ["src", "label", "width", "alt", "caption"],
+                BBCODE_TAGS["asy"][2],
             )
         assert context.type is ValueError
         assert "Invalid argument provided" in str(context.value)
@@ -35,7 +35,7 @@ lorem [asy src=/home/bubu/meow.png label=hello width=50 alt="meow neow" caption=
             text,
             11,
             BBCODE_TAGS["asy"][0],
-            ["src", "label", "width", "alt", "caption"],
+            BBCODE_TAGS["asy"][2],
         )
 
     def test_empty_args(self) -> None:
@@ -47,7 +47,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
             text,
             11,
             BBCODE_TAGS["asy"][0],
-            ["src", "label", "width", "alt", "caption"],
+            BBCODE_TAGS["asy"][2],
         )
 
     def test_asy_without_src(self) -> None:
@@ -57,7 +57,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["asy"][0],
-                ["src", "label", "width", "alt", "caption"],
+                BBCODE_TAGS["asy"][2],
             )
         assert context.type is ValueError
         assert 'Missing mandatory parameter "src' in str(context.value)
@@ -69,7 +69,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["asy"][0],
-                ["src", "label", "width", "alt", "caption"],
+                BBCODE_TAGS["asy"][2],
             )
         assert context.type is ValueError
         assert 'Missing mandatory parameter "label' in str(context.value)
@@ -81,7 +81,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["img"][0],
-                ["width", "alt", "caption"],
+                BBCODE_TAGS["img"][2],
             )
         assert context.type is ValueError
         assert "Missing mandatory parameter" in str(context.value)
@@ -95,7 +95,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["list"][0],
-                ["type", "style"],
+                BBCODE_TAGS["list"][2],
             )
         assert context.type is ValueError
         assert "Invalid <ul> style provided" in str(context.value)
@@ -109,7 +109,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["list"][0],
-                ["type", "style"],
+                BBCODE_TAGS["list"][2],
             )
         assert context.type is ValueError
         assert "Invalid <ol> style provided" in str(context.value)
@@ -121,7 +121,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["color"][0],
-                ["hex"],
+                BBCODE_TAGS["color"][2],
             )
         assert context.type is ValueError
         assert "Missing mandatory parameter" in str(context.value)
@@ -133,7 +133,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["url"][0],
-                ["link", "target"],
+                BBCODE_TAGS["url"][2],
             )
         assert context.type is ValueError
         assert "Missing mandatory parameter" in str(context.value)
@@ -145,7 +145,7 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
                 text,
                 6,
                 BBCODE_TAGS["url"][0],
-                ["link", "target"],
+                BBCODE_TAGS["url"][2],
             )
         assert context.type is ValueError
         assert "Invalid target value provided" in str(context.value)
@@ -205,3 +205,39 @@ lorem [asy src=/home/bubu/meow.png label=hello]some random stuff
         )
         assert "39:" in str(context.value)
         assert "[b]" in str(context.value)
+
+    def test_hide_without_label(self) -> None:
+        text = r"""lorem [hide]some random stuff[/hide] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = _validate_args(
+                text,
+                6,
+                BBCODE_TAGS["hide"][0],
+                BBCODE_TAGS["hide"][2],
+            )
+        assert context.type is ValueError
+        assert "Missing mandatory parameter" in str(context.value)
+
+    def test_code_with_invalid_mode(self) -> None:
+        text = r"""lorem [code mode=blocks]some random stuff[/code] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = _validate_args(
+                text,
+                6,
+                BBCODE_TAGS["code"][0],
+                BBCODE_TAGS["code"][2],
+            )
+        assert context.type is ValueError
+        assert "Invalid mode provided" in str(context.value)
+
+    def test_code_with_inline_mode_with_lang(self) -> None:
+        text = r"""lorem [code lang=meow mode=inline]some random stuff[/code] lorem"""
+        with pytest.raises(ValueError) as context:
+            _ = _validate_args(
+                text,
+                6,
+                BBCODE_TAGS["code"][0],
+                BBCODE_TAGS["code"][2],
+            )
+        assert context.type is ValueError
+        assert '"lang" cannot be used' in str(context.value)

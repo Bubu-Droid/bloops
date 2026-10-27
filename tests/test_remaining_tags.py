@@ -3,20 +3,59 @@ from bloops.vars import BBCODE_TAGS
 
 
 class TestCodeTag:
-    def test_code_without_lang(self) -> None:
+    def test_code_without_lang_with_mode(self) -> None:
+        text = r"""lorem [code mode=inline]some random stuff[/code] lorem"""
+        res = _convert_tag_to_html(
+            text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
+        )
+        assert res == (r"""<code>some random stuff</code>""")
+
+    def test_code_without_lang_without_mode(self) -> None:
         text = r"""lorem [code]some random stuff[/code] lorem"""
         res = _convert_tag_to_html(
             text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
         )
         assert res == (r"""<pre><code>some random stuff</code></pre>""")
 
-    def test_code_with_lang(self) -> None:
+    def test_code_with_lang_with_mode(self) -> None:
+        text = r"""lorem [code lang=html mode=inline]some random stuff[/code] lorem"""
+        res = _convert_tag_to_html(
+            text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
+        )
+        assert res == (r"""<code>some random stuff</code>""")
+
+    def test_code_with_lang_without_mode(self) -> None:
         text = r"""lorem [code lang=html]some random stuff[/code] lorem"""
         res = _convert_tag_to_html(
             text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
         )
         assert res == (
             r"""<pre><code class="language-html">some random stuff</code></pre>"""
+        )
+
+    def test_code_with_lang_with_block_mode(self) -> None:
+        text = r"""lorem [code lang=html mode=block]some random stuff[/code] lorem"""
+        res = _convert_tag_to_html(
+            text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
+        )
+        assert res == (
+            r"""<pre><code class="language-html">some random stuff</code></pre>"""
+        )
+
+    def test_inline_with_bad_chars(self) -> None:
+        text = r"""lorem [code mode=inline]some <random></stuff>[/code] lorem"""
+        res = _convert_tag_to_html(
+            text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
+        )
+        assert res == (r"""<code>some &lt;random&gt;&lt;/stuff&gt;</code>""")
+
+    def test_block_with_bad_chars(self) -> None:
+        text = r"""lorem [code]some <random></stuff>[/code] lorem"""
+        res = _convert_tag_to_html(
+            text, 6, BBCODE_TAGS["code"][0], BBCODE_TAGS["code"][1]
+        )
+        assert res == (
+            r"""<pre><code>some &lt;random&gt;&lt;/stuff&gt;</code></pre>"""
         )
 
 
