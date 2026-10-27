@@ -161,6 +161,13 @@ pre code.hljs {
   background: none;
 }
 
+:not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--ctp-surface0);
+  background: var(--ctp-mantle);
+  font-size: 0.9em;
+}
+
 /* theorem-style boxes */
 
 [class^="box"] {
@@ -256,7 +263,9 @@ pre code.hljs {
 }
 
 @media (width >= 1040px) {
-  body {
+  /* make room for sidenotes only when the post has any; otherwise the
+     post stays centered */
+  body:has(.sidenote) {
     position: relative;
     max-width: calc(660px + 17.5rem);
     padding-right: calc(1.5rem + 17.5rem);
