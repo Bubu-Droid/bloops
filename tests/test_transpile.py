@@ -173,6 +173,8 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@catppuccin/highlightjs@1.0.1/css/catppuccin-variables.css"
+      integrity="sha384-M0GSf48HLWBBgQ/KARCdcZIaQkGPHFbmTLg1UcXDue0b7EAaFO/f/zo2ooDJqDvj"
+      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="static/style.css" />
     <script>
@@ -190,9 +192,14 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
       href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"
+      integrity="sha384-wjfDDhOPPdjtva8vWBhWeVprSpmxisEu5aYT3q1JyACqXpdKpo3PWZTMVq24MBix"
+      crossorigin="anonymous"
+    ></script>
     <script>
-      hljs.highlightAll();
+      addEventListener("DOMContentLoaded", () => hljs.highlightAll());
     </script>
     <script>
       MathJax = {
@@ -215,7 +222,9 @@ and [u]underline[/u] to top it off. [sup]14[/sup]P[sub]3[/sub]."""
     </script>
     <script
       defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"
+      src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-svg.js"
+      integrity="sha384-my9P1jDckpHD+5LZsLQ0gaiCl/RMO32HaqwBtbo/25QIMVr6xXIUCg1jvdSRcvb4"
+      crossorigin="anonymous"
     ></script>
     <script src="static/script.js" defer></script>
   </head>
