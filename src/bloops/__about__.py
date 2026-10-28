@@ -1,5 +1,5 @@
 """Version, author and license metadata for bloops."""
 
-__version__ = "0.2.1"
+__version__ = "0.3.1"
 __author__ = "Bubu-Droid"
 __license__ = "MIT"
