@@ -80,7 +80,7 @@ compiles `[asy]` blocks into SVG vector graphics using Asymptote.
 powered by `livereload` and `watchdog` to preview changes instantly
 into the browser.
 - **Math & Syntax Highlighthing**: Pre-configured with **MathJax v4**
-for TeX rendering and **Highlight.js** (Tokyo Night Dark) for
+for TeX rendering and **Highlight.js** (Catppuccin Latte/Mocha) for
 code syntax highlighting.
 
 ## Demo
@@ -367,7 +367,8 @@ for writing hobby projects; however, I have no
 problem if someone else uses them. If you're using AI assistance
 for contributing, please mention so in your PR.
 (No AI has been used in this project except for generating docstrings,
-the TokyoNight-Night based CSS stylesheet, and the preview demos/banner.)
+the Catppuccin Latte/Mocha based CSS stylesheet,
+and the preview demos/banner.)
 
 ## TODOs
 
