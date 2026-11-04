@@ -47,7 +47,7 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "livereload>=2.7.1",
-  "watchdog>=6",
+  "watchdog>=6,<7",
 ]
 urls.Documentation = "https://github.com/Bubu-Droid/bloops/blob/main/docs/api.md"
 urls.Issues = "https://github.com/Bubu-Droid/bloops/issues"
