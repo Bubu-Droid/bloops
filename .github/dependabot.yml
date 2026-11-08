@@ -11,7 +11,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 7
+      default-days: 0
     groups:
       github-actions:
         update-types:
@@ -22,7 +22,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 7
+      default-days: 0
     groups:
       python-deps:
         update-types:
@@ -33,7 +33,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 7
+      default-days: 0
     groups:
       pre-commit-hooks:
         update-types:
